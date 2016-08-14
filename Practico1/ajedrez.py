@@ -36,6 +36,14 @@ class Movimiento:
     def esComida(self):
         return  abs(self.origen[0] - self.destino[0][0]) > 1
 
+    def __eq__(self, other):
+
+        return self.origen == other.origen and self.destino == other.destino
+
+    def __ne__(self, other):
+
+        return not self.__eq__(other)
+
 class Damas:
 
     movimientosValidosCalculados = []
@@ -86,6 +94,10 @@ class Damas:
 
     def esMovimientoValido(self, movimiento):
 
+        return movimiento in self.movimientosValidosCalculados
+
+    def calcularEsMovimientoValido(self, movimiento):
+
         x, y = movimiento.origen
 
         if x < 0 or x > 7 or y < 0 or y > 7:
@@ -118,7 +130,7 @@ class Damas:
                 (self.turno == Turno.NEGRA and signoX != Direccion.NEGRA):
             return False
 
-        if difX == 0:
+        if difX == 0 or abs(difX) > 2:
             return
 
         if self.tablero[xDest][yDest] != Casilla.VACIA:
@@ -128,6 +140,7 @@ class Damas:
         medioY = (yDest + y) / 2
 
         return abs(difX) == 1 or self.tablero[medioX][medioY] == Turno.otroTurno(self.turno)
+
 
     def obtenerTableroResultante(self,movimiento):
 
@@ -183,12 +196,12 @@ class Damas:
 
             movimiento = Movimiento((x, y), (xDest, y + difX))
 
-            if self.esMovimientoValido(movimiento):
+            if self.calcularEsMovimientoValido(movimiento):
                 movimientos.append(movimiento)
 
             movimiento = Movimiento((x, y), (xDest, y - difX))
 
-            if self.esMovimientoValido(movimiento):
+            if self.calcularEsMovimientoValido(movimiento):
                 movimientos.append(movimiento)
 
 
