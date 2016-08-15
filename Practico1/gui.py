@@ -1,5 +1,5 @@
 import Tkinter as tk
-from ajedrez import Casilla, Damas, Movimiento
+from damas import Casilla, Damas, Movimiento
 
 class Estado():
     ORIGEN = 0
