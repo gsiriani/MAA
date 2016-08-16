@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import Tkinter as tk
 from damas import Casilla, Damas, Movimiento
 
@@ -19,9 +21,12 @@ class Application():
 
     def createWidgets(self):
         self.tablero = tk.Canvas(bg='dark goldenrod',height=self.CASILLA_TAMANO*8, width=self.CASILLA_TAMANO*8)
-        self.tablero.grid()
+        self.tablero.grid(row=0,column=0)
         self.tablero.bind("<Button-1>", self.onClick)
         self.root.bind("<Return>", self.onEnter)
+        self.labelString = tk.StringVar()
+        self.label = tk.Label(textvariable=self.labelString)
+        self.label.grid(row=1,column=0)
 
     def onClick(self, event):
 
@@ -91,6 +96,8 @@ class Application():
 
                 if color != '':
                     self.dibujarMarca((fila, columna), 5, color)
+
+        self.labelString.set(str(len(self.damas.movimientosValidosCalculados)) + " movimientos válidos")
 
         if self.movimiento is not None:
             movimientosValidos = self.damas.movimientosValidosDePieza(self.movimiento.origen[0],self.movimiento.origen[1])
