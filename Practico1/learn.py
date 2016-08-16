@@ -1,53 +1,9 @@
 # -*- coding: UTF-8 -*-
 
-import random
 import math
+import random
 
-from damas import Damas, Turno, Casilla
-
-class Representacion():
-
-    size = 6
-
-    @staticmethod
-    def obtener(tablero):
-
-        flattened = [casilla for fila in tablero for casilla in fila]
-
-        cantidadBlancas = sum([1 for c in flattened if c == Casilla.BLANCA])
-        cantidadNegras = sum([1 for c in flattened if c == Casilla.NEGRA])
-
-        segurasBlancas = Representacion.obtenerSeguras(tablero, Turno.BLANCA)
-        segurasNegras = Representacion.obtenerSeguras(tablero, Turno.NEGRA)
-
-        distanciaLineaFondoBlancas = Representacion.distanciaLineaFondo(tablero, Turno.BLANCA)
-        distanciaLineaFondoNegras = Representacion.distanciaLineaFondo(tablero, Turno.NEGRA)
-
-        return cantidadBlancas, cantidadNegras, segurasBlancas, segurasNegras, distanciaLineaFondoBlancas,\
-               distanciaLineaFondoNegras
-
-    @staticmethod
-    def obtenerSeguras(tablero, color):
-
-        for i in range(8):
-            cantidadSeguras = 1 if tablero[0][i] == color else 0
-            cantidadSeguras += 1 if tablero[7][i] == color else 0
-            cantidadSeguras += 1 if tablero[i][0] == color else 0
-            cantidadSeguras += 1 if tablero[i][7] == color else 0
-
-        return cantidadSeguras
-
-    @staticmethod
-    def distanciaLineaFondo(tablero, color):
-
-        distancia = 0
-
-        for x in range(8):
-            for y in range(8):
-                if tablero[x][y] == color:
-                    distancia += 7 - x if color == Turno.BLANCA else x
-
-        return distancia
+from damas import Damas, Turno
 
 
 class Learner():
@@ -108,7 +64,7 @@ class Learner():
             if not damas.partidaTerminada():
                 tableroGenerado = True
 
-        return damas.tablero
+        return damas
 
 
     def aplicarAprendizaje(self, decisiones, valorFinal):
@@ -132,9 +88,9 @@ class Learner():
 
         decisiones = []
 
-        damas = Damas(self.generarTableroInicial(),random.choice([Turno.BLANCA,Turno.NEGRA]))
+        damas = self.generarTableroInicial()
 
-        colorFichas = damas.turno
+        colorFichas = random.choice([Turno.BLANCA,Turno.NEGRA])
 
         while not damas.partidaTerminada():
 
@@ -166,97 +122,6 @@ class Learner():
         elif valorFinal == (-100 * (1 if colorFichas == Turno.BLANCA else -1)):
             self.perdidas += 1
 
-class Maquina:
-
-    MAX_INITIAL_WEIGHT = 1
-    MIN_INITIAL_WEIGHT = -1
-
-    representacion = None
-
-    def __init__(self, representacion):
-
-        self.representacion = representacion
-        self.weights = tuple(random.uniform(self.MIN_INITIAL_WEIGHT, self.MAX_INITIAL_WEIGHT)
-                         for i in range(representacion.size + 1))
-
-    def valorTablero(self, representacion, damas):
-        if damas.partidaTerminada():
-            return self.valorTableroFinal(damas.tablero)
-
-        valor = sum([x * y for x, y in zip(representacion, self.weights)]) + representacion[len(representacion) - 1]
-
-        assert not math.isinf(valor)
-
-        return valor
-
-    def valorTableroFinal(self, tablero):
-        flattened = [casilla for fila in tablero for casilla in fila]
-
-        cantidadBlancas = sum([1 for c in flattened if c == Casilla.BLANCA])
-        cantidadNegras = sum([1 for c in flattened if c == Casilla.NEGRA])
-
-        return 0 if cantidadNegras == cantidadBlancas else (100 if cantidadBlancas > cantidadNegras else -100)
-
-
-    def decidirProximaJugada(self, damas):
-        movimientosPosibles = []
-
-        for m in damas.movimientosValidosCalculados:
-            resultado = Resultado()
-            resultado.estadoResultante = damas.obtenerTableroResultante(m)
-            resultado.representacionTablero = self.representacion.obtener(resultado.estadoResultante.tablero)
-            resultado.valorTableroResultante = self.valorTablero(resultado.representacionTablero,
-                                                                 resultado.estadoResultante)
-
-            movimientosPosibles.append(resultado)
-
-        if damas.turno == Turno.BLANCA:
-            mejorResultado = max(movimientosPosibles, key=lambda r: r.valorTableroResultante)
-        else:
-            mejorResultado = min(movimientosPosibles, key=lambda r: r.valorTableroResultante)
-
-        mejoresResultados = [r for r in movimientosPosibles if
-                             r.valorTableroResultante == mejorResultado.valorTableroResultante]
-        resultadoElegido = random.choice(mejoresResultados)
-
-        return resultadoElegido
-
-
-class MaquinaAzar:
-
-    representacion = None
-
-    def __init__(self, representacion):
-
-        self.representacion = representacion
-        self.weights = tuple(0 for i in range(representacion.size + 1))
-
-    def valorTablero(self, representacion, damas):
-        if damas.partidaTerminada():
-            return self.valorTableroFinal(damas.tablero)
-        else:
-            return 0
-
-    def valorTableroFinal(self, tablero):
-        flattened = [casilla for fila in tablero for casilla in fila]
-
-        cantidadBlancas = sum([1 for c in flattened if c == Casilla.BLANCA])
-        cantidadNegras = sum([1 for c in flattened if c == Casilla.NEGRA])
-
-        return 0 if cantidadNegras == cantidadBlancas else (100 if cantidadBlancas > cantidadNegras else -100)
-
-
-    def decidirProximaJugada(self, damas):
-        movimientosPosibles = []
-
-        m = random.choice(damas.movimientosValidosCalculados)
-
-        resultado = Resultado()
-        resultado.estadoResultante = damas.obtenerTableroResultante(m)
-        resultado.representacionTablero = self.representacion.obtener(resultado.estadoResultante.tablero)
-        resultado.valorTableroResultante = self.valorTablero(resultado.representacionTablero, resultado.estadoResultante)
-
-        return resultado
 
 class Resultado:
     valorTableroAlInicioDelTurno = None
