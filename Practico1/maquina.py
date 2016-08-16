@@ -7,8 +7,8 @@ from learn import Resultado
 
 class Maquina:
 
-    MAX_INITIAL_WEIGHT = 10
-    MIN_INITIAL_WEIGHT = -10
+    MAX_INITIAL_WEIGHT = 100
+    MIN_INITIAL_WEIGHT = -100
 
     representacion = None
 

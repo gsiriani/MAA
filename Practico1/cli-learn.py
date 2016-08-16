@@ -12,7 +12,7 @@ maquinaD = Maquina(Representacion())
 maquinaE = MaquinaAzar(Representacion())
 
 learner = Learner(maquinaA,maquinaB,0.0001, True)
-learner.run(5000)
+learner.run(20000)
 #learner = Learner(maquinaC,maquinaD,0.0001,True)
 #learner.run(5000)
 #learner = Learner(maquinaA,maquinaC,0.0001,False)
