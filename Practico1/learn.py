@@ -74,7 +74,7 @@ class Learner():
         print ("Iniciando ejecución")
 
         for i in range(iterations):
-            if i % 100 == 0:
+            if i % 1000 == 0:
                 print(str(i) + " iteraciones.")
                 # print ("A" + str(self.maquinaA.weights))
                 # print ("B" + str(self.maquinaB.weights))
