@@ -5,39 +5,52 @@ import random
 
 from damas import Damas, Turno
 
+class TipoAprendizaje():
+
+    APRENDEN_AMBAS_MAQUINAS = 0
+    SOLO_MAQUINA_A_APRENDE = 1
+    SIN_APRENDIZAJE = 2
 
 class Learner():
 
+    # estadístcas
     victorias = 0
     empates = 0
     perdidas = 0
     jugadasTotales = 0
 
+    # la maquina A es la que aprende
     maquinaA = None
+    # la maquina B es la contrincante
     maquinaB = None
 
-    def __init__(self, maquinaA, maquinaB, factorAprendizaje, aplicarAprendizajeAAmbasMaquinas):
+    # tipo de aprendizaje a aplicar
+    tipoAprendizaje = None
+
+    def __init__(self, maquinaA, maquinaB, factorAprendizaje, tipoAprendizaje = TipoAprendizaje.APRENDEN_AMBAS_MAQUINAS):
 
         self.maquinaA = maquinaA
         self.maquinaB = maquinaB
-        self.aplicarAprendizajeAAmbasMaquinas = aplicarAprendizajeAAmbasMaquinas
-        self.magnitudesPesos = [0 for i in range(maquinaA.representacion.size + 1)]
+        self.tipoAprendizaje = tipoAprendizaje
+
+        # Lleva el conteo del aporte de los terminos de la funcion de fitness
+        self.magnitudesPesos = [0 for i in range(maquinaA.representacion.size)]
         random.seed()
 
         self.factorAprendizaje = factorAprendizaje
 
-    def run(self, iterations, sinAprendizaje = False):
+    # Ejecuta un número especificado de partidas
+    def run(self, iterations):
 
         print ("Iniciando ejecución")
 
         for i in range(iterations):
             if i % 1000 == 0:
                 print(str(i) + " iteraciones.")
-                # print ("A" + str(self.maquinaA.weights))
-                # print ("B" + str(self.maquinaB.weights))
 
-            self.siguienteIteracion(sinAprendizaje)
+            self.siguienteIteracion()
 
+        # Se imprimen las estadísticas de las iteraciones
         print ("Ejecución terminada.")
         print ("Partidas realizadas: " + str(iterations))
         print ("Victorias: " + str(self.victorias) + " ("  + str(float(self.victorias) / iterations * 100) + "%)")
@@ -48,13 +61,16 @@ class Learner():
 
         sumaMagnitudes = sum(self.magnitudesPesos)
 
+        # Aporte porcentual de cada termino de la fitness function
         print "Pesos relativos" + str([(float(p) / sumaMagnitudes)*100 for p in self.magnitudesPesos])
 
+    # Se genera la partida inicial tomando un número de jugadas aleatorias iniciales
     def generarTableroInicial(self):
 
         tableroGenerado = False
         nroJugadas = random.randint(0, 15)
 
+        # Se itera hasta obtener un tablero aceptable
         while not tableroGenerado:
 
             damas = Damas(Damas.tablero_base(), random.choice([Turno.BLANCA, Turno.NEGRA]))
@@ -66,25 +82,31 @@ class Learner():
                 if damas.partidaTerminada():
                     break
 
+            # No se aceptan partidas terminadas como tableros iniciales
             if not damas.partidaTerminada():
                 tableroGenerado = True
 
         return damas
 
+    # Se aplica Least Mean Squares para ajustar los weights de la fitness function
     def aplicarAprendizaje(self, decisiones, valorFinal):
 
         weights = list(self.maquinaA.weights)
 
         for i,decision in enumerate(decisiones):
 
+            # El valor objetivo se toma como el valor del tablero al inicio del turno siguiente
+            # o como el valor final de la partida si es la ultima jugada
             valorEntrenamiento = decisiones[i + 1].valorTableroAlInicioDelTurno if i + 1 < len(decisiones) else valorFinal
 
             for j,w in enumerate(weights):
 
+                # Se toman los valores de la representación y se toma 1 como el valor de le representacióm
                 valorParametro = decision.representacionTablero[j] if j < len(weights) -1 else 1
 
+                # Se incorporan los datos de los pesos
                 if j < len(weights) - 1:
-                    self.magnitudesPesos[j] += abs(weights[j])
+                    self.magnitudesPesos[j] += abs(weights[j] * decision.representacionTablero[j])
 
                 weights[j] = w + self.factorAprendizaje * valorParametro * \
                                  (valorEntrenamiento - decision.valorTableroResultante)
@@ -93,7 +115,7 @@ class Learner():
 
         return tuple(weights)
 
-    def siguienteIteracion(self, sinAprendizaje):
+    def siguienteIteracion(self):
 
         decisiones = []
 
@@ -116,10 +138,10 @@ class Learner():
 
         valorFinal = self.maquinaA.valorTablero(None,damas)
 
-        if not sinAprendizaje:
+        if self.tipoAprendizaje != TipoAprendizaje.SIN_APRENDIZAJE:
             self.maquinaA.weights = self.aplicarAprendizaje(decisiones, valorFinal)
 
-            if self.aplicarAprendizajeAAmbasMaquinas:
+            if self.tipoAprendizaje == TipoAprendizaje.APRENDEN_AMBAS_MAQUINAS:
                 self.maquinaB.weights = self.maquinaA.weights
 
         self.jugadasTotales += len(decisiones)
