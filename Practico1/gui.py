@@ -41,7 +41,10 @@ class Application():
             self.estado = Estado.DESTINO
         elif self.estado == Estado.DESTINO and self.damas.tablero[x][y] == Casilla.VACIA:
             movimiento = Movimiento(self.movimiento.origen,self.movimiento.destino + [(x,y)])
-            if self.damas.esMovimientoValido(movimiento):
+
+            movimientosParciales = [m for m in self.damas.movimientosValidosCalculados if m.esParcial(movimiento)]
+
+            if len(movimientosParciales) > 0:
                 self.movimiento = movimiento
             else:
                 self.resetearTurno()
@@ -104,11 +107,11 @@ class Application():
 
             for movimiento in movimientosValidos:
 
-                x,y = movimiento.destino[0]
-
-                self.dibujarMarca((x, y), 25, 'yellow')
+                for x,y in movimiento.destino:
+                    self.dibujarMarca((x, y), 25, 'yellow')
 
             self.dibujarMarca((self.movimiento.origen[0], self.movimiento.origen[1]), 25, 'red')
+
             for destino in self.movimiento.destino:
                 self.dibujarMarca((destino[0], destino[1]), 25, 'red')
 
