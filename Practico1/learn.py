@@ -21,6 +21,7 @@ class Learner():
         self.maquinaA = maquinaA
         self.maquinaB = maquinaB
         self.aplicarAprendizajeAAmbasMaquinas = aplicarAprendizajeAAmbasMaquinas
+        self.magnitudesPesos = [0 for i in range(maquinaA.representacion.size + 1)]
         random.seed()
 
         self.factorAprendizaje = factorAprendizaje
@@ -45,6 +46,10 @@ class Learner():
         print ("Jugadas realizadas: " + str(self.jugadasTotales))
         print ("Pesos: " + str(self.maquinaA.weights))
 
+        sumaMagnitudes = sum(self.magnitudesPesos)
+
+        print "Pesos relativos" + str([(float(p) / sumaMagnitudes)*100 for p in self.magnitudesPesos])
+
     def generarTableroInicial(self):
 
         tableroGenerado = False
@@ -66,16 +71,20 @@ class Learner():
 
         return damas
 
-
     def aplicarAprendizaje(self, decisiones, valorFinal):
 
         weights = list(self.maquinaA.weights)
 
         for i,decision in enumerate(decisiones):
+
+            valorEntrenamiento = decisiones[i + 1].valorTableroAlInicioDelTurno if i + 1 < len(decisiones) else valorFinal
+
             for j,w in enumerate(weights):
 
-                valorEntrenamiento = decisiones[i+1].valorTableroAlInicioDelTurno if i+1 < len(decisiones) else valorFinal
                 valorParametro = decision.representacionTablero[j] if j < len(weights) -1 else 1
+
+                if j < len(weights) - 1:
+                    self.magnitudesPesos[j] += abs(weights[j])
 
                 weights[j] = w + self.factorAprendizaje * valorParametro * \
                                  (valorEntrenamiento - decision.valorTableroResultante)
