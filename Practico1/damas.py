@@ -230,14 +230,14 @@ class Damas:
 
         if self.calcularEsMovimientoValido(movimiento):
 
-            '''if delta == 2:
+            if delta == 2:
                 cadena = self.calcularMovimientosValidosDePieza(x,y, nuevosDestinos)
 
                 if len(cadena) == 0:
                     movimientos.append(movimiento)
                 else:
                     movimientos += cadena
-            else:'''
-            movimientos.append(movimiento)
+            else:
+                movimientos.append(movimiento)
 
 

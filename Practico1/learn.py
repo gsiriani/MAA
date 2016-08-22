@@ -2,6 +2,7 @@
 
 import math
 import random
+import csv
 
 from damas import Damas, Turno
 
@@ -29,7 +30,11 @@ class Learner():
 
     DebugOutput = False
 
-    def __init__(self, maquinaA, maquinaB, factorAprendizaje, tipoAprendizaje = TipoAprendizaje.APRENDEN_AMBAS_MAQUINAS):
+    writer = None
+    file = None
+
+    def __init__(self, maquinaA, maquinaB, factorAprendizaje, tipoAprendizaje = TipoAprendizaje.APRENDEN_AMBAS_MAQUINAS,
+                 fileOutput = None):
 
         self.maquinaA = maquinaA
         self.maquinaB = maquinaB
@@ -41,10 +46,16 @@ class Learner():
 
         self.factorAprendizaje = factorAprendizaje
 
+        self.file = open(fileOutput, 'wb')
+        self.writer = csv.writer(self.file, dialect='excel')
+
     # Ejecuta un número especificado de partidas
     def run(self, iterations):
 
         print ("Iniciando ejecución")
+
+        if self.writer is not None:
+            self.writer.writerow(self.maquinaA.weights)
 
         for i in range(iterations):
             if i % 1000 == 0:
@@ -52,10 +63,15 @@ class Learner():
 
             self.siguienteIteracion()
 
+            if self.writer is not None:
+                self.writer.writerow(self.maquinaA.weights)
+
+        self.file.close()
+
         # Se imprimen las estadísticas de las iteraciones
         print ("Ejecución terminada.")
         print ("Partidas realizadas: " + str(iterations))
-        print ("Victorias: " + str(self.victorias) + " ("  + str(float(self.victorias) / iterations * 100) + "%)")
+        print ("Victorias: " + str(self.victorias) + " (" + str(float(self.victorias) / iterations * 100) + "%)")
         print ("Empates: " + str(self.empates) + " (" + str(float(self.empates) / iterations * 100) + "%)")
         print ("Perdidas: " + str(self.perdidas) + " (" + str(float(self.perdidas) / iterations * 100) + "%)")
         print ("Jugadas realizadas: " + str(self.jugadasTotales))
@@ -124,7 +140,7 @@ class Learner():
 
         damas = self.generarTableroInicial()
 
-        colorFichas = random.choice([Turno.BLANCA,Turno.NEGRA])
+        colorFichas = random.choice([Turno.BLANCA, Turno.NEGRA])
 
         while not damas.partidaTerminada():
 
