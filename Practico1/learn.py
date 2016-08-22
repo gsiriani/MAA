@@ -27,6 +27,8 @@ class Learner():
     # tipo de aprendizaje a aplicar
     tipoAprendizaje = None
 
+    DebugOutput = False
+
     def __init__(self, maquinaA, maquinaB, factorAprendizaje, tipoAprendizaje = TipoAprendizaje.APRENDEN_AMBAS_MAQUINAS):
 
         self.maquinaA = maquinaA
@@ -61,8 +63,9 @@ class Learner():
 
         sumaMagnitudes = sum(self.magnitudesPesos)
 
-        # Aporte porcentual de cada termino de la fitness function
-        print "Pesos relativos" + str([(float(p) / sumaMagnitudes)*100 for p in self.magnitudesPesos])
+        if sumaMagnitudes > 0:
+            # Aporte porcentual de cada termino de la fitness function
+            print "Pesos relativos" + str([(float(p) / sumaMagnitudes)*100 for p in self.magnitudesPesos])
 
     # Se genera la partida inicial tomando un número de jugadas aleatorias iniciales
     def generarTableroInicial(self):
@@ -129,6 +132,13 @@ class Learner():
 
             decisionJugador = maquinaTurno.decidirProximaJugada(damas)
 
+            if self.DebugOutput:
+                print("****")
+                print("Turno de " + "BLANCAS" if damas.turno == Turno.BLANCA else "NEGRAS")
+                print("Turno de " + "MAQUINA A" if maquinaTurno == self.maquinaA else "MAQUINA B")
+                print("Se elige jugada con valor " + str(decisionJugador.valorTableroResultante))
+                print("****")
+
             if colorFichas == damas.turno:
                 decisionJugador.valorTableroAlInicioDelTurno = \
                     maquinaTurno.valorTablero(maquinaTurno.representacion.obtener(damas.tablero),damas)
@@ -137,6 +147,9 @@ class Learner():
             damas = decisionJugador.estadoResultante
 
         valorFinal = self.maquinaA.valorTablero(None,damas)
+
+        if self.DebugOutput:
+            print("### Valor final: " + str(valorFinal) + " ###")
 
         if self.tipoAprendizaje != TipoAprendizaje.SIN_APRENDIZAJE:
             self.maquinaA.weights = self.aplicarAprendizaje(decisiones, valorFinal)

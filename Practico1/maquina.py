@@ -10,6 +10,8 @@ class Maquina:
     MAX_INITIAL_WEIGHT = 100
     MIN_INITIAL_WEIGHT = -100
 
+    DebugOutput = False
+
     representacion = None
 
     def __init__(self, representacion):
@@ -48,6 +50,10 @@ class Maquina:
                                                                  resultado.estadoResultante)
 
             movimientosPosibles.append(resultado)
+
+        if self.DebugOutput:
+            valores = [r.valorTableroResultante for r in movimientosPosibles]
+            print ("Jugadas: " + str((min(valores),max(valores))))
 
         if damas.turno == Turno.BLANCA:
             mejorResultado = max(movimientosPosibles, key=lambda r: r.valorTableroResultante)

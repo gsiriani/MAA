@@ -3,7 +3,7 @@ from damas import Casilla, Turno, Damas
 
 class Representacion():
 
-    size = 10
+    size = 8
 
     @staticmethod
     def obtener(tablero):
@@ -16,14 +16,11 @@ class Representacion():
         segurasBlancas = Representacion.obtenerSeguras(tablero, Turno.BLANCA)
         segurasNegras = Representacion.obtenerSeguras(tablero, Turno.NEGRA)
 
-        distanciaLineaFondoBlancas = Representacion.distanciaLineaFondo(tablero, Turno.BLANCA)
-        distanciaLineaFondoNegras = Representacion.distanciaLineaFondo(tablero, Turno.NEGRA)
-
         cantidadMovimientosBlancas, cantidadComidasBlancas = Representacion.cantidadMovimientosYComidas(tablero, Turno.BLANCA)
         cantidadMovimientosNegras, cantidadComidasNegras = Representacion.cantidadMovimientosYComidas(tablero, Turno.NEGRA)
 
-        return cantidadBlancas, cantidadNegras, segurasBlancas, segurasNegras, distanciaLineaFondoBlancas,\
-               distanciaLineaFondoNegras,cantidadMovimientosBlancas,cantidadMovimientosNegras, \
+        return cantidadBlancas, cantidadNegras, segurasBlancas, segurasNegras,\
+               cantidadMovimientosBlancas,cantidadMovimientosNegras, \
                cantidadComidasBlancas, cantidadComidasNegras
 
     @staticmethod
