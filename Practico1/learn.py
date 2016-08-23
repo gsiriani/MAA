@@ -46,8 +46,9 @@ class Learner():
 
         self.factorAprendizaje = factorAprendizaje
 
-        self.file = open(fileOutput, 'wb')
-        self.writer = csv.writer(self.file, dialect='excel')
+        if fileOutput is not None:
+            self.file = open(fileOutput, 'wb')
+            self.writer = csv.writer(self.file, dialect='excel')
 
     # Ejecuta un número especificado de partidas
     def run(self, iterations):
@@ -66,7 +67,8 @@ class Learner():
             if self.writer is not None:
                 self.writer.writerow(self.maquinaA.weights)
 
-        self.file.close()
+        if self.writer is not None:
+            self.file.close()
 
         # Se imprimen las estadísticas de las iteraciones
         print ("Ejecución terminada.")
