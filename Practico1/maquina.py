@@ -20,7 +20,7 @@ class Maquina:
         self.weights = tuple(random.uniform(self.MIN_INITIAL_WEIGHT, self.MAX_INITIAL_WEIGHT)
                          for i in range(representacion.size + 1))
 
-    def valorTablero(self, representacion, damas):
+    def valorTablero(self, representacion, damas):#calcula el valor del tablero multiplicando los criterios por los pesos
         if damas.partidaTerminada():
             return self.valorTableroFinal(damas.tablero)
 
@@ -41,7 +41,7 @@ class Maquina:
 
     def decidirProximaJugada(self, damas):
         movimientosPosibles = []
-
+		#calculo todas las jugadas posibles
         for m in damas.movimientosValidosCalculados:
             resultado = Resultado()
             resultado.estadoResultante = damas.obtenerTableroResultante(m)
@@ -54,12 +54,12 @@ class Maquina:
         if self.DebugOutput:
             valores = [r.valorTableroResultante for r in movimientosPosibles]
             print ("Jugadas: " + str((min(valores),max(valores))))
-
+		#elijo el mejor resultado segun el color con el que este jugando
         if damas.turno == Turno.BLANCA:
             mejorResultado = max(movimientosPosibles, key=lambda r: r.valorTableroResultante)
         else:
             mejorResultado = min(movimientosPosibles, key=lambda r: r.valorTableroResultante)
-
+		#si hay mas de uno elijo cualquiera
         mejoresResultados = [r for r in movimientosPosibles if
                              r.valorTableroResultante == mejorResultado.valorTableroResultante]
         resultadoElegido = random.choice(mejoresResultados)

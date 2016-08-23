@@ -16,7 +16,7 @@ class Turno:
     def otroTurno(turno):
         return Turno.BLANCA if turno == Turno.NEGRA else Turno.NEGRA
 
-class Direccion:
+class Direccion: #se asumen estos valores para facilitar las cuentas en el codigo
     BLANCA = 1
     NEGRA = -1
 
@@ -33,7 +33,7 @@ class Movimiento:
     origen = None
     destino = []
 
-    def esComida(self):
+    def esComida(self): 
         return  abs(self.origen[0] - self.destino[0][0]) > 1
 
     def __eq__(self, other):
@@ -71,7 +71,7 @@ class Damas:
         self.movimientosValidosCalculados = self.calcularMovimientosValidos()
 
     @staticmethod
-    def tableroVacio():
+    def tableroVacio(): #retorna un tablero sin piezas
 
         # Declaro la variable
         tablero = [[0 for x in range(8)] for y in range(8)]
@@ -86,7 +86,7 @@ class Damas:
         return tablero
 
     @staticmethod
-    def tablero_base():
+    def tablero_base(): #retorna un tablero con las piezas en sus posiciones iniciales
 
         tablero = Damas.tableroVacio()
 
@@ -108,7 +108,7 @@ class Damas:
 
         return movimiento in self.movimientosValidosCalculados
 
-    def calcularEsMovimientoValido(self, movimiento):
+    def calcularEsMovimientoValido(self, movimiento):#verifica si el movimiento es valido ya sea simple o compuesto
 
         x, y = movimiento.origen
 
@@ -121,15 +121,17 @@ class Damas:
             return False
 
         xDest,yDest = movimiento.destino[len(movimiento.destino) - 1]
-        if len(movimiento.destino) == 1:            
+        if len(movimiento.destino) == 1:  
+			#el movimiento es simple
             return self.esValidoMovimientoSimple(x, y, xDest, yDest, self.turno, self.tablero)
         else:
+			#el movimiento es compuesto
             xDest0,yDest0 = movimiento.destino[len(movimiento.destino) - 2]
             return self.esValidoMovimientoSimple(xDest0, yDest0,xDest, yDest, self.turno, self.tablero)
 
 
     def esValidoMovimientoSimple(self, xOrigen, yOrigen, xDest, yDest, turno, tablero):
-
+	
         if xDest < 0 or xDest > 7 or yDest < 0 or yDest > 7:
             return False
 
@@ -156,8 +158,7 @@ class Damas:
 
         return abs(difX) == 1 or tablero[medioX][medioY] == Turno.otroTurno(turno)
 
-    def obtenerTableroResultante(self,movimiento):
-
+    def obtenerTableroResultante(self,movimiento):#retorna el tablero resultante de haber realizado el movimiento
         if not self.esMovimientoValido(movimiento):
             return Damas(self.tablero, self.turno)
 
@@ -229,7 +230,7 @@ class Damas:
         movimiento = Movimiento((x, y), nuevosDestinos)
 
         if self.calcularEsMovimientoValido(movimiento):
-
+			#verifica si es posible comer multiples piezas 
             if delta == 2:
                 cadena = self.calcularMovimientosValidosDePieza(x,y, nuevosDestinos)
 
@@ -238,6 +239,6 @@ class Damas:
                 else:
                     movimientos += cadena
             else:
-                movimientos.append(movimiento)
+            movimientos.append(movimiento)
 
 

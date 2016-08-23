@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+# Simulador de entrenamiento
+
 from learn import Learner, TipoAprendizaje
 from representacion import Representacion
 from maquinaAzar import MaquinaAzar
