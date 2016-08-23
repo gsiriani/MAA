@@ -162,7 +162,7 @@ class Learner():
                     maquinaTurno.valorTablero(maquinaTurno.representacion.obtener(damas.tablero),damas)
                 decisiones += [decisionJugador]
 
-            damas = decisionJugador.estadoResultante
+                damas = decisionJugador.estadoResultante
 
         valorFinal = self.maquinaA.valorTablero(None,damas)
 

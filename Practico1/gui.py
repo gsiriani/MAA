@@ -1,7 +1,13 @@
 # -*- coding: UTF-8 -*-
 
 import Tkinter as tk
-from damas import Casilla, Damas, Movimiento
+import time
+import sys
+import json
+from damas import Casilla, Damas, Movimiento, Turno
+from maquina import Maquina
+from maquinaAzar import MaquinaAzar
+from representacion import Representacion
 
 class Estado():
     ORIGEN = 0
@@ -12,12 +18,17 @@ class Application():
     CASILLA_TAMANO = 64
     movimiento = None
 
+    contrincanteBlancas = None
+    contrincanteNegras = None
+
     def __init__(self, damas):
         self.root = tk.Tk()
         self.entry = tk.Entry(self.root)
         self.createWidgets()
         self.estado = Estado.ORIGEN
         self.damas = damas
+        self.obtenerContrincantes()
+        self.siguienteTurno()
 
     def createWidgets(self):
         self.tablero = tk.Canvas(bg='dark goldenrod',height=self.CASILLA_TAMANO*8, width=self.CASILLA_TAMANO*8)
@@ -27,6 +38,35 @@ class Application():
         self.labelString = tk.StringVar()
         self.label = tk.Label(textvariable=self.labelString)
         self.label.grid(row=1,column=0)
+
+    def obtenerContrincantes(self):
+
+        if len(sys.argv) != 2:
+            return
+
+        file = open(sys.argv[1])
+
+        config = json.load(file)
+
+        if 'blancas' in config:
+            if config['blancas']['tipo'] == 'azar':
+                self.contrincanteBlancas = MaquinaAzar(Representacion())
+            else:
+                self.contrincanteBlancas = Maquina(Representacion())
+
+            if 'pesos' in config['blancas']:
+                self.contrincanteBlancas.weights = tuple(config['blancas']['pesos'])
+
+        if 'negras' in config:
+            if config['negras']['tipo'] == 'azar':
+                self.contrincanteNegras = MaquinaAzar(Representacion())
+            else:
+                self.contrincanteNegras = Maquina(Representacion())
+
+            if 'pesos' in config['negras']:
+                self.contrincanteNegras.weights = tuple(config['negras']['pesos'])
+
+        file.close()
 
     def onClick(self, event):
 
@@ -58,6 +98,23 @@ class Application():
         self.movimiento = None
         self.estado = Estado.ORIGEN
 
+    def siguienteTurno(self):
+
+        if self.damas.turno == Turno.BLANCA and self.contrincanteBlancas is not None:
+            contrincante = self.contrincanteBlancas
+        elif self.damas.turno == Turno.NEGRA and self.contrincanteNegras is not None:
+            contrincante = self.contrincanteNegras
+        else:
+            return
+
+        decision = contrincante.decidirProximaJugada(self.damas)
+        self.damas = decision.estadoResultante
+
+        self.resetearTurno()
+        self.dibujarTablero()
+
+        self.root.after(1000,self.siguienteTurno)
+
     def onEnter(self,event):
 
         if self.movimiento is not None and len(self.movimiento.destino) > 0 :
@@ -66,6 +123,8 @@ class Application():
 
         self.resetearTurno()
         self.dibujarTablero()
+
+        self.siguienteTurno()
 
     def run(self):
         self.root.mainloop()
