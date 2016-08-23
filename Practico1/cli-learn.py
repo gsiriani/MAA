@@ -15,9 +15,9 @@ maquinaE = MaquinaAzar(Representacion())
 maquinaF = MaquinaAzar(Representacion())
 
 learner = Learner(maquinaA,maquinaB,0.0001, TipoAprendizaje.APRENDEN_AMBAS_MAQUINAS)
-learner.run(15000)
-learner = Learner(maquinaC,maquinaD,0.0001, TipoAprendizaje.APRENDEN_AMBAS_MAQUINAS)
-learner.run(15000)
+learner.run(5000)
+#learner = Learner(maquinaC,maquinaD,0.0001, TipoAprendizaje.APRENDEN_AMBAS_MAQUINAS)
+#learner.run(15000)
 #learner = Learner(maquinaA,maquinaC,0.0001, TipoAprendizaje.SOLO_MAQUINA_A_APRENDE)
 #learner.run(2000)
 
@@ -26,10 +26,10 @@ learner = Learner(maquinaA,maquinaE,0.0001,TipoAprendizaje.SIN_APRENDIZAJE)
 #learner.DebugOutput = True
 learner.run(2000)
 
-learner = Learner(maquinaC,maquinaE,0.0001,TipoAprendizaje.SIN_APRENDIZAJE)
+#learner = Learner(maquinaC,maquinaE,0.0001,TipoAprendizaje.SIN_APRENDIZAJE)
 #maquinaA.DebugOutput = True
 #learner.DebugOutput = True
-learner.run(2000)
+#learner.run(2000)
 #learner = Learner(maquinaE,maquinaF,0.0001,TipoAprendizaje.SIN_APRENDIZAJE)
 #learner.run(1000)
 

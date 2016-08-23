@@ -64,11 +64,15 @@ class Damas:
         self.turno = turno if turno is not None else Turno.BLANCA
 
         if tablero is not None:
-            self.tablero = tablero
+            self.tablero = Damas.copiarTablero(tablero)
         else:
             self.tablero = Damas.tableroVacio()
 
         self.movimientosValidosCalculados = self.calcularMovimientosValidos()
+
+    @staticmethod
+    def copiarTablero(tablero):
+        return [list(f) for f in tablero]
 
     @staticmethod
     def tableroVacio(): #retorna un tablero sin piezas
@@ -162,7 +166,7 @@ class Damas:
         if not self.esMovimientoValido(movimiento):
             return Damas(self.tablero, self.turno)
 
-        tablero = self.tablero
+        tablero = Damas.copiarTablero(self.tablero)
 
         x,y = movimiento.origen
         tablero[x][y] = Casilla.VACIA

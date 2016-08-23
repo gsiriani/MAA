@@ -8,24 +8,26 @@ class Representacion():
     @staticmethod
     def obtener(tablero):#retorna el valor de los criterios usados para evaluar el tablero
 
-		flattened = [casilla for fila in tablero for casilla in fila]
+        flattened = [casilla for fila in tablero for casilla in fila]
 
-		cantidadBlancas = sum([1 for c in flattened if c == Casilla.BLANCA])
-		cantidadNegras = sum([1 for c in flattened if c == Casilla.NEGRA])
+        cantidadBlancas = sum([1 for c in flattened if c == Casilla.BLANCA])
+        cantidadNegras = sum([1 for c in flattened if c == Casilla.NEGRA])
 
-		segurasBlancas = Representacion.obtenerSeguras(tablero, Turno.BLANCA)
-		segurasNegras = Representacion.obtenerSeguras(tablero, Turno.NEGRA)
-		
-		distanciaLineaFondoBlancas = Representacion.distanciaLineaFondo(tablero, Turno.BLANCA)
-		distanciaLineaFondoNegras = Representacion.distanciaLineaFondo(tablero, Turno.NEGRA)
-		
-		cantidadMovimientosBlancas, cantidadComidasBlancas = Representacion.cantidadMovimientosYComidas(tablero, Turno.BLANCA)
-		cantidadMovimientosNegras, cantidadComidasNegras = Representacion.cantidadMovimientosYComidas(tablero, Turno.NEGRA)
+        segurasBlancas = Representacion.obtenerSeguras(tablero, Turno.BLANCA)
+        segurasNegras = Representacion.obtenerSeguras(tablero, Turno.NEGRA)
 
-		return cantidadBlancas, cantidadNegras, segurasBlancas, segurasNegras,\
-			distanciaLineaFondoBlancas, distanciaLineaFondoNegras, \
-			cantidadMovimientosBlancas,cantidadMovimientosNegras, \
-			cantidadComidasBlancas, cantidadComidasNegras
+        distanciaLineaFondoBlancas = Representacion.distanciaLineaFondo(tablero, Turno.BLANCA)
+        distanciaLineaFondoNegras = Representacion.distanciaLineaFondo(tablero, Turno.NEGRA)
+
+        cantidadMovimientosBlancas, cantidadComidasBlancas = Representacion.cantidadMovimientosYComidas(tablero, Turno.BLANCA)
+        cantidadMovimientosNegras, cantidadComidasNegras = Representacion.cantidadMovimientosYComidas(tablero, Turno.NEGRA)
+
+        cantidadAmenazadasBlancas = Representacion.cantidadAmenazadas(tablero, Turno.BLANCA)
+        cantidadAmenazadasNegras = Representacion.cantidadAmenazadas(tablero, Turno.NEGRA)
+
+        return cantidadBlancas, cantidadNegras, segurasBlancas, segurasNegras,distanciaLineaFondoBlancas,\
+               distanciaLineaFondoNegras, cantidadMovimientosBlancas, cantidadMovimientosNegras, cantidadAmenazadasBlancas,\
+               cantidadAmenazadasNegras
 
     @staticmethod
     def obtenerSeguras(tablero, color):#retorna la cantidad de fichas que estan en una posicion segura
@@ -59,3 +61,21 @@ class Representacion():
         cantidadMovimientos = len(damas.movimientosValidosCalculados) - cantidadComidas
 
         return (cantidadMovimientos, cantidadComidas)
+
+    @staticmethod
+    def cantidadAmenazadas(tablero, color):  # retorna la cantidad de movimientos y comidas validas
+
+        damas = Damas(tablero, color)
+
+        comidas = [m for m in damas.movimientosValidosCalculados if m.esComida()]
+
+        posiblesComidas = set()
+
+        for m in comidas:
+            x,y = m.origen
+
+            for xDest, yDest in m.destino:
+                posiblesComidas.add(((xDest + x)/2,(yDest + y)/2))
+                x,y = xDest, yDest
+
+        return len(posiblesComidas)
