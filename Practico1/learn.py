@@ -177,11 +177,11 @@ class Learner():
 
         self.jugadasTotales += len(decisiones)
 
-        if valorFinal == (100 * (1 if colorFichas == Turno.BLANCA else -1)):
+        if valorFinal * (1 if colorFichas == Turno.BLANCA else -1) > 0 :
             self.victorias += 1
         elif valorFinal == 0:
             self.empates += 1
-        elif valorFinal == (-100 * (1 if colorFichas == Turno.BLANCA else -1)):
+        else:
             self.perdidas += 1
 
 
