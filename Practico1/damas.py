@@ -64,7 +64,7 @@ class Damas:
         self.turno = turno if turno is not None else Turno.BLANCA
 
         if tablero is not None:
-            self.tablero = Damas.copiarTablero(tablero)
+            self.tablero = tablero
         else:
             self.tablero = Damas.tableroVacio()
 
