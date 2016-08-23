@@ -44,7 +44,7 @@ class Maquina:
         if self.evaluacioTableroFinal == EvaluacionTableroFinal.ESTATICA:
             return 0 if cantidadNegras == cantidadBlancas else (100 if cantidadBlancas > cantidadNegras else -100)
         else:
-            return (cantidadBlancas  - cantidadNegras) * 0.5
+            return (cantidadBlancas - cantidadNegras) * 100
 
 
     def decidirProximaJugada(self, damas):
