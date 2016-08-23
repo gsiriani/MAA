@@ -4,6 +4,9 @@ import random
 from damas import Casilla, Turno
 from learn import Resultado
 
+class EvaluacionTableroFinal:
+    ESTATICA = 0
+    DIFERENCIA_FICHAS = 1
 
 class Maquina:
 
@@ -14,11 +17,13 @@ class Maquina:
 
     representacion = None
 
-    def __init__(self, representacion):
+    def __init__(self, representacion, evaluacioTableroFinal = EvaluacionTableroFinal.ESTATICA):
 
         self.representacion = representacion
         self.weights = tuple(random.uniform(self.MIN_INITIAL_WEIGHT, self.MAX_INITIAL_WEIGHT)
                          for i in range(representacion.size + 1))
+
+        self.evaluacioTableroFinal = evaluacioTableroFinal
 
     def valorTablero(self, representacion, damas):#calcula el valor del tablero multiplicando los criterios por los pesos
         if damas.partidaTerminada():
@@ -36,12 +41,15 @@ class Maquina:
         cantidadBlancas = sum([1 for c in flattened if c == Casilla.BLANCA])
         cantidadNegras = sum([1 for c in flattened if c == Casilla.NEGRA])
 
-        return 0 if cantidadNegras == cantidadBlancas else (100 if cantidadBlancas > cantidadNegras else -100)
+        if self.evaluacioTableroFinal == EvaluacionTableroFinal.ESTATICA:
+            return 0 if cantidadNegras == cantidadBlancas else (100 if cantidadBlancas > cantidadNegras else -100)
+        else:
+            return (cantidadBlancas  - cantidadNegras) * 0.5
 
 
     def decidirProximaJugada(self, damas):
         movimientosPosibles = []
-		#calculo todas las jugadas posibles
+        #calculo todas las jugadas posibles
         for m in damas.movimientosValidosCalculados:
             resultado = Resultado()
             resultado.estadoResultante = damas.obtenerTableroResultante(m)
@@ -54,12 +62,12 @@ class Maquina:
         if self.DebugOutput:
             valores = [r.valorTableroResultante for r in movimientosPosibles]
             print ("Jugadas: " + str((min(valores),max(valores))))
-		#elijo el mejor resultado segun el color con el que este jugando
+        #elijo el mejor resultado segun el color con el que este jugando
         if damas.turno == Turno.BLANCA:
             mejorResultado = max(movimientosPosibles, key=lambda r: r.valorTableroResultante)
         else:
             mejorResultado = min(movimientosPosibles, key=lambda r: r.valorTableroResultante)
-		#si hay mas de uno elijo cualquiera
+        #si hay mas de uno elijo cualquiera
         mejoresResultados = [r for r in movimientosPosibles if
                              r.valorTableroResultante == mejorResultado.valorTableroResultante]
         resultadoElegido = random.choice(mejoresResultados)

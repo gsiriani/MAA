@@ -122,10 +122,10 @@ class Damas:
 
         xDest,yDest = movimiento.destino[len(movimiento.destino) - 1]
         if len(movimiento.destino) == 1:  
-			#el movimiento es simple
+            #el movimiento es simple
             return self.esValidoMovimientoSimple(x, y, xDest, yDest, self.turno, self.tablero)
         else:
-			#el movimiento es compuesto
+            #el movimiento es compuesto
             xDest0,yDest0 = movimiento.destino[len(movimiento.destino) - 2]
             return self.esValidoMovimientoSimple(xDest0, yDest0,xDest, yDest, self.turno, self.tablero)
 
@@ -230,7 +230,7 @@ class Damas:
         movimiento = Movimiento((x, y), nuevosDestinos)
 
         if self.calcularEsMovimientoValido(movimiento):
-			#verifica si es posible comer multiples piezas 
+            #verifica si es posible comer multiples piezas
             if delta == 2:
                 cadena = self.calcularMovimientosValidosDePieza(x,y, nuevosDestinos)
 
@@ -239,6 +239,6 @@ class Damas:
                 else:
                     movimientos += cadena
             else:
-            movimientos.append(movimiento)
+                movimientos.append(movimiento)
 
 
