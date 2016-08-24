@@ -1,3 +1,5 @@
+# Contiene una clase que implementa una de las representaciones usadas para la ejecucion del aprendizaje LMS.
+
 from damas import Casilla, Turno, Damas
 
 

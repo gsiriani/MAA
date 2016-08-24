@@ -1,3 +1,5 @@
+# Maquina que elije una jugada al azar entre aquellas validas. Se utiliza para validar el aprendizaje.
+
 import random
 
 from damas import Casilla
@@ -29,6 +31,7 @@ class MaquinaAzar:
 
 
     def decidirProximaJugada(self, damas):
+        # Elige movimiento al azar
         movimientosPosibles = []
 
         m = random.choice(damas.movimientosValidosCalculados)

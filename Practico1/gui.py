@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+# Interfaz grafica para la validacion de los algoritmos del core del juego. Permite la carga de contrincantes.
 
 import Tkinter as tk
 from damas import Casilla, Damas, Movimiento

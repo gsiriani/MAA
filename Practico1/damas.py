@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+# Este archivo contiene las clases que modelan e implementan el juego de damas.
+# Entre otras cosas este archivo contiene la representacion del estado del tablero
+# y calcula los movimientos validos en cada turno
 
 class Casilla:
     # Enum que representa el estado de una casilla en el tablero
@@ -16,7 +19,8 @@ class Turno:
     def otroTurno(turno):
         return Turno.BLANCA if turno == Turno.NEGRA else Turno.NEGRA
 
-class Direccion: #se asumen estos valores para facilitar las cuentas en el codigo
+class Direccion: 
+    # Representan la direccion de movimiento en el eje vertical
     BLANCA = 1
     NEGRA = -1
 
@@ -45,6 +49,9 @@ class Movimiento:
         return not self.__eq__(other)
 
     def esParcial(self, parcial):
+        # Dado un movimiento, otro es parcial,
+        # si los primeros n pasos coinciden
+
 
         if self.origen != parcial.origen:
             return False
@@ -57,6 +64,8 @@ class Movimiento:
         return True
 
 class Damas:
+    # Esta clase contiene el estado del tablero y los movimientos 
+    # validos para el jugador de turno
 
     movimientosValidosCalculados = []
 
@@ -72,10 +81,12 @@ class Damas:
 
     @staticmethod
     def copiarTablero(tablero):
+        # Retorna una copia limpia del tablero 
         return [list(f) for f in tablero]
 
     @staticmethod
-    def tableroVacio(): #retorna un tablero sin piezas
+    def tableroVacio(): 
+        # Retorna un tablero sin piezas
 
         # Declaro la variable
         tablero = [[0 for x in range(8)] for y in range(8)]
@@ -90,7 +101,8 @@ class Damas:
         return tablero
 
     @staticmethod
-    def tablero_base(): #retorna un tablero con las piezas en sus posiciones iniciales
+    def tablero_base(): 
+        # Retorna un tablero con las piezas en sus posiciones iniciales
 
         tablero = Damas.tableroVacio()
 
@@ -100,7 +112,7 @@ class Damas:
                 if ((x + y) % 2) == 0:
                     tablero[x][y] = Casilla.BLANCA
 
-        # Completo las primeras 3 hileras con fichas blancas
+        # Completo las ultimas 3 hileras con fichas negras
         for x in range(5, 8):
             for y in range(8):
                 if ((x + y) % 2) == 0:
@@ -192,6 +204,8 @@ class Damas:
                 if self.tablero[x][y] == self.turno:
                     movimientos += self.calcularMovimientosValidosDePieza(x,y)
 
+        # Si es posible comer una pieza, se eliminan  todos los movimientos que 
+        # no son comida
         if any(m.esComida() for m in movimientos):
             movimientos = [m for m in movimientos if m.esComida()]
 

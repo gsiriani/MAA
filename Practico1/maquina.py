@@ -1,3 +1,5 @@
+# Maquina que elije segun los valores de sus weights la proxima jugada a ejecutar.
+
 import math
 import random
 
