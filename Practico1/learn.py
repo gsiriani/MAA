@@ -1,4 +1,6 @@
 # -*- coding: UTF-8 -*-
+# Contiene las clases utilizadas para la ejecucion del algoritmo de aprendizaje. 
+# Permite la salida a consola de informacion de debugging asi como a un archivo en formato CSV los pesos.
 
 import math
 import random
@@ -137,6 +139,8 @@ class Learner():
         return tuple(weights)
 
     def siguienteIteracion(self):
+        # Ejecuta una iteracion de aprendizaje
+        # Esto es: generar tablero inicial, realizar movimientos hasta el final del juego y corregir pesos
 
         decisiones = []
 
@@ -169,6 +173,7 @@ class Learner():
         if self.DebugOutput:
             print("### Valor final: " + str(valorFinal) + " ###")
 
+        # Corrijo pesos
         if self.tipoAprendizaje != TipoAprendizaje.SIN_APRENDIZAJE:
             self.maquinaA.weights = self.aplicarAprendizaje(decisiones, valorFinal)
 
