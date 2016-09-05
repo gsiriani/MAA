@@ -1,4 +1,4 @@
-from arbol import Arbol
+from arbol import Arbol, TipoHijo
 import itertools
 from math import log
 
@@ -7,29 +7,32 @@ class Id3:
     def __init__(self, atributoObjetivo):
         self.atributoObjetivo = atributoObjetivo
 
-    def ejecutar(self, ejemplos, atributos, maxDepth = 3):
+    def ejecutar(self, ejemplos, atributos, maxDepth = None):
 
         objetivo = self.atributoObjetivo
 
-        primerValor = ejemplos[0][objetivo]
+        if len(set([e[objetivo] for e in ejemplos])) == 1:
+            return Arbol(ejemplos[0][objetivo], TipoHijo.UNICO)
 
-        if len(ejemplos) == 1 or all([primerValor == e[objetivo] for e in ejemplos]):
-            return Arbol(primerValor)
+        if len(atributos) == 0 or (maxDepth is not None and maxDepth <= 0):
+            return Arbol(self.obtenerValorMasComun(ejemplos), TipoHijo.MAYORIA)
 
-        if len(atributos) == 0 or maxDepth <= 0:
-            return Arbol(self.obtenerValorMasComun(ejemplos))
-
-        mejorAtributo = self.obtenerMejorClasificador(ejemplos, atributos)
+        mejorAtributo, ganancia = self.obtenerMejorClasificador(ejemplos, atributos)
 
         nuevosAtributos = list(atributos)
         nuevosAtributos.remove(mejorAtributo)
 
         a = Arbol(mejorAtributo)
+        a.ganancia = ganancia
+        sumaGanancias = sum([g[1] for g in self.obtenerGanancias(ejemplos, atributos)])
+        a.gananciaRelativa =  ganancia /  sumaGanancias if sumaGanancias != 0 else 0
 
         for v in self.valoresPosibles(mejorAtributo, ejemplos):
             ejemplos_aux = [e for e in ejemplos if e[mejorAtributo]==v]
-            rama = self.ejecutar(ejemplos_aux, nuevosAtributos, maxDepth - 1)
+            rama = self.ejecutar(ejemplos_aux, nuevosAtributos, maxDepth - 1 if maxDepth is not None else None)
             a.agregarRama(v, rama)
+
+        a.agregarRamaElse(Arbol(self.obtenerValorMasComun(ejemplos), TipoHijo.ELSE))
 
         return a
 
@@ -38,9 +41,15 @@ class Id3:
 
         return set([e[atributo] for e in ejemplos])
 
+    def obtenerGanancias(self, ejemplos, atributos):
+
+        return [(a, self.obtenerGananciaInformacion(ejemplos,a)) for a in atributos]
+
     def obtenerMejorClasificador(self,ejemplos, atributos):
 
-        return max(atributos, key=lambda a:self.obtenerGananciaInformacion(ejemplos,a))
+        ganancias =  self.obtenerGanancias(ejemplos,atributos)
+
+        return max(ganancias, key=lambda g: g[1])
 
     def obtenerEntropia(self, ejemplos, atributo):
 
