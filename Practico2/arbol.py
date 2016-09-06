@@ -4,7 +4,8 @@ class TipoHijo:
     '''
     UNICO = 0
     MAYORIA = 1,
-    ELSE = 2
+    ELSE = 2,
+    PODA = 3
 
 class Arbol:
     '''
@@ -49,11 +50,16 @@ class Arbol:
     def cantidadHojas(self):
         return sum([h.cantidadHojas() for h in self.hijos.values()]) if len(self.hijos) > 0 else 1
 
+    def cantidadHojasAprendidas(self):
+        valor = 1 if self.tipoHijo == TipoHijo.UNICO or self.tipoHijo == TipoHijo.MAYORIA else 0
+        return sum([h.cantidadHojasAprendidas() for h in self.hijos.values()]) if len(self.hijos) > 0 else valor
+
 
     def imprimirEstadisticas(self):
         print("Altura maxima: " + str(self.alturaMaxima()))
         print("Altura minima: " + str(self.alturaMinima()))
         print("Cantidad de hojas: " + str(self.cantidadHojas()))
+        print("Cantidad de hojas aprendidas: " + str(self.cantidadHojasAprendidas()))
 
 
     def validarLista(self, datos, valorObjetivo):
@@ -77,8 +83,23 @@ class Arbol:
 
             return hijo.validar(caso, valorObjetivo)
 
+    def esHoja(self):
+        return len(self.hijos) == 0
 
+    def podar(self):
 
+        if self.esHoja():
+            return
+
+        for h in self.hijos.values():
+            h.podar()
+
+        valorPrimerHijo = self.hijos.values()[0].valor
+
+        if all([h.esHoja() and h.valor == valorPrimerHijo for h in self.hijos.values()]):
+            self.hijos = {}
+            self.valor = valorPrimerHijo
+            self.tipoHijo = TipoHijo.PODA
 
 
 

@@ -22,10 +22,15 @@ builder.registrarAtributos(["school","sex","age","address",
 
 # Al atributo objetivo G3 se le cambia la lista de valores posibles para simplificar el
 # algoritmo.
-builder.registrarAtributo("G3", lambda x: int(x)/5)
-
-# Se reduce los valores posibles del atributo "absences" por "Pocas" o "Muchas"
-builder.registrarAtributo("absences", lambda x: ('Pocas' if int(x) < 20 else 'Muchas'))
+builder.registrarAtributoParticionado("G3",3,1,20)
+builder.registrarAtributoParticionado("G2",3,1,20)
+builder.registrarAtributoParticionado("G1",3,1,20)
+builder.registrarAtributoParticionado("famrel")
+builder.registrarAtributoParticionado("freetime")
+builder.registrarAtributoParticionado("goout")
+builder.registrarAtributoParticionado("Dalc")
+builder.registrarAtributoParticionado("Walc")
+builder.registrarAtributoParticionado("health")
 
 # Utilizamos el builder para obtener todos los objetos estudiante
 # (con los atributos deseados) a partir del archivo .csv
@@ -36,10 +41,8 @@ print(str(len(estudiantes)) + " estudiantes cargados")
 # Se genera la lista de atributos a considerar en el entrenamiento, partiendo de todos
 # los atributos definidos en el builder, y eliminando los que no queremos usar
 atributos = builder.atributos.keys()
-atributos.remove("age")
 atributos.remove("G3")
 atributos.remove("G2")
-atributos.remove("Walc")
 atributos.remove("G1")
 
 # Se genera una instancia del algoritmo pasandole el atributo objetivo
@@ -50,7 +53,12 @@ id3 = Id3("G3",valoresPosibles)
 arbol = id3.ejecutar(estudiantes, atributos)
 arbol.imprimirEstadisticas()
 print("Relacion hojas/ejemplos: " + str(float(arbol.cantidadHojas())/len(estudiantes)))
-
+print("Relacion hojas aprendidas/ejemplos: " + str(float(arbol.cantidadHojasAprendidas())/len(estudiantes)))
+arbol.podar()
+print("Podado del arbol")
+arbol.imprimirEstadisticas()
+print("Relacion hojas/ejemplos: " + str(float(arbol.cantidadHojas())/len(estudiantes)))
+print("Relacion hojas aprendidas/ejemplos: " + str(float(arbol.cantidadHojasAprendidas())/len(estudiantes)))
 Dibujante.dibujar(arbol)
 
 # ------------------
@@ -95,4 +103,3 @@ print "Evaluacion final..."
 arbol = id3.ejecutar(estudiantesEntrenamiento, atributos)
 aciertos = arbol.validarLista(estudiantesTest, "G3")
 print "Error: " + str(1 - aciertos)
-

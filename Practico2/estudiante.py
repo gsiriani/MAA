@@ -1,4 +1,5 @@
 import csv
+import math
 
 class EstudianteBuilder:
     '''
@@ -14,6 +15,34 @@ class EstudianteBuilder:
         valor en el .csv, le otorga un valor adecuado a nuestro modelo
         '''
         self.atributos[nombre] = Atributo(conversor)
+
+    def registrarAtributoParticionado(self, nombre, particiones = 3,min = 1, max = 5):
+        '''
+        Agrega un nuevo atributo a considerar junto con la funcion que a partir del
+        valor en el .csv, le otorga un valor adecuado a nuestro modelo
+        '''
+        tamano = float(max - min)/particiones
+        self.atributos[nombre] = Atributo(lambda x: int(math.floor((float(x) - min) / tamano)))
+
+    def registrarAtributoParticionadoPorLista(self, nombre, puntos):
+        '''
+        Agrega un nuevo atributo a considerar junto con la funcion que a partir del
+        valor en el .csv, le otorga un valor adecuado a nuestro modelo
+        '''
+
+        puntosOrdenados = list(puntos)
+        puntosOrdenados.sort()
+
+        def obtenerParticion(x):
+            for i in range(len(puntosOrdenados)):
+                if x <= puntosOrdenados[i]:
+                    return i
+
+            return len(puntosOrdenados)
+
+
+        self.atributos[nombre] = Atributo(obtenerParticion)
+
 
     def registrarAtributos(self, lista):
         '''

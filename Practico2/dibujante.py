@@ -29,6 +29,6 @@ class Dibujante:
 
         for l, h in arbol.hijos.iteritems():
             Dibujante.subDibujar(h, dot)
-            dot.edge(str(id(arbol)), str(id(h)), label=l)
+            dot.edge(str(id(arbol)), str(id(h)), label=str(l))
 
 
