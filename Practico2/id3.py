@@ -4,8 +4,9 @@ from math import log
 
 class Id3:
 
-    def __init__(self, atributoObjetivo):
+    def __init__(self, atributoObjetivo, valoresPosibles):
         self.atributoObjetivo = atributoObjetivo
+        self.valoresPosibles = valoresPosibles
 
     def ejecutar(self, ejemplos, atributos, maxDepth = None):
 
@@ -27,19 +28,19 @@ class Id3:
         sumaGanancias = sum([g[1] for g in self.obtenerGanancias(ejemplos, atributos)])
         a.gananciaRelativa =  ganancia /  sumaGanancias if sumaGanancias != 0 else 0
 
-        for v in self.valoresPosibles(mejorAtributo, ejemplos):
+        for v in self.valoresPosibles[mejorAtributo]:
             ejemplos_aux = [e for e in ejemplos if e[mejorAtributo]==v]
-            rama = self.ejecutar(ejemplos_aux, nuevosAtributos, maxDepth - 1 if maxDepth is not None else None)
-            a.agregarRama(v, rama)
 
-        a.agregarRamaElse(Arbol(self.obtenerValorMasComun(ejemplos), TipoHijo.ELSE))
+            if len(ejemplos_aux) != 0:
+
+                rama = self.ejecutar(ejemplos_aux, nuevosAtributos, maxDepth - 1 if maxDepth is not None else None)
+                a.agregarRama(v, rama)
+
+            else:
+
+                a.agregarRama(v, Arbol(self.obtenerValorMasComun(ejemplos), TipoHijo.ELSE))
 
         return a
-
-
-    def valoresPosibles(self, atributo, ejemplos):
-
-        return set([e[atributo] for e in ejemplos])
 
     def obtenerGanancias(self, ejemplos, atributos):
 
@@ -47,7 +48,7 @@ class Id3:
 
     def obtenerMejorClasificador(self,ejemplos, atributos):
 
-        ganancias =  self.obtenerGanancias(ejemplos,atributos)
+        ganancias = self.obtenerGanancias(ejemplos,atributos)
 
         return max(ganancias, key=lambda g: g[1])
 
@@ -55,8 +56,9 @@ class Id3:
 
         entropia = 0
 
-        for v in self.valoresPosibles(atributo, ejemplos):
+        for v in  set([e[atributo] for e in ejemplos]):
             proporcion = float(len([e for e in ejemplos if e[atributo] == v])) / len(ejemplos)
+
             entropia -= proporcion * log(proporcion)
 
         return entropia
@@ -65,7 +67,7 @@ class Id3:
 
         termino = 0
 
-        for v in self.valoresPosibles(atributo, ejemplos):
+        for v in set([e[atributo] for e in ejemplos]):
             ejemplosSelecionados = [e for e in ejemplos if e[atributo] == v]
             termino += (float(len(ejemplosSelecionados))/len(ejemplos)) * \
                        self.obtenerEntropia(ejemplosSelecionados, atributo)

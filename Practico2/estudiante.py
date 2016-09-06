@@ -27,6 +27,20 @@ class EstudianteBuilder:
 
         return estudiantes
 
+    def obtenerValoresPosibles(self, lineas):
+
+        valores = {}
+
+        for linea in lineas:
+            for k, v in linea.iteritems():
+
+                if not k in valores:
+                    valores[k] = set()
+
+                valores[k].add(v)
+
+        return valores
+
     def convertirEstudiante(self, lineaEstudiante):
 
         estudiante = {}

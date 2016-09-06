@@ -1,6 +1,7 @@
 from estudiante import Atributo,EstudianteBuilder
 from arbol import *
 from id3 import Id3
+from dibujante import Dibujante
 from random import shuffle
 # from dibujante import Dibujante # Utilizado para dibujar el arbol. Requiere bibliotecas extra
 
@@ -17,6 +18,7 @@ builder.registrarAtributos(["school","sex","age","address",
 builder.registrarAtributo("G3", lambda x: int(x)/5)
 builder.registrarAtributo("absences", lambda x: ('Nerd' if int(x) < 20 else 'Falton'))
 estudiantes = builder.obtenerEstudiantes("DataSets/student-por.csv")
+valoresPosibles = builder.obtenerValoresPosibles(estudiantes)
 print(str(len(estudiantes)) + " estudiantes cargados")
 
 atributos = builder.atributos.keys()
@@ -26,11 +28,12 @@ atributos.remove("G2")
 atributos.remove("Walc")
 atributos.remove("G1")
 
-id3 = Id3("G3")
+id3 = Id3("G3",valoresPosibles)
 arbol = id3.ejecutar(estudiantes, atributos)
 arbol.imprimirEstadisticas()
 print("Relacion hojas/ejemplos: " + str(float(arbol.cantidadHojas())/len(estudiantes)))
-# Dibujante.dibujar(arbol)
+
+Dibujante.dibujar(arbol)
 
 # ------------------
 # VALIDACION CRUZADA

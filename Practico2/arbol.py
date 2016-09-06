@@ -5,8 +5,6 @@ class TipoHijo:
 
 class Arbol:
 
-    VALOR_ELSE = "*ELSE*"
-
     def __init__(self, valor, tipoHijo = None):
         self.valor = valor
         self.hijos = {}
@@ -16,9 +14,6 @@ class Arbol:
 
     def agregarRama(self, etiqueta, arbol):
         self.hijos[etiqueta] = arbol
-
-    def agregarRamaElse(self, arbol):
-        self.hijos[Arbol.VALOR_ELSE] = arbol
 
     def alturaMaxima(self):
         return 1 + (max([h.alturaMaxima() for h in self.hijos.values()]) if len(self.hijos) > 0 else 0)
@@ -47,11 +42,13 @@ class Arbol:
         else:
             valor = caso[self.valor]
 
-            if valor not in self.hijos:
-                return self.hijos[Arbol.VALOR_ELSE].validar(caso, valorObjetivo)
-
             hijo = self.hijos[valor]
 
             return hijo.validar(caso, valorObjetivo)
+
+
+
+        
+
 
 
