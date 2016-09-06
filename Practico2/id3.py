@@ -92,7 +92,7 @@ class Id3:
         for v in  set([e[atributo] for e in ejemplos]):
             proporcion = float(len([e for e in ejemplos if e[atributo] == v])) / len(ejemplos)
 
-            entropia -= proporcion * log(proporcion)
+            entropia -= proporcion * log(proporcion, 2)
 
         return entropia
 

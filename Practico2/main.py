@@ -1,7 +1,6 @@
 from estudiante import Atributo,EstudianteBuilder
 from arbol import *
 from id3 import Id3
-from dibujante import Dibujante
 from random import shuffle
 # from dibujante import Dibujante # Utilizado para dibujar el arbol. Requiere bibliotecas extra
 
@@ -44,6 +43,7 @@ atributos = builder.atributos.keys()
 atributos.remove("G3")
 atributos.remove("G2")
 atributos.remove("G1")
+atributos.remove("age")
 
 # Se genera una instancia del algoritmo pasandole el atributo objetivo
 id3 = Id3("G3",valoresPosibles)
@@ -59,7 +59,7 @@ print("Podado del arbol")
 arbol.imprimirEstadisticas()
 print("Relacion hojas/ejemplos: " + str(float(arbol.cantidadHojas())/len(estudiantes)))
 print("Relacion hojas aprendidas/ejemplos: " + str(float(arbol.cantidadHojasAprendidas())/len(estudiantes)))
-Dibujante.dibujar(arbol)
+# Dibujante.dibujar(arbol)
 
 # ------------------
 # VALIDACION CRUZADA
@@ -103,3 +103,53 @@ print "Evaluacion final..."
 arbol = id3.ejecutar(estudiantesEntrenamiento, atributos)
 aciertos = arbol.validarLista(estudiantesTest, "G3")
 print "Error: " + str(1 - aciertos)
+
+
+
+# Se realizaran multiples pruebas para obtener una estimacion de la efectividad del algoritmo
+# para cualquier eleccion de casos de entrenamiento / prueba
+CANTIDAD_PRUEBAS = 25
+
+cantEstTest = len(estudiantes)/5
+CANT_BLOQUES = 10
+largoBloque = len(estudiantesEntrenamiento)/10
+
+validacionCruzada = 0
+validacionFinal = 0
+validacionPodas = {}
+MAX_RAMAS = 10
+for i in range(1, MAX_RAMAS):
+    validacionPodas[i] = 0
+
+for prueba in range(CANTIDAD_PRUEBAS):
+
+    shuffle(estudiantes)
+    estudiantesTest = estudiantes[:cantEstTest]
+    estudiantesEntrenamiento = estudiantes[cantEstTest + 1:]
+
+    resultados = []
+
+    for i in range(CANT_BLOQUES):
+        pos = i*largoBloque
+        estTest = estudiantesEntrenamiento[pos:pos+largoBloque]
+        estEntr = estudiantesEntrenamiento[:pos] + estudiantesEntrenamiento[pos+largoBloque:]
+        arbol = id3.ejecutar(estEntr,atributos)
+        resultados.append(arbol.validarLista(estTest, "G3"))
+
+    validacionCruzada += sum([r/CANT_BLOQUES for r in resultados])
+
+
+    # Entreno el arbol con estudiantesEntrenamiento y lo valido con estudiantesTest
+    arbol = id3.ejecutar(estudiantesEntrenamiento, atributos)
+    validacionFinal += arbol.validarLista(estudiantesTest, "G3")
+
+    for i in range(1, MAX_RAMAS):
+        arbol = id3.ejecutar(estudiantesEntrenamiento, atributos, maxDepth = i)
+        validacionPodas[i] += arbol.validarLista(estudiantesTest, "G3")
+
+
+print 'Porcentaje de aciertos aciertos:'
+print 'Validacion Cruzada: ' + str(100*validacionCruzada/CANTIDAD_PRUEBAS)
+print 'Evaluacion sin poda: ' + str(100*validacionFinal/CANTIDAD_PRUEBAS)
+for i in range(1,MAX_RAMAS):
+    print 'Evaluacion profundidad ' + str(i) + ': ' + str(100*validacionPodas[i]/CANTIDAD_PRUEBAS)
