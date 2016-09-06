@@ -21,15 +21,14 @@ builder.registrarAtributos(["school","sex","age","address",
 
 # Al atributo objetivo G3 se le cambia la lista de valores posibles para simplificar el
 # algoritmo.
-builder.registrarAtributoParticionado("G3",3,1,20)
-builder.registrarAtributoParticionado("G2",3,1,20)
-builder.registrarAtributoParticionado("G1",3,1,20)
+builder.registrarAtributoParticionado("G3",4,1,20)
 builder.registrarAtributoParticionado("famrel")
 builder.registrarAtributoParticionado("freetime")
 builder.registrarAtributoParticionado("goout")
 builder.registrarAtributoParticionado("Dalc")
 builder.registrarAtributoParticionado("Walc")
 builder.registrarAtributoParticionado("health")
+builder.registrarAtributoParticionado("absences",4,0,40)
 
 # Utilizamos el builder para obtener todos los objetos estudiante
 # (con los atributos deseados) a partir del archivo .csv
