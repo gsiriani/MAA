@@ -5,8 +5,12 @@ from dibujante import Dibujante
 from random import shuffle
 # from dibujante import Dibujante # Utilizado para dibujar el arbol. Requiere bibliotecas extra
 
+# Generamos un nuevo constructor que, a partir de una linea de archivo .csv, construye
+# un objeto de tipo Estudiante con los atributos deseados.
+# Esto nos permite decidir que atributos utilizar y cuales son los posibles valores de cada uno.
 builder = EstudianteBuilder()
 
+# En principio registramos todos los atributos disponibles con sus valores por defecto.
 builder.registrarAtributos(["school","sex","age","address",
                             "famsize","Pstatus","Medu","Fedu",
                             "Mjob","Fjob","reason","guardian",
@@ -15,12 +19,22 @@ builder.registrarAtributos(["school","sex","age","address",
                             "nursery","higher","internet","romantic","famrel",
                             "freetime","goout","Dalc","Walc","health","absences",
                             "G1","G2"])
+
+# Al atributo objetivo G3 se le cambia la lista de valores posibles para simplificar el
+# algoritmo.
 builder.registrarAtributo("G3", lambda x: int(x)/5)
-builder.registrarAtributo("absences", lambda x: ('Nerd' if int(x) < 20 else 'Falton'))
+
+# Se reduce los valores posibles del atributo "absences" por "Pocas" o "Muchas"
+builder.registrarAtributo("absences", lambda x: ('Pocas' if int(x) < 20 else 'Muchas'))
+
+# Utilizamos el builder para obtener todos los objetos estudiante
+# (con los atributos deseados) a partir del archivo .csv
 estudiantes = builder.obtenerEstudiantes("DataSets/student-por.csv")
 valoresPosibles = builder.obtenerValoresPosibles(estudiantes)
 print(str(len(estudiantes)) + " estudiantes cargados")
 
+# Se genera la lista de atributos a considerar en el entrenamiento, partiendo de todos
+# los atributos definidos en el builder, y eliminando los que no queremos usar
 atributos = builder.atributos.keys()
 atributos.remove("age")
 atributos.remove("G3")
@@ -28,7 +42,11 @@ atributos.remove("G2")
 atributos.remove("Walc")
 atributos.remove("G1")
 
+# Se genera una instancia del algoritmo pasandole el atributo objetivo
 id3 = Id3("G3",valoresPosibles)
+
+# Ejecutamos una vez el algoritmo entrenando con todos los estudiantes para obtener
+# unas estadisticas iniciales del arbol resultante
 arbol = id3.ejecutar(estudiantes, atributos)
 arbol.imprimirEstadisticas()
 print("Relacion hojas/ejemplos: " + str(float(arbol.cantidadHojas())/len(estudiantes)))
@@ -49,7 +67,7 @@ shuffle(estudiantes)
 estudiantesTest = estudiantes[:cantEstTest]
 estudiantesEntrenamiento = estudiantes[cantEstTest + 1:]
 
-
+# Realizo validacion cruzada sobre estudiantesEntrenamiento
 CANT_BLOQUES = 10
 
 largoBloque = len(estudiantesEntrenamiento)/10
@@ -73,6 +91,7 @@ print ("Error medio: " + str(1 - aciertos))
 
 print "Evaluacion final..."
 
+# Entreno el arbol con estudiantesEntrenamiento y lo valido con estudiantesTest
 arbol = id3.ejecutar(estudiantesEntrenamiento, atributos)
 aciertos = arbol.validarLista(estudiantesTest, "G3")
 print "Error: " + str(1 - aciertos)
