@@ -77,7 +77,7 @@ validacionCruzada = 0
 validacionFinal = 0
 validacionAjuste = {}
 MAX_AJUSTE = 5
-for i in range(1, MAX_AJUSTE):
+for i in range(0, MAX_AJUSTE):
     validacionAjuste[i] = 0
 
 for prueba in range(CANTIDAD_PRUEBAS):
@@ -117,7 +117,7 @@ for prueba in range(CANTIDAD_PRUEBAS):
     (p, pc) = bayes.ejecutar(ejemplos= estudiantesEntrenamiento)
     validacionFinal += bayes.validarLista(estudiantesTest, p, pc)
 
-    for i in range(1, MAX_AJUSTE):
+    for i in range(0, MAX_AJUSTE):
         # arbol = id3.ejecutar(estudiantesEntrenamiento, atributos, maxDepth = i)
         # validacionAjuste[i] += arbol.validarLista(estudiantesTest, "G3")
         (p, pc) = bayes.ejecutar(ejemplos= estudiantesEntrenamiento, ajuste= i)
@@ -128,5 +128,5 @@ print 'Porcentaje de aciertos:'
 print 'Valor mas probable: ' + str(100*validacionMasProbable/CANTIDAD_PRUEBAS)
 print 'Validacion Cruzada: ' + str(100*validacionCruzada/CANTIDAD_PRUEBAS)
 print 'Evaluacion por defecto: ' + str(100*validacionFinal/CANTIDAD_PRUEBAS)
-for i in range(1,MAX_AJUSTE):
-    print 'Evaluacion profundidad ' + str(i) + ': ' + str(100*validacionAjuste[i]/CANTIDAD_PRUEBAS)
+for i in range(0,MAX_AJUSTE):
+    print 'Evaluacion con valor de ajuste ' + str(i) + ': ' + str(100*validacionAjuste[i]/CANTIDAD_PRUEBAS)

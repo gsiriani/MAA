@@ -15,7 +15,7 @@ class Bayes:
 		self.atributos = atributos
 		self.valoresPosibles = valoresPosibles
 
-	def ejecutar(self, ejemplos, ajuste = 1):
+	def ejecutar(self, ejemplos, ajuste = 0):
 		'''
         Se ejecuta el algoritmo sobre la lista de datos "ejemplos", considerando los
         atributos "atributos".
@@ -54,13 +54,17 @@ class Bayes:
 				for p in self.valoresPosibles[self.atributoObjetivo]:
 					cantCond = len([e for e in ejemplos if e[nomAtributo] == v and e[self.atributoObjetivo] == p])
 					cantidades[v]['condicionada'][p] = cantCond
-					if cantCond == 0:
-						ajustarCantidadCondicionada = True
-				# Si es necesario, agrego ejemplos condicionados al atributo objetivo
-				if ajustarCantidadCondicionada:
-					for p in self.valoresPosibles[self.atributoObjetivo]:
-						cantidades[v]['condicionada'][p] += ajuste
-					cantidades[v]['totalCondicionada'] += ajuste*len(self.valoresPosibles[self.atributoObjetivo])
+
+				# DESCOMENTAR EL SIGUIENTE BLOQUE SI SE DESEA REALIZAR AJUSTE EN LAS CONDICIONADAS
+				#---------------------------------------------------------------------------------
+				# 	if cantCond == 0:
+				# 		ajustarCantidadCondicionada = True
+				# # Si es necesario, agrego ejemplos condicionados al atributo objetivo
+				# if ajustarCantidadCondicionada:
+				# 	for p in self.valoresPosibles[self.atributoObjetivo]:
+				# 		cantidades[v]['condicionada'][p] += ajuste
+				# 	cantidades[v]['totalCondicionada'] += ajuste*len(self.valoresPosibles[self.atributoObjetivo])
+				# ----------------------------------------------------------------------------------
 
 			cantidadEjemplosAtributo = cantidadEjemplos
 			# Si es necesario, agrego ejemplos
@@ -74,7 +78,10 @@ class Bayes:
 				probabilidades[nomAtributo][v] = float(cantidades[v]["total"])/cantidadEjemplosAtributo
 				probabilidadesCondicionadas[nomAtributo][v] = {}
 				for p in self.valoresPosibles[self.atributoObjetivo]:
-					probabilidadesCondicionadas[nomAtributo][v][p] = float(cantidades[v]['condicionada'][p]) / cantidades[v]['totalCondicionada']
+					if cantidades[v]['totalCondicionada'] == 0:
+						probabilidadesCondicionadas[nomAtributo][v][p] = 0
+					else:
+						probabilidadesCondicionadas[nomAtributo][v][p] = float(cantidades[v]['condicionada'][p]) / cantidades[v]['totalCondicionada']
 
 		return (probabilidades, probabilidadesCondicionadas)
 
