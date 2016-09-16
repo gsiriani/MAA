@@ -1,0 +1,2 @@
+# Ejecutar gui.py pasando como argumento un json con la configuración de los jugadores maquina
+python gui.py contrincantes-estatica-azar.json

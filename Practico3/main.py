@@ -1,49 +1,14 @@
 from estudiante import Atributo,EstudianteBuilder
-# from arbol import *
-# from id3 import Id3
+
 from bayes import Bayes
 from random import shuffle
-# from dibujante import Dibujante # Utilizado para dibujar el arbol. Requiere bibliotecas extra
+from setup import Setup
 
-# Generamos un nuevo constructor que, a partir de una linea de archivo .csv, construye
-# un objeto de tipo Estudiante con los atributos deseados.
-# Esto nos permite decidir que atributos utilizar y cuales son los posibles valores de cada uno.
-builder = EstudianteBuilder()
+Setup.setup()
 
-# En principio registramos todos los atributos disponibles con sus valores por defecto.
-builder.registrarAtributos(["school","sex","age","address",
-                            "famsize","Pstatus","Medu","Fedu",
-                            "Mjob","Fjob","reason","guardian",
-                            "traveltime","studytime","failures",
-                            "schoolsup","famsup","paid","activities",
-                            "nursery","higher","internet","romantic","famrel",
-                            "freetime","goout","Dalc","Walc","health","absences",
-                            "G1","G2"])
-
-# Al atributo objetivo G3 se le cambia la lista de valores posibles para simplificar el
-# algoritmo.
-builder.registrarAtributoParticionado("G3",4,1,20)
-builder.registrarAtributoParticionado("famrel")
-builder.registrarAtributoParticionado("freetime")
-builder.registrarAtributoParticionado("goout")
-builder.registrarAtributoParticionado("Dalc")
-builder.registrarAtributoParticionado("Walc")
-builder.registrarAtributoParticionado("health")
-builder.registrarAtributoParticionado("absences",4,0,40)
-
-# Utilizamos el builder para obtener todos los objetos estudiante
-# (con los atributos deseados) a partir del archivo .csv
-estudiantes = builder.obtenerEstudiantes("DataSets/student-por.csv")
-valoresPosibles = builder.obtenerValoresPosibles(estudiantes)
-print(str(len(estudiantes)) + " estudiantes cargados")
-
-# Se genera la lista de atributos a considerar en el entrenamiento, partiendo de todos
-# los atributos definidos en el builder, y eliminando los que no queremos usar
-atributos = builder.atributos.keys()
-#atributos.remove("G3")
-atributos.remove("G2")
-atributos.remove("G1")
-atributos.remove("age")
+atributos = Setup.atributos
+estudiantes = Setup.estudiantes
+valoresPosibles = Setup.valoresPosibles
 
 # Se genera una instancia del algoritmo pasandole el atributo objetivo
 # id3 = Id3("G3",valoresPosibles)
