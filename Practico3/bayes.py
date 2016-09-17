@@ -15,7 +15,7 @@ class Bayes:
 		self.atributos = atributos
 		self.valoresPosibles = valoresPosibles
 
-	def ejecutar(self, ejemplos, ajuste = 0):
+	def entrenar(self, ejemplos, ajuste = 0):
 		'''
         Se ejecuta el algoritmo sobre la lista de datos "ejemplos", considerando los
         atributos "atributos".
@@ -34,54 +34,58 @@ class Bayes:
 
 		atributos = self.atributos
 
-		for nomAtributo in atributos:
-			valPosibles = self.valoresPosibles[nomAtributo]
-			probabilidades[nomAtributo] = {}
-			probabilidadesCondicionadas[nomAtributo] = {}
+		valPosibles = self.valoresPosibles[self.atributoObjetivo]
+		probabilidades = {}
+		probabilidadesCondicionadas = {}
 
-			ajustarCantidad = False
+		ajustarCantidad = False
 
-        	# Obtengo cantidad de apariciones de cada valor
-			cantidades = {}
-			for v in valPosibles:
-				cantidadTotal = len([e for e in ejemplos if e[nomAtributo] == v])
-				cantidades[v] = {'total': cantidadTotal, 'totalCondicionada': cantidadTotal, 'condicionada': {}}
-				if cantidadTotal == 0:
-					ajustarCantidad = True
+    	# Obtengo cantidad de apariciones de cada valor
+		cantidades = {}
+		for v in valPosibles:
+			cantidadTotal = len([e for e in ejemplos if e[self.atributoObjetivo] == v])
+			cantidades[v] = {'total': cantidadTotal, 'totalCondicionada': {}, 'condicionada': {}}
+			if cantidadTotal == 0: # No tengo ningun ejemplo que corresponda a algun valor posible del atr. objetivo
+				ajustarCantidad = True
 
-				# Obtengo cantidad condicionada
-				ajustarCantidadCondicionada = False
-				for p in self.valoresPosibles[self.atributoObjetivo]:
-					cantCond = len([e for e in ejemplos if e[nomAtributo] == v and e[self.atributoObjetivo] == p])
-					cantidades[v]['condicionada'][p] = cantCond
+			# Obtengo cantidad condicionada
+			ajustarCantidadCondicionada = False
+			for nomAtributo in self.atributos:
+				cantidades[v]['totalCondicionada'][nomAtributo] = cantidadTotal
+				cantidades[v]['condicionada'][nomAtributo] = {}
+				for p in self.valoresPosibles[nomAtributo]:
+					cantCond = len([e for e in ejemplos if e[nomAtributo] == p and e[self.atributoObjetivo] == v])
+					cantidades[v]['condicionada'][nomAtributo][p] = cantCond
 
 				# DESCOMENTAR EL SIGUIENTE BLOQUE SI SE DESEA REALIZAR AJUSTE EN LAS CONDICIONADAS
 				#---------------------------------------------------------------------------------
-				# 	if cantCond == 0:
-				# 		ajustarCantidadCondicionada = True
-				# # Si es necesario, agrego ejemplos condicionados al atributo objetivo
-				# if ajustarCantidadCondicionada:
-				# 	for p in self.valoresPosibles[self.atributoObjetivo]:
-				# 		cantidades[v]['condicionada'][p] += ajuste
-				# 	cantidades[v]['totalCondicionada'] += ajuste*len(self.valoresPosibles[self.atributoObjetivo])
+					if cantCond == 0:
+						ajustarCantidadCondicionada = True
+				# Si es necesario, agrego ejemplos condicionados al atributo objetivo
+				if ajustarCantidadCondicionada:
+					for p in self.valoresPosibles[nomAtributo]:
+						cantidades[v]['condicionada'][nomAtributo][p] += ajuste
+					cantidades[v]['totalCondicionada'][nomAtributo] += ajuste*len(self.valoresPosibles[nomAtributo])
 				# ----------------------------------------------------------------------------------
 
-			cantidadEjemplosAtributo = cantidadEjemplos
-			# Si es necesario, agrego ejemplos
-			if ajustarCantidad:
-				for v in valPosibles:
-					cantidades[v]["total"] += ajuste
-				cantidadEjemplosAtributo = cantidadEjemplos + ajuste*len(valPosibles)
-
-			# Calculo probabilidades del atributo
+		cantidadEjemplosAtributo = cantidadEjemplos
+		# Si es necesario, agrego ejemplos
+		if ajustarCantidad:
 			for v in valPosibles:
-				probabilidades[nomAtributo][v] = float(cantidades[v]["total"])/cantidadEjemplosAtributo
-				probabilidadesCondicionadas[nomAtributo][v] = {}
-				for p in self.valoresPosibles[self.atributoObjetivo]:
-					if cantidades[v]['totalCondicionada'] == 0:
-						probabilidadesCondicionadas[nomAtributo][v][p] = 0
+				cantidades[v]["total"] += ajuste
+			cantidadEjemplosAtributo = cantidadEjemplos + ajuste*len(valPosibles)
+
+		# Calculo probabilidades del atributo
+		for v in valPosibles:
+			probabilidades[v] = float(cantidades[v]["total"])/cantidadEjemplosAtributo
+			probabilidadesCondicionadas[v] = {}
+			for nomAtributo in self.atributos:
+				probabilidadesCondicionadas[v][nomAtributo] = {}
+				for p in self.valoresPosibles[nomAtributo]:
+					if cantidades[v]['totalCondicionada'][nomAtributo] == 0:
+						probabilidadesCondicionadas[v][nomAtributo][p] = 0
 					else:
-						probabilidadesCondicionadas[nomAtributo][v][p] = float(cantidades[v]['condicionada'][p]) / cantidades[v]['totalCondicionada']
+						probabilidadesCondicionadas[v][nomAtributo][p] = float(cantidades[v]['condicionada'][nomAtributo][p]) / cantidades[v]['totalCondicionada'][nomAtributo]
 
 		return (probabilidades, probabilidadesCondicionadas)
 
@@ -105,21 +109,21 @@ class Bayes:
 		'''
 
 		p = {} # Diccionario de probabilidades para el ejemplo
-		for valor in self.valoresPosibles["G3"]:
-			p[valor] = self.calcularProbabilidad(ejemplo, probabilidades, probabilidadesCondicionadas, valor)
+		for valor in self.valoresPosibles[self.atributoObjetivo]:
+			p[valor] = self.calcularProbabilidad(ejemplo, probabilidades[valor], probabilidadesCondicionadas[valor])
 
 		return max(p.iteritems(), key=lambda (k, v): v)[0]
 
 
-	def calcularProbabilidad(self, ejemplo, probabilidades, probabilidadesCondicionadas, valor):
+	def calcularProbabilidad(self, ejemplo, probabilidad, probabilidadesCondicionadas):
 		'''
 		Calcula la probabilidad de que un ejemplo tenga determinado 'valor' en el atributo objetivo
 		basandose en las probabilidades previamente calculadas
 		'''
-		probabilidad = probabilidades[self.atributoObjetivo][valor]
+		probCalc = probabilidad
 
 		for (k, v) in ejemplo.iteritems():
 			if k in self.atributos:
-				probabilidad = probabilidad*probabilidades[k][v]*probabilidadesCondicionadas[k][v][valor]
+				probCalc = probCalc*probabilidadesCondicionadas[k][v]
 
-		return probabilidad
+		return probCalc

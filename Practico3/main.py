@@ -11,7 +11,6 @@ estudiantes = Setup.estudiantes
 valoresPosibles = Setup.valoresPosibles
 
 # Se genera una instancia del algoritmo pasandole el atributo objetivo
-# id3 = Id3("G3",valoresPosibles)
 bayes = Bayes("G3", atributos, valoresPosibles)
 
 
@@ -68,24 +67,18 @@ for prueba in range(CANTIDAD_PRUEBAS):
         pos = i*largoBloque
         estTest = estudiantesEntrenamiento[pos:pos+largoBloque]
         estEntr = estudiantesEntrenamiento[:pos] + estudiantesEntrenamiento[pos+largoBloque:]
-        # arbol = id3.ejecutar(estEntr,atributos)
-        # resultados.append(arbol.validarLista(estTest, "G3"))
-        (p, pc) = bayes.ejecutar(ejemplos= estEntr)
+        (p, pc) = bayes.entrenar(ejemplos= estEntr)
         resultados.append(bayes.validarLista(estTest, p, pc))
 
     validacionCruzada += sum([r/CANT_BLOQUES for r in resultados])
 
 
-    # Entreno el arbol con estudiantesEntrenamiento y lo valido con estudiantesTest
-    # arbol = id3.ejecutar(estudiantesEntrenamiento, atributos)
-    # validacionFinal += arbol.validarLista(estudiantesTest, "G3")
-    (p, pc) = bayes.ejecutar(ejemplos= estudiantesEntrenamiento)
+    # Entreno el algoritmo con estudiantesEntrenamiento y lo valido con estudiantesTest
+    (p, pc) = bayes.entrenar(ejemplos= estudiantesEntrenamiento)
     validacionFinal += bayes.validarLista(estudiantesTest, p, pc)
 
     for i in range(0, MAX_AJUSTE):
-        # arbol = id3.ejecutar(estudiantesEntrenamiento, atributos, maxDepth = i)
-        # validacionAjuste[i] += arbol.validarLista(estudiantesTest, "G3")
-        (p, pc) = bayes.ejecutar(ejemplos= estudiantesEntrenamiento, ajuste= i)
+        (p, pc) = bayes.entrenar(ejemplos= estudiantesEntrenamiento, ajuste= i)
         validacionAjuste[i] += bayes.validarLista(estudiantesTest, p, pc)
 
 
