@@ -54,21 +54,26 @@ for prueba in range(CANTIDAD_PRUEBAS):
     resultados1 = []
     resultados3 = []
 
+    knn = Knn(estudiantesEntrenamiento, "G3", atributos, operadores)
+    knn.entrenarPonderaciones(10, 3, 0.01, 10)
+    validacionFinal1 += knn.validar(estudiantesTest, 1)
+    validacionFinal3 += knn.validar(estudiantesTest, 3)
+
+    ponderaciones = knn.ponderaciones
+
     for i in range(CANT_BLOQUES):
         pos = i*largoBloque
         estTest = estudiantesEntrenamiento[pos:pos+largoBloque]
         estEntr = estudiantesEntrenamiento[:pos] + estudiantesEntrenamiento[pos+largoBloque:]
 
         knn = Knn(estEntr, "G3", atributos, operadores)
+        knn.ponderaciones = ponderaciones
+        print 'Ponderaciones: ' + str(ponderaciones)
         resultados1.append(knn.validar(estTest,1))
         resultados3.append(knn.validar(estTest, 3))
 
     validacionCruzada1 += sum([r/CANT_BLOQUES for r in resultados1])
     validacionCruzada3 += sum([r / CANT_BLOQUES for r in resultados3])
-
-    knn = Knn(estudiantesEntrenamiento, "G3", atributos, operadores)
-    validacionFinal1 += knn.validar(estudiantesTest,1)
-    validacionFinal3 += knn.validar(estudiantesTest, 3)
 
 print 'Porcentaje de aciertos:'
 print 'Validacion Cruzada n=1: ' + str(100*validacionCruzada1/CANTIDAD_PRUEBAS)

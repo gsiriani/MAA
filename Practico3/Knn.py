@@ -3,14 +3,12 @@
 from math import sqrt
 import random
 
-
 class Knn:
-
 
         def __init__ (self, ejemplos, atributoObjetivo, atributos, operadores):
             # agrego en ejemplos los datos para luego ser usados como punto de comparacion
             self.ejemplos = ejemplos
-            self.ponderaciones = self.ponderar(ejemplos, atributos)
+            self.ponderaciones = {a:1 for a in atributos}
             self.atributoObjetivo = atributoObjetivo
             self.atributos = list(atributos)
             self.atributos.remove('G3')
@@ -25,17 +23,12 @@ class Knn:
 
             for d in datos:
                 # calculo las distacias entre todos mis ejemplos y mi objetivo d y las guardo (junto con sus respectivos ejemplos) en la variable distancias
-                distancias = self.distancias(self.atributos,d)
+                distancias = self.distancias(self.ejemplos, self.atributos,d)
                 # seran los vecinos mas cercanos
-                neighbors = []
-
-                for i in range (k):
-                    nn = min(distancias,key=lambda v:v[1])
-                    neighbors.append(nn)
-                    distancias.remove(nn)
+                neighbors = self.obtenerVecinos(distancias, k)
 
                 #calculo un promedio basado en la distancia, dando mas importancia a los mas cercanos
-                promedio = self.calcularValorPromedio(neighbors)
+                promedio = round(self.calcularValorPromedio(neighbors))
 
                 resultado.append(1 if promedio == d[self.atributoObjetivo] else 0)
 
@@ -43,8 +36,8 @@ class Knn:
             return float(sum (resultado)) / len(datos)
 
 
-        def distancias (self, atributos, objetivo):
-            return [(e, sqrt (sum (self.obtenerDiferencias(e,atributos, objetivo)))) for e in self.ejemplos]
+        def distancias (self, ejemplos, atributos, objetivo):
+            return [(e, sqrt (sum (self.obtenerDiferencias(e,atributos, objetivo)))) for e in ejemplos]
 
         def obtenerDiferencias (self, ejemplo, atributos, objetivo):
             # mas del humo de arriba solo que multiplico por las ponderaciones para priorizar ciertos atributos sobre otros
@@ -52,17 +45,61 @@ class Knn:
 
         def calcularValorPromedio(self, neighbors):
             #calculo el valor promedio tomando en cuenta las distancias (n[1])
-            distancia = sum (n[1] for n in neighbors)
-            if distancia == 0:
-                return random.choice(neighbors)[0][self.atributoObjetivo]
+            vecinosDistanciaCero = [n for n in neighbors if n[1] == 0]
+
+            if len(vecinosDistanciaCero) > 0:
+                return random.choice(vecinosDistanciaCero)[0][self.atributoObjetivo]
             else:
-                return round(float(sum (n[1]*(n[0][self.atributoObjetivo] + 1) for n in neighbors)) / distancia - 1)
+                distanciaTotal = sum(n[1] for n in neighbors)
+                return sum([n[0][self.atributoObjetivo] * distanciaTotal/n[1] for n in neighbors])
 
-        def ponderar(self, ejemplos, atributos):
-            # TODO: cambiar esta bazofia
-            ponderaciones = {}
-            for a in atributos:
-                ponderaciones[a] = 1
-            return ponderaciones
+        def entrenarPonderaciones(self, numeroDeBloques, k, factorAprendizaje, cantidadIteraciones):
+            ''''
+                Se realiza una validacion cruzada, utilizando aprendizaje por gradiente de descenso estocastico
+                para aproximar la función de ponderaciones
+            '''
 
-        # pd. que mierda python que no te deja poner letras con tilde áadsdsadásdasd
+            ejemplos = list(self.ejemplos)
+
+            self.ponderaciones = {k:random.uniform(0,1) for k in self.ponderaciones.keys()}
+
+            for i in range(cantidadIteraciones):
+
+                random.shuffle(ejemplos)
+
+                tamanoBloque = len(ejemplos) / numeroDeBloques
+
+                for pos in range(0, len(ejemplos), tamanoBloque):
+                    conjuntoEntrenamiento = ejemplos[:pos] + ejemplos[pos+tamanoBloque:]
+                    conjuntoValidacion = ejemplos[pos: pos+tamanoBloque]
+                    self.entrenar(conjuntoEntrenamiento, conjuntoValidacion, k, factorAprendizaje)
+
+                print(str(i + 1) + " iteraciones")
+
+        def obtenerVecinos(self, distancias, k):
+
+            neighbors = []
+
+            for i in range(k):
+                nn = min(distancias, key=lambda v: v[1])
+                neighbors.append(nn)
+                distancias.remove(nn)
+
+            return neighbors
+
+        def entrenar(self, conjuntoEntrenamiento, conjuntoValidacion, k, factorAprendizaje):
+
+            for d in conjuntoValidacion:
+
+                distancias = self.distancias(conjuntoEntrenamiento, self.atributos,d)
+
+                neighbors = self.obtenerVecinos(distancias, k)
+
+                promedio = self.calcularValorPromedio(neighbors)
+
+                error = d[self.atributoObjetivo] - promedio
+
+                for key,value in self.ponderaciones.iteritems():
+                    self.ponderaciones[key] = max(0,value + factorAprendizaje * error)
+
+
