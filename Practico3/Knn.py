@@ -41,7 +41,7 @@ class Knn:
 
         def obtenerDiferencias (self, ejemplo, atributos, objetivo):
             # mas del humo de arriba solo que multiplico por las ponderaciones para priorizar ciertos atributos sobre otros
-            return [self.ponderaciones[a] * self.operadores[a](objetivo[a],ejemplo[a])**2 for a in atributos]
+            return [1 / self.ponderaciones[a] * self.operadores[a](objetivo[a],ejemplo[a])**2 for a in atributos]
 
         def calcularValorPromedio(self, neighbors):
             #calculo el valor promedio tomando en cuenta las distancias (n[1])
@@ -100,6 +100,6 @@ class Knn:
                 error = d[self.atributoObjetivo] - promedio
 
                 for key,value in self.ponderaciones.iteritems():
-                    self.ponderaciones[key] = max(0,value + factorAprendizaje * error)
+                    self.ponderaciones[key] = max(0,value + factorAprendizaje * error * d[key])
 
 

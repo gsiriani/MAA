@@ -68,7 +68,6 @@ for prueba in range(CANTIDAD_PRUEBAS):
 
         knn = Knn(estEntr, "G3", atributos, operadores)
         knn.ponderaciones = ponderaciones
-        print 'Ponderaciones: ' + str(ponderaciones)
         resultados1.append(knn.validar(estTest,1))
         resultados3.append(knn.validar(estTest, 3))
 
