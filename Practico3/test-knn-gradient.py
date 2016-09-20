@@ -59,7 +59,7 @@ for prueba in range(CANTIDAD_PRUEBAS):
     knn = Knn(estudiantesEntrenamiento, "G3", atributos, operadores, ponderaciones)
     knnSinPonderar = Knn(estudiantesEntrenamiento, "G3", atributos, operadores)
     if ponderaciones is None:
-        knn.entrenarPonderaciones(10, 3, 0.001, 30)
+        knn.entrenarPonderaciones(10, 3, 0.001, 50)
 
     validacionFinal1 += knn.validar(estudiantesTest, 1)
     validacionFinal3 += knn.validar(estudiantesTest, 3)

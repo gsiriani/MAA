@@ -47,7 +47,7 @@ class Knn:
 
         def obtenerDiferencias (self, ejemplo, objetivo, atributos):
             # mas del humo de arriba solo que multiplico por las ponderaciones para priorizar ciertos atributos sobre otros
-            return [self.ponderaciones[a]**2 * self.operadores[a](objetivo[a],ejemplo[a])**2 for a in atributos]
+            return [self.ponderaciones[a] * self.operadores[a](objetivo[a],ejemplo[a])**2 for a in atributos]
 
         def calcularValorPromedio(self, neighbors):
             #calculo el valor promedio tomando en cuenta las distancias (n[1])
@@ -56,8 +56,8 @@ class Knn:
             if len(vecinosDistanciaCero) > 0:
                 return random.choice(vecinosDistanciaCero)[0][self.atributoObjetivo]
             else:
-                inversoDistanciaTotal = sum(1/n[1] for n in neighbors)
-                return sum([n[0][self.atributoObjetivo]*1/n[1] for n in neighbors])/inversoDistanciaTotal
+                distanciaTotal = sum(n[1] for n in neighbors)
+                return sum([n[0][self.atributoObjetivo] * n[1]/distanciaTotal for n in neighbors])
 
         def entrenarPonderaciones(self, numeroDeBloques, k, factorAprendizaje, cantidadIteraciones):
             ''''
@@ -67,7 +67,7 @@ class Knn:
 
             ejemplos = list(self.ejemplos)
 
-            self.ponderaciones = {k:random.uniform(0,0) for k in self.ponderaciones.keys()}
+            self.ponderaciones = {k:random.uniform(0,1) for k in self.ponderaciones.keys()}
 
             for i in range(cantidadIteraciones):
 
