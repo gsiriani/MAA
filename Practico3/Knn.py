@@ -2,16 +2,19 @@
 
 from math import sqrt
 import random
-
+import math
 class Knn:
 
-        def __init__ (self, ejemplos, atributoObjetivo, atributos, operadores):
+        def __init__ (self, ejemplos, atributoObjetivo, atributos, operadores, ponderaciones = None):
             # agrego en ejemplos los datos para luego ser usados como punto de comparacion
             self.ejemplos = ejemplos
-            self.ponderaciones = {a:1 for a in atributos}
-            self.atributoObjetivo = atributoObjetivo
             self.atributos = list(atributos)
-            self.atributos.remove('G3')
+            self.atributos.remove(atributoObjetivo)
+            if ponderaciones is None:
+                self.ponderaciones = {a:1 for a in self.atributos}
+            else:
+                self.ponderaciones = ponderaciones
+            self.atributoObjetivo = atributoObjetivo
             self.operadores = operadores
 
 
@@ -36,12 +39,15 @@ class Knn:
             return float(sum (resultado)) / len(datos)
 
 
-        def distancias (self, ejemplos, atributos, objetivo):
-            return [(e, sqrt (sum (self.obtenerDiferencias(e,atributos, objetivo)))) for e in ejemplos]
+        def distancias(self, ejemplos, atributos, objetivo):
+            return [(e, self.distanciaEntre(e,objetivo, atributos)) for e in ejemplos]
 
-        def obtenerDiferencias (self, ejemplo, atributos, objetivo):
+        def distanciaEntre(self,a, b, atributos):
+            return sqrt(sum(self.obtenerDiferencias(a, b, atributos)))
+
+        def obtenerDiferencias (self, ejemplo, objetivo, atributos):
             # mas del humo de arriba solo que multiplico por las ponderaciones para priorizar ciertos atributos sobre otros
-            return [1 / self.ponderaciones[a] * self.operadores[a](objetivo[a],ejemplo[a])**2 for a in atributos]
+            return [self.ponderaciones[a]**2 * self.operadores[a](objetivo[a],ejemplo[a])**2 for a in atributos]
 
         def calcularValorPromedio(self, neighbors):
             #calculo el valor promedio tomando en cuenta las distancias (n[1])
@@ -50,8 +56,8 @@ class Knn:
             if len(vecinosDistanciaCero) > 0:
                 return random.choice(vecinosDistanciaCero)[0][self.atributoObjetivo]
             else:
-                distanciaTotal = sum(n[1] for n in neighbors)
-                return sum([n[0][self.atributoObjetivo] * distanciaTotal/n[1] for n in neighbors])
+                inversoDistanciaTotal = sum(1/n[1] for n in neighbors)
+                return sum([n[0][self.atributoObjetivo]*1/n[1] for n in neighbors])/inversoDistanciaTotal
 
         def entrenarPonderaciones(self, numeroDeBloques, k, factorAprendizaje, cantidadIteraciones):
             ''''
@@ -61,7 +67,7 @@ class Knn:
 
             ejemplos = list(self.ejemplos)
 
-            self.ponderaciones = {k:random.uniform(0,1) for k in self.ponderaciones.keys()}
+            self.ponderaciones = {k:random.uniform(0,0) for k in self.ponderaciones.keys()}
 
             for i in range(cantidadIteraciones):
 
@@ -75,6 +81,7 @@ class Knn:
                     self.entrenar(conjuntoEntrenamiento, conjuntoValidacion, k, factorAprendizaje)
 
                 print(str(i + 1) + " iteraciones")
+                print self.ponderaciones
 
         def obtenerVecinos(self, distancias, k):
 
@@ -93,13 +100,21 @@ class Knn:
 
                 distancias = self.distancias(conjuntoEntrenamiento, self.atributos,d)
 
-                neighbors = self.obtenerVecinos(distancias, k)
+                # promedio = self.calcularValorPromedio(self.obtenerVecinos(distancias, 3))
 
-                promedio = self.calcularValorPromedio(neighbors)
+                #if round(promedio) == d[self.atributoObjetivo]:
+                #    continue
 
-                error = d[self.atributoObjetivo] - promedio
+                distancias.sort(key=lambda n:n[1])
+                distancias = distancias[:k]
 
-                for key,value in self.ponderaciones.iteritems():
-                    self.ponderaciones[key] = max(0,value + factorAprendizaje * error * d[key])
+                for target in distancias:
+                    distanciaEntre = self.distanciaEntre(target[0],d,self.atributos)
+                    if distanciaEntre != 0:
+                        error = (d[self.atributoObjetivo] - target[0][self.atributoObjetivo])**2/distanciaEntre
+                    else:
+                        error = (d[self.atributoObjetivo] - target[0][self.atributoObjetivo])**2 * 100
 
-
+                    for key,value in self.ponderaciones.iteritems():
+                        diferencia = self.operadores[key](target[0][key], d[key])
+                        self.ponderaciones[key] = value + factorAprendizaje * error * diferencia
