@@ -67,7 +67,7 @@ class Knn:
 
             ejemplos = list(self.ejemplos)
 
-            self.ponderaciones = {k:random.uniform(0,1) for k in self.ponderaciones.keys()}
+            self.ponderaciones = {k:random.uniform(0,100) for k in self.ponderaciones.keys()}
 
             for i in range(cantidadIteraciones):
 
