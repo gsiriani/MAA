@@ -25,7 +25,7 @@ knn = Knn(estudiantes, "G3", atributos, operadores)
 
 # Se realizaran multiples pruebas para obtener una estimacion de la efectividad del algoritmo
 # para cualquier eleccion de casos de entrenamiento / prueba
-CANTIDAD_PRUEBAS = 3
+CANTIDAD_PRUEBAS = 25
 
 # Separo 1/5 de los casos de prueba
 cantEstTest = len(estudiantes)/5
