@@ -1,6 +1,10 @@
 from casilla import Casilla
 
 class Mundo:
+	'''
+	Clase que representa el mundo del problema con sus casillas y valor
+	de trancisiones
+	'''
 
 	def __init__(self, size):
 		'''
@@ -9,6 +13,7 @@ class Mundo:
 		mundo construido NO es circular) 
 		'''
 		self.casillas = []
+		self.size = size
 
 		# Construyo una matriz de size*size
 		for i in range(size):
@@ -39,3 +44,6 @@ class Mundo:
 
 	def getCasilla(self, i, j)
 		return self.casillas[i][j]
+
+	def getSize(self):
+		return self.size

@@ -1,6 +1,13 @@
 
 class Casilla:
-	def __init__(self, izquierda=0, derecha=0, arriba=0, abajo=0):
+	'''
+	Clase que representa una casilla con su valor de trancision para cada direccion
+	'''
+
+	def __init__(self, izquierda=None, derecha=None, arriba=None, abajo=None):
+		'''
+		La casilla creada por defecto no tiene transiciones posibles (es Goal)
+		'''
 		self.izquierda = izquierda
 		self.derecha = derecha
 		self.arriba = arriba
@@ -31,6 +38,9 @@ class Casilla:
 		self.derecha = valor
 
 	def isGoal(self):
+		'''
+		Una casilla es meta (Goal) si no tiene trancisiones posibles
+		'''
 		return (self.izquierda == None) and (self.derecha == None) and (self.arriba == None) and (self.abajo == None)
 
 
