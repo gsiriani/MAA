@@ -17,7 +17,7 @@ class Mundo:
 
 		# Construyo una matriz de size*size
 		for i in range(size):
-			self.casillas[i] = []
+			self.casillas.append([])
 			for j in range(size):
 				
 				# Por defecto las casillas tienen valor 0 en todas las direcciones
@@ -37,12 +37,12 @@ class Mundo:
 					derecha = None
 
 				# Construyo la casilla
-				self.casillas[i][j] = Casilla(izquierda=izquierda, derecha=derecha, arriba=arriba, abajo=abajo)
+				self.casillas[i].append(Casilla(izquierda=izquierda, derecha=derecha, arriba=arriba, abajo=abajo))
 
 	def setCasilla(self, i, j, casilla):
 		self.casillas[i][j] = casilla
 
-	def getCasilla(self, i, j)
+	def getCasilla(self, i, j):
 		return self.casillas[i][j]
 
 	def getSize(self):

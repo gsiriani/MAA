@@ -1,5 +1,6 @@
-from mundo import Mundo, setCasilla
+from mundo import Mundo
 from casilla import Casilla
+from aprendizajeQ import AprendizajeQ
 
 # CREO EL MUNDO DEL PROBLEMA
 # --------------------------
@@ -18,4 +19,10 @@ mundo.setCasilla(2, 2, Casilla())
 mundo.setCasilla(2, 3, Casilla())
 mundo.setCasilla(3, 2, Casilla())
 mundo.setCasilla(3, 3, Casilla())
+
+# Inicializo el algoritmo
+algoritmoQ = AprendizajeQ(mundo, 0.8)
+
+# Entreno
+rQ = algoritmoQ.entrenar(5)
 

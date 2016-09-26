@@ -1,3 +1,4 @@
+from movimiento import Direccion
 
 class Casilla:
 	'''
@@ -42,5 +43,20 @@ class Casilla:
 		Una casilla es meta (Goal) si no tiene trancisiones posibles
 		'''
 		return (self.izquierda == None) and (self.derecha == None) and (self.arriba == None) and (self.abajo == None)
+
+	def getMovimientosValidos(self):
+		'''
+		Retorna una lista con todas las direcciones posibles en las que me puedo mover
+		'''
+		movimientos = []
+		if self.izquierda != None:
+			movimientos.append(Direccion.IZQUIERDA)
+		if self.derecha != None:
+			movimientos.append(Direccion.DERECHA)
+		if self.arriba != None:
+			movimientos.append(Direccion.ARRIBA)
+		if self.abajo != None:
+			movimientos.append(Direccion.ABAJO)
+		return movimientos
 
 

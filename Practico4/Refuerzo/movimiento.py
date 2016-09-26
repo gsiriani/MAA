@@ -13,9 +13,17 @@ class Movimiento:
 	valor de ganancia/penalizacion
 	'''
 	
-	def __init__(self, direccion, valor):
+	def __init__(self, origen, destino, direccion, valor=0):
+		self.origen = origen
+		self.destino = destino
 		self.direccion = direccion
 		self.valor = valor
+
+	def getOrigen(self):
+		return self.origen
+
+	def getDestino(self):
+		return self.destino
 
 	def getDireccion(self):
 		return self.direccion
