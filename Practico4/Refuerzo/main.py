@@ -5,6 +5,7 @@ from aprendizajeQ import AprendizajeQ
 # CREO EL MUNDO DEL PROBLEMA
 # --------------------------
 
+print 'Construyendo mundo'
 # Mundo por defecto de tamano 6*6
 mundo = Mundo(6)
 # Transiciones con valores especiales
@@ -22,6 +23,8 @@ mundo.setCasilla(3, 3, Casilla())
 
 # Inicializo el algoritmo
 algoritmoQ = AprendizajeQ(mundo, 0.8)
+
+print 'Comienza entrenamiento'
 
 # Entreno
 rQ = algoritmoQ.entrenar(5)

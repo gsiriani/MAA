@@ -36,26 +36,55 @@ class AprendizajeQ:
 			direccionMovimiento = choice(movimientosValidos)
 			origen = destino
 			destino = self.calcularDestino(origen, direccionMovimiento)
-			movimiento = Movimiento(origen=origen, destino=destino, direccion=direccionMovimiento)
+			valor = self.obtenerValorCasilla(casilla_actual, direccionMovimiento)
+			movimiento = Movimiento(origen=origen, destino=destino, direccion=direccionMovimiento, valor=valor)
 			recorrido.append(movimiento)
+			casilla_actual = self.mundo.getCasilla(destino[0], destino[1])
 
 		return recorrido
 
 
 	def actualizarValores(self, mundoQ, recorrido):
-		for m in recorrido:
-			print m.getOrigen() + ' ' + m.getDestino() + ' ' + m.getDireccion
+		print 'Recorrido:'
+		for m in recorrido.reverse(): # Esto es un bolazo ARREGLAR
+			casillaOrigen = mundoQ.getCasilla(m.getOrigen()[0], m.getOrigen()[1])
+			casillaCorregida = self.corregirCasilla(casillaOrigen, m.getDireccion(), m.getValor())
+			mundoQ.setCasilla(m.getOrigen()[0], m.getOrigen()[1], casillaCorregida)
+			print str(m.getOrigen()) + ' ' + str(m.getDestino()) + ' ' + str(m.getDireccion()) + ' ' + str(m.getValor())
 
 
+	def obtenerValorCasilla(self, casilla, direccion):
+		if direccion == Direccion.IZQUIERDA:
+			valor = casilla.getIzquierda()
+		if direccion == Direccion.DERECHA:
+			valor = casilla.getDerecha()
+		if direccion == Direccion.ARRIBA:
+			valor = casilla.getArriba()
+		if direccion == Direccion.ABAJO:
+			valor = casilla.getAbajo()
+		return valor
 
 	def calcularDestino(self, (i, j), direccion):
 		if direccion == Direccion.IZQUIERDA:
-			i -= 1
-		if direccion == Direccion.DERECHA:
-			i += 1
-		if direccion == Direccion.ARRIBA:
 			j -= 1
-		if direccion == Direccion.ABAJO:
+		if direccion == Direccion.DERECHA:
 			j += 1
+		if direccion == Direccion.ARRIBA:
+			i -= 1
+		if direccion == Direccion.ABAJO:
+			i += 1
 		return (i, j)
+
+
+	def corregirCasilla(self, casilla, direccion, valor):
+		if direccion == Direccion.IZQUIERDA:
+			casilla.setIzquierda(valor)
+		if direccion == Direccion.DERECHA:
+			casilla.setDerecha(valor)
+		if direccion == Direccion.ARRIBA:
+			casilla.setArriba(valor)
+		if direccion == Direccion.ABAJO:
+			casilla.setAbajo(valor)
+		return casilla
+
 
