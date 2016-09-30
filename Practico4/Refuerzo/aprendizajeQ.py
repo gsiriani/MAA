@@ -26,6 +26,13 @@ class AprendizajeQ:
 		i = choice(range(self.mundo.getSize()))
 		j = choice(range(self.mundo.getSize()))
 		casilla_actual = self.mundo.getCasilla(i, j)
+
+		# Si elijo una Goal, itero hasta obtener una No Goal
+		while casilla_actual.isGoal():			
+			i = choice(range(self.mundo.getSize()))
+			j = choice(range(self.mundo.getSize()))
+			casilla_actual = self.mundo.getCasilla(i, j)
+
 		recorrido = []
 		destino = (i,j)
 
@@ -45,12 +52,21 @@ class AprendizajeQ:
 
 
 	def actualizarValores(self, mundoQ, recorrido):
-		print 'Recorrido:'
-		for m in recorrido.reverse(): # Esto es un bolazo ARREGLAR
-			casillaOrigen = mundoQ.getCasilla(m.getOrigen()[0], m.getOrigen()[1])
-			casillaCorregida = self.corregirCasilla(casillaOrigen, m.getDireccion(), m.getValor())
+		recorrido.reverse()
+		for m in recorrido:
+			# Recupero las casillas
+			casillaOrigen = mundoQ.getCasilla(m.getOrigen()[0], m.getOrigen()[1])			
+			casillaDestino = mundoQ.getCasilla(m.getDestino()[0], m.getDestino()[1])
+
+			# Obtengo el maximo valor posible de la casilla destino
+			maxDestino = casillaDestino.maximoValorPosible()
+
+			# Calculo el nuevo valor de la accion en la casilla (Q(s,a))
+			nuevoValor = m.getValor() + self.facDescuento*maxDestino
+
+			# Actualizo el valor de la casilla
+			casillaCorregida = self.corregirCasilla(casillaOrigen, m.getDireccion(), nuevoValor)
 			mundoQ.setCasilla(m.getOrigen()[0], m.getOrigen()[1], casillaCorregida)
-			print str(m.getOrigen()) + ' ' + str(m.getDestino()) + ' ' + str(m.getDireccion()) + ' ' + str(m.getValor())
 
 
 	def obtenerValorCasilla(self, casilla, direccion):
@@ -74,7 +90,6 @@ class AprendizajeQ:
 		if direccion == Direccion.ABAJO:
 			i += 1
 		return (i, j)
-
 
 	def corregirCasilla(self, casilla, direccion, valor):
 		if direccion == Direccion.IZQUIERDA:

@@ -59,4 +59,9 @@ class Casilla:
 			movimientos.append(Direccion.ABAJO)
 		return movimientos
 
+	def maximoValorPosible(self):
+		return max(self.izquierda, self.derecha, self.arriba, self.abajo)
 
+	def maximaDireccionPosible(self):
+		return max([('Desconocido', 0), (Direccion.IZQUIERDA, self.izquierda), (Direccion.DERECHA, self.derecha), 
+			(Direccion.ARRIBA, self.arriba), (Direccion.ABAJO, self.abajo)], key=lambda (x, y) : y)[0]

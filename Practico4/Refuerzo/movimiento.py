@@ -2,10 +2,10 @@ class Direccion:
 	'''
 	Enum que representa las distintas direcciones en que me puedo mover
 	'''
-	ARRIBA = 1
-	ABAJO = 2
-	IZQUIERDA = 3
-	DERECHA = 4
+	ARRIBA = 'Arriba'
+	ABAJO = 'Abajo'
+	IZQUIERDA = 'Izquierda'
+	DERECHA = 'Derecha'
 
 class Movimiento:
 	'''
