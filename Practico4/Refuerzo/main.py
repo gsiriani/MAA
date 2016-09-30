@@ -22,16 +22,80 @@ mundo.setCasilla(2, 3, Casilla())
 mundo.setCasilla(3, 2, Casilla())
 mundo.setCasilla(3, 3, Casilla())
 
+print 'Comienza entrenamiento'
+
+# ENTRENO PARA GAMMA = 0.8
+# ------------------------
+print '\nDescuento = 0.8\n--------------'
+
 # Inicializo el algoritmo
 algoritmoQ = AprendizajeQ(mundo, 0.8)
 
-print 'Comienza entrenamiento'
-
-# Entreno
+print '5 iteraciones:'
 rQ = algoritmoQ.entrenar(5)
 
 for i in range(sizeMundo):
+	fila = ''
 	for j in range(sizeMundo):
 		c = rQ.getCasilla(i,j)
-		print 'Casilla (' + str(i) + ',' + str(j) +'):'
-		print '\t Direccion: ' + str(c.maximaDireccionPosible())
+		fila += ' ' + str(c.maximaDireccionPosible())
+	print fila
+
+print '10 iteraciones:'
+rQ = algoritmoQ.entrenar(5, rQ)
+
+for i in range(sizeMundo):
+	fila = ''
+	for j in range(sizeMundo):
+		c = rQ.getCasilla(i,j)
+		fila += ' ' + str(c.maximaDireccionPosible())
+	print fila
+
+print '30 iteraciones:'
+rQ = algoritmoQ.entrenar(20, rQ)
+
+for i in range(sizeMundo):
+	fila = ''
+	for j in range(sizeMundo):
+		c = rQ.getCasilla(i,j)
+		fila += ' ' + str(c.maximaDireccionPosible())
+	print fila
+
+
+
+# ENTRENO PARA GAMMA = 0.4
+# ------------------------
+print '\nDescuento = 0.4\n--------------'
+
+# Inicializo el algoritmo
+algoritmoQ = AprendizajeQ(mundo, 0.4)
+
+print '5 iteraciones:'
+rQ = algoritmoQ.entrenar(5)
+
+for i in range(sizeMundo):
+	fila = ''
+	for j in range(sizeMundo):
+		c = rQ.getCasilla(i,j)
+		fila += ' ' + str(c.maximaDireccionPosible())
+	print fila
+
+print '10 iteraciones:'
+rQ = algoritmoQ.entrenar(5, rQ)
+
+for i in range(sizeMundo):
+	fila = ''
+	for j in range(sizeMundo):
+		c = rQ.getCasilla(i,j)
+		fila += ' ' + str(c.maximaDireccionPosible())
+	print fila
+
+print '30 iteraciones:'
+rQ = algoritmoQ.entrenar(20, rQ)
+
+for i in range(sizeMundo):
+	fila = ''
+	for j in range(sizeMundo):
+		c = rQ.getCasilla(i,j)
+		fila += ' ' + str(c.maximaDireccionPosible())
+	print fila

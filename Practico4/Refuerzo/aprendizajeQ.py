@@ -9,11 +9,15 @@ class AprendizajeQ:
 		self.mundo = mundo
 		self.facDescuento = facDescuento
 
-	def entrenar(self, iteraciones):
-		# Inicializo el mundo con valores nulos
-		mundoQ = Mundo(self.mundo.getSize())
+	def entrenar(self, iteraciones, mundoQ=None):
+		'''
+		Exploro el mundo y luego corrigo mis estimaciones
+		'''
+		if mundoQ == None:
+			# Inicializo el mundo con valores nulos
+			mundoQ = Mundo(self.mundo.getSize())
 
-		# Realizo un recorrido por cada iteraciones
+		# Realizo un recorrido por cada iteracion
 		for i in range(iteraciones):
 			recorrido = self.explorar()
 			self.actualizarValores(mundoQ, recorrido)
@@ -21,6 +25,10 @@ class AprendizajeQ:
 		return mundoQ
 
 	def explorar(self):
+		'''
+		Realizo un recorrido aleatorio por el mundo y retorno la
+		secuencia de pasos con la ganancia/descuento de cada uno
+		'''
 
 		# Selecciono al azar la casilla inicial
 		i = choice(range(self.mundo.getSize()))
@@ -52,6 +60,9 @@ class AprendizajeQ:
 
 
 	def actualizarValores(self, mundoQ, recorrido):
+		'''
+		Dado un recorrido, lo revierto para actualizar mi estimacion del mundo
+		'''
 		recorrido.reverse()
 		for m in recorrido:
 			# Recupero las casillas
@@ -70,6 +81,9 @@ class AprendizajeQ:
 
 
 	def obtenerValorCasilla(self, casilla, direccion):
+		'''
+		Obtengo el valor de la casilla para determinada direccion
+		'''
 		if direccion == Direccion.IZQUIERDA:
 			valor = casilla.getIzquierda()
 		if direccion == Direccion.DERECHA:
@@ -81,6 +95,10 @@ class AprendizajeQ:
 		return valor
 
 	def calcularDestino(self, (i, j), direccion):
+		'''
+		Obtengo las coordenadas de la siguiente casilla a visitar dada una 
+		direccion de movimiento
+		'''
 		if direccion == Direccion.IZQUIERDA:
 			j -= 1
 		if direccion == Direccion.DERECHA:
@@ -92,6 +110,9 @@ class AprendizajeQ:
 		return (i, j)
 
 	def corregirCasilla(self, casilla, direccion, valor):
+		'''
+		Actualizo el valor de la casilla en determinada direccion
+		'''
 		if direccion == Direccion.IZQUIERDA:
 			casilla.setIzquierda(valor)
 		if direccion == Direccion.DERECHA:
