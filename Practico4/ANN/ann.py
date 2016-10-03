@@ -1,11 +1,22 @@
 import random
 import math
+from __builtin__ import staticmethod
+
 
 class Funciones:
 
     @staticmethod
     def Sigmoid(x):
         return 1 / (1 + math.pow(math.e,-x))
+
+    @staticmethod
+    def Tanh(x):
+        return math.tanh(x)
+
+    @staticmethod
+    def Sign(x):
+        return int(abs(x)/x) if x != 0 else 0
+
 
 class Ejemplo:
 
@@ -76,9 +87,9 @@ class Neurona:
         self.pesos = [random.uniform(min, max) for i in range(cantidadEntradas + 1)]
 
     def disparar(self, valores):
-        self.entrada = valores
+        self.entrada = list(valores)
         self.entrada.append(1)
-        ponderados = [v[0]*v[1] for v in zip(valores, self.pesos)]
+        ponderados = [v[0]*v[1] for v in zip(self.entrada, self.pesos)]
         suma = sum(ponderados)
 
         self.salida = self.fn(suma)
