@@ -28,9 +28,9 @@ redes["Logistica - 50"] = Entramiento(redGrandeSigmoide,0.1)
 #redes["Grande hiperbolica"] = Entramiento(redGrandeHiperbolica,0.01)
 
 entrenador = Entrenador()
-#fnObjetivo = lambda x: math.sin(1.5*math.pi*x)/2.3 + 0.5
+fnObjetivo = lambda x: math.sin(1.5*math.pi*x)/2.3 + 0.5
 #fnObjetivo = lambda x: x**2
-fnObjetivo = lambda x,y : 1 if x**2 + y**2 < 0.5 else 0
+#fnObjetivo = lambda x,y : 1 if x**2 + y**2 < 0.5 else 0
 entrenador.entrenar(redes.values(), 100000, 40, fnObjetivo)
 
 for k,v in redes.iteritems():
