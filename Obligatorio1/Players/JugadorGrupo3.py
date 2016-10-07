@@ -22,7 +22,8 @@ class JugadorGrupo3(Player):
 
     def __init__(self, color, path = "nn.pkl", red = None):
         super(JugadorGrupo3, self).__init__(self.name, color=color)
-        self._ann = Ann()
+        self._ann_Early = Ann()
+        self._ann_Late = Ann()
         self._tableros_resultantes = []
 
         self.cargar(path,red)
@@ -45,18 +46,15 @@ class JugadorGrupo3(Player):
 
     def on_win(self, board):
         #print 'Gané y soy el color:' + self.color.name
-        self._ann.entrenar(self._tableros_resultantes, EnumResultado.VICTORIA)
-        self._tableros_resultantes = []
+        self.entrenar(EnumResultado.VICTORIA)
 
     def on_defeat(self, board):
         #print 'Perdí y soy el color:' + self.color.name
-        self._ann.entrenar(self._tableros_resultantes, EnumResultado.DERROTA)
-        self._tableros_resultantes = []
+        self.entrenar(EnumResultado.DERROTA)
 
     def on_draw(self, board):
         #print 'Empaté y soy el color:' + self.color.name
-        self._ann.entrenar(self._tableros_resultantes, EnumResultado.EMPATE)
-        self._tableros_resultantes = []
+        self.entrenar(EnumResultado.EMPATE)
 
     def on_error(self, board):
         raise Exception('Hubo un error.')
@@ -65,7 +63,10 @@ class JugadorGrupo3(Player):
 
         t = self._ejecutar_jugada(jugada,t)
 
-        return self._evaluar_tablero(t)
+        if len(self._tableros_resultantes) < 30:
+            return self._evaluar_tablero(t, self._ann_Early)
+        else:
+            return self._evaluar_tablero(t, self._ann_Late)
 
     def _ejecutar_jugada(self,jugada, t):
         tablero = deepcopy(t)
@@ -75,13 +76,13 @@ class JugadorGrupo3(Player):
 
         return tablero
 
-    def _evaluar_tablero(self, t):
+    def _evaluar_tablero(self, t, ann):
 
         matriz = t.get_as_matrix()
 
         entrada = [self._transormarCasilla(square).value for fila in matriz for square in fila]
 
-        return (self._ann.evaluar(np.array(entrada).reshape(1,-1)), entrada)
+        return (ann.evaluar(np.array(entrada).reshape(1,-1)), entrada)
 
     def _transormarCasilla(self, casilla):
         if casilla == self.color.value:
@@ -97,6 +98,14 @@ class JugadorGrupo3(Player):
     def cargar(self, path, red):
         self._ann.cargar(path, red)
 
+    def entrenar(self, resultado):
+        if len(self._tableros_resultantes) > 30:
+            self._ann_Early.entrenar(self._tableros_resultantes[:31], resultado)
+            self._ann_Late.entrenar(self._tableros_resultantes[31:], resultado)
+        else:
+            self._ann_Early.entrenar(self._tableros_resultantes, resultado)
+        self._tableros_resultantes = []
+        
 class AnnBuilder:
 
     @staticmethod
