@@ -6,12 +6,42 @@ from Players.GreedyPlayer import GreedyPlayer
 from Players.JugadorGrupo3 import JugadorGrupo3,AnnBuilder
 import DataTypes
 
+class Estadisticas:
+
+    def __init__(self):
+
+        self.Blancos = ()
+        self.Negros = ()
+        self.HistoriaBlancos = []
+        self.HistoriaNegros = []
+
+    def Cargar(self, blancos, negros, esPrimerJugador):
+
+        if not esPrimerJugador:
+            blancos = tuple(reversed(blancos))
+            negros = tuple(reversed(negros))
+
+        self.Blancos = tuple([sum(x) for x in zip(self.Blancos, blancos)])
+        self.Negros = tuple([sum(x) for x in zip(self.Negros, negros)])
+        self.HistoriaBlancos.append(blancos)
+        self.HistoriaNegros.append(negros)
+
+
+    def __str__(self):
+
+        print "N: " + str(tuple([float(x)/sum(self.Negros) for x in self.Negros]))
+        print "B: " + str(tuple([float(x) / sum(self.Blancos) for x in self.Blancos]))
+        sumas = [x[0] + x[1] for x in zip(self.Negros, self.Blancos)]
+        print "T: " + str(tuple([float(x) / sum(sumas) for x in sumas]))
+
+
 class Contrincante:
 
     def __init__(self, nombre, jugador):
         self.nombre = nombre
         self.jugador = jugador
-        self.estadisticos = (0,0,0)
+        self.estadisticas = Estadisticas()
+
 
 class Aprendiz:
 
@@ -19,7 +49,7 @@ class Aprendiz:
         self.nombre = nombre
         self.red = red
         self.jugador = None
-        self.estadisticas = (0,0,0)
+        self.estadisticas = Estadisticas()
 
 class Torneo:
 
@@ -41,12 +71,14 @@ class Torneo:
             self.ejecutarVuelta()
 
         for aprendiz in self.aprendices:
-            print (aprendiz.nombre + " " + aprendiz.estadisticas)
+            print (aprendiz.nombre + " " + str(aprendiz.estadisticas))
 
         for contrincante in self.contricantes:
-            print (contrincante.nombre + " " + contrincante.estadisticas)
+            print (contrincante.nombre + " " + str(contrincante.estadisticas))
 
     def ejecutarVuelta(self):
+
+        yaJugadas = []
 
         for aprendiz in self.aprendices:
             for contrincante in self.contricantes:
@@ -54,9 +86,14 @@ class Torneo:
                 aprendiz.jugador.almacenar()
 
             for otroAprendiz in self.aprendices:
+                if aprendiz == otroAprendiz or (otroAprendiz,aprendiz) in yaJugadas:
+                    continue
+
                 self.ejecutarPartidas(aprendiz, otroAprendiz)
                 aprendiz.jugador.almacenar()
                 otroAprendiz.jugador.almacenar()
+
+                yaJugadas.append((aprendiz,otroAprendiz))
 
 
     def ejecutarPartidas(self, jugadorA, jugadorB):
@@ -76,18 +113,15 @@ class Torneo:
         estatidicasB = self.obtenerSuma(BvsW, DataTypes.GameStatus.BLACK_WINS)
         estatidicasW = self.obtenerSuma(WvsB,DataTypes.GameStatus.WHITE_WINS)
 
-        jugadorA.estadisticas = tuple([sum(x) for x in zip(jugadorA.estadisticas, estatidicasW)])
-        jugadorA.estadisticas = tuple([sum(x) for x in zip(jugadorA.estadisticas, estatidicasB)])
+        jugadorA.estadisticas.Cargar(estatidicasW,estatidicasB, True)
+        jugadorB.estadisticas.Cargar(estatidicasW, estatidicasB, False)
 
-        jugadorB.estadisticas = tuple([sum(x) for x in zip(jugadorB.estadisticas, reversed(estatidicasW))])
-        jugadorB.estadisticas = tuple([sum(x) for x in zip(jugadorB.estadisticas, reversed(estatidicasB))])
-
-        print ("Resultado: B:" + str([float(e)/len(estatidicasB)for e in estatidicasB]) +
-               " W:" + str([float(e)/len(estatidicasW)for e in estatidicasW]))
+        print(estatidicasW)
+        print(estatidicasB)
 
     def obtenerSuma(self, partidas, color):
         victorias = sum([1 for p in partidas if p == color.value])
-        empates = sum([1 for p in partidas if p == DataTypes.GameStatus.DRAW])
+        empates = sum([1 for p in partidas if p == DataTypes.GameStatus.DRAW.value])
         derrotas = len(partidas) - (victorias + empates)
 
         return (victorias,empates,derrotas)
@@ -98,5 +132,5 @@ aprendices.append(Aprendiz("nn2", AnnBuilder.Red10_8()))
 contrincantes = []
 contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
 
-torneo = Torneo(aprendices, contrincantes)
+torneo = Torneo(aprendices, contrincantes, 100, 10)
 torneo.ejecutar()
