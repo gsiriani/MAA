@@ -69,18 +69,18 @@ class JugadorGrupo3(Player):
     def on_win(self, board):
         if self.aplicarEntrenamiento:
             resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
-            self._ann.entrenar(self._tableros_resultantes, resultado)
+            self._ann.agregar_a_entrenamiento(self._tableros_resultantes, resultado)
         self._tableros_resultantes = []
 
     def on_defeat(self, board):
         if self.aplicarEntrenamiento:
             resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
-            self._ann.entrenar(self._tableros_resultantes, resultado)
+            self._ann.agregar_a_entrenamiento(self._tableros_resultantes, resultado)
         self._tableros_resultantes = []
 
     def on_draw(self, board):
         if self.aplicarEntrenamiento:
-            self._ann.entrenar(self._tableros_resultantes, EnumResultado.EMPATE)
+            self._ann.agregar_a_entrenamiento(self._tableros_resultantes, EnumResultado.EMPATE)
         self._tableros_resultantes = []
 
     def on_error(self, board):
@@ -138,6 +138,10 @@ class JugadorGrupo3(Player):
     def cargar(self, path, red):
         self._ann.cargar(path, red)
 
+    def entrenar(self):
+        if self.aplicarEntrenamiento:
+            self._ann.entrenar()
+
 class AnnBuilder:
 
     @staticmethod
@@ -153,16 +157,22 @@ class Ann:
     def __init__(self):
 
         self._nn = MLPRegressor(hidden_layer_sizes=(10,), verbose=False, warm_start=True)
+        self._entradas_entrenamiento = []
+        self._salidas_esperadas_entrenamiento = []
 
     def evaluar(self, entrada):
         return self._nn.predict(entrada)
 
-    def entrenar(self, tableros, resultado):
+    def agregar_a_entrenamiento(self, tableros, resultado):
 
         tableros.reverse()
-        valores = [resultado.value*(0.8**i) for i in range(len(tableros))]
+        self._entradas_entrenamiento.extend(tableros)
+        self._salidas_esperadas_entrenamiento.extend([[resultado.value*(0.8**i)] for i in xrange(len(tableros))])
 
-        self._nn.partial_fit(tableros, np.array(valores).reshape(-1,1))
+    def entrenar(self):
+        self._nn.partial_fit(self._entradas_entrenamiento, self._salidas_esperadas_entrenamiento)
+        self._entradas_entrenamiento = []
+        self._salidas_esperadas_entrenamiento = []
 
     def almacenar(self):
         pickle.dump(self._nn, open(self.path,'wb'))
@@ -174,7 +184,8 @@ class Ann:
         else:
             self._nn = red
             tableroVacio = [EnumCasilla.EMPTY.value for _ in xrange(64)]
-            self.entrenar([tableroVacio], EnumResultado.EMPATE)
+            self.agregar_a_entrenamiento([tableroVacio], EnumResultado.EMPATE)
+            self.entrenar()
 
 
 class EnumCasilla(Enum):

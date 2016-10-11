@@ -7,6 +7,7 @@ from Players.JugadorGrupo3 import JugadorGrupo3,AnnBuilder
 import numpy as np
 import matplotlib.pyplot as plt
 import DataTypes
+import time
 
 class Estadisticas:
 
@@ -61,6 +62,7 @@ class Aprendiz:
         self.minmax = minmax
         self.estadisticas = Estadisticas()
 
+
 class Torneo:
 
     def __init__(self, aprendices, contrincantes, partidas = 50, torneos = 1):
@@ -71,20 +73,20 @@ class Torneo:
 
     def ejecutar(self):
 
-        print("Iniciando torneo")
+        print(time.asctime() + " - " +  "Iniciando torneo")
 
         for aprendiz in self.aprendices:
             aprendiz.jugador = JugadorGrupo3(None,aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
 
         for i in range(self.torneos):
-            print ("Vuelta " + str(i) + " del torneo")
+            print (time.asctime() + " - " + "Vuelta " + str(i) + " del torneo")
             self.ejecutarVuelta(i)
 
         for aprendiz in self.aprendices:
-            print (aprendiz.nombre + " " + str(aprendiz.estadisticas))
+            print (time.asctime() + " - " + aprendiz.nombre + " " + str(aprendiz.estadisticas))
 
         for contrincante in self.contricantes:
-            print (contrincante.nombre + " " + str(contrincante.estadisticas))
+            print (time.asctime() + " - " + contrincante.nombre + " " + str(contrincante.estadisticas))
 
         self.plot()
 
@@ -95,6 +97,9 @@ class Torneo:
         for aprendiz in self.aprendices:
             for contrincante in self.contricantes:
                 self.ejecutarPartidas(aprendiz, contrincante, i)
+                print (time.asctime() + " - " + "Entrenando...")
+                aprendiz.jugador.entrenar()
+                print (time.asctime() + " - " + "Fin de entrenamiento...")
                 aprendiz.jugador.almacenar()
 
             for otroAprendiz in self.aprendices:
@@ -102,14 +107,24 @@ class Torneo:
                     continue
 
                 self.ejecutarPartidas(aprendiz, otroAprendiz, i)
+                print (time.asctime() + " - " + "Entrenando...")
+
+                aprendiz.jugador.entrenar()
+
+                print (time.asctime() + " - " + "Fin de entrenamiento...")
                 aprendiz.jugador.almacenar()
+                print (time.asctime() + " - " + "Entrenando...")
+
+                otroAprendiz.jugador.entrenar()
+
+                print (time.asctime() + " - " + "Fin de entrenamiento...")
                 otroAprendiz.jugador.almacenar()
 
                 yaJugadas.append((aprendiz,otroAprendiz))
 
 
     def ejecutarPartidas(self, jugadorA, jugadorB, vuelta):
-        print(jugadorA.nombre + " vs " + jugadorB.nombre)
+        print(time.asctime() + " - " + jugadorA.nombre + " vs " + jugadorB.nombre)
         jugadorA.jugador.color = DataTypes.SquareType.BLACK
         jugadorB.jugador.color = DataTypes.SquareType.WHITE
 
@@ -128,8 +143,8 @@ class Torneo:
         jugadorA.estadisticas.Cargar(estatidicasW,estatidicasB, True, vuelta)
         jugadorB.estadisticas.Cargar(estatidicasW, estatidicasB, False, vuelta)
 
-        print(estatidicasW)
-        print(estatidicasB)
+        print(time.asctime() + " - " + str(estatidicasW))
+        print(time.asctime() + " - " + str(estatidicasB))
 
         return (estatidicasW, estatidicasB)
 

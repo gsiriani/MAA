@@ -2,137 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="13c0562d-9544-47c5-93bc-c97c76196b48" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resultados/nn10-no-minimax vs random.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../.gitattributes" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Torneo.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/nn-no-minmax.pkl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resultados/nn-minmax-3.pkl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resultados/nn-no-minmax.pkl" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_010000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_030000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_044000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_049000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_064000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_067000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_088000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_091000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_106000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_107000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_110000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_111000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_126000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_128000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_132000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_141000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_142000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_149000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_161000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_166000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_190000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_195000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_203000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_206000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_207000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_218000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_221000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_227000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_236000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_252000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_253000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_263000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_265000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_269000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_270000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_277000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_283000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_294000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_302000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_311000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_325000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_326000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_329000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_330000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_337000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_338000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_353000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_354000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_365000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_388000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_391000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_398000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_401000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_402000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_418000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_420000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_428000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_430000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_454000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_456000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_465000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_468000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_469000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_481000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_490000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_491000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_496000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_498000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_508000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_548000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_568000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_576000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_582000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_587000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_591000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_598000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_608000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_632000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_640000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_643000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_646000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_648000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_662000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_684000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_686000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_719000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_721000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_727000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_748000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_759000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_769000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_772000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_773000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_781000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_786000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_799000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_811000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_819000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_826000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_837000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_858000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_867000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_869000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_870000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_883000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_888000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_891000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_898000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_906000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_908000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_913000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_917000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_922000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_931000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_939000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_945000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_955000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_960000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_970000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_986000.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nn.pkl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nn2.pkl" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loader.py" afterPath="$PROJECT_DIR$/Loader.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Players/JugadorGrupo3.py" afterPath="$PROJECT_DIR$/Players/JugadorGrupo3.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Torneo.py" afterPath="$PROJECT_DIR$/Torneo.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nn-2-layer.pkl" afterPath="$PROJECT_DIR$/nn-2-layer.pkl" />
     </list>
     <ignored path="Obligatorio1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -145,7 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Obligatorio1$Loader.coverage" NAME="Loader Coverage Results" MODIFIED="1476196065874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Obligatorio1$Loader.coverage" NAME="Loader Coverage Results" MODIFIED="1476210151905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Obligatorio1$JugadorGrupo3.coverage" NAME="JugadorGrupo3 Coverage Results" MODIFIED="1475796172854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Players" />
     <SUITE FILE_PATH="coverage/Obligatorio1$InteractiveGame.coverage" NAME="InteractiveGame Coverage Results" MODIFIED="1476120616410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -158,31 +31,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Loader.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Loader.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Loader.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="14" column="63" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="63" />
+              <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Torneo.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Torneo.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-40">
-              <caret line="104" column="38" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JugadorGrupo3.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="JugadorGrupo3.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="164" column="21" selection-start-line="164" selection-start-column="21" selection-end-line="164" selection-end-column="21" />
+            <state relative-caret-position="329">
+              <caret line="55" column="6" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
               <folding>
                 <element signature="e#24#59#0" expanded="true" />
               </folding>
@@ -190,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="multilayer_perceptron.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/sklearn/neural_network/multilayer_perceptron.py">
+      <file leaf-file-name="Board.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Board.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="639" column="23" selection-start-line="639" selection-start-column="23" selection-end-line="639" selection-end-column="23" />
+            <state relative-caret-position="307">
+              <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -221,9 +84,9 @@
         <option value="$PROJECT_DIR$/Players/GreedyPlayer.py" />
         <option value="$PROJECT_DIR$/InteractiveGame.py" />
         <option value="$PROJECT_DIR$/CustomBatchGame.py" />
-        <option value="$PROJECT_DIR$/Torneo.py" />
-        <option value="$PROJECT_DIR$/Players/JugadorGrupo3.py" />
         <option value="$PROJECT_DIR$/Loader.py" />
+        <option value="$PROJECT_DIR$/Players/JugadorGrupo3.py" />
+        <option value="$PROJECT_DIR$/Torneo.py" />
       </list>
     </option>
   </component>
@@ -234,10 +97,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1" />
-    <option name="y" value="1" />
-    <option name="width" value="1364" />
-    <option name="height" value="726" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1378" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -617,16 +480,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="1" width="1364" height="726" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2714724" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26858878" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41652614" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28477904" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -1000,14 +863,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Board.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="889">
-          <caret line="107" column="18" selection-start-line="107" selection-start-column="18" selection-end-line="107" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/InteractiveGame.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1024,26 +879,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CustomBatchGame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/enum/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
           <caret line="729" column="0" selection-start-line="729" selection-start-column="0" selection-end-line="729" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Torneo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-40">
-          <caret line="104" column="38" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1056,12 +895,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
+    <entry file="file://$PROJECT_DIR$/CustomBatchGame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="164" column="21" selection-start-line="164" selection-start-column="21" selection-end-line="164" selection-end-column="21" />
+        <state relative-caret-position="129">
+          <caret line="20" column="24" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Torneo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
           <folding>
-            <element signature="e#24#59#0" expanded="true" />
+            <element signature="e#25#68#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1069,8 +916,26 @@
     <entry file="file://$PROJECT_DIR$/Loader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="14" column="63" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="63" />
+          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Board.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="55" column="6" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
+          <folding>
+            <element signature="e#24#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
