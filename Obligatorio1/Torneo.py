@@ -4,6 +4,7 @@ from CustomBatchGame import CustomBatchGame
 from Players.RandomPlayer import RandomPlayer
 from Players.GreedyPlayer import GreedyPlayer
 from Players.JugadorGrupo3 import JugadorGrupo3,AnnBuilder
+from Players.JugadorGrupo3x3 import JugadorGrupo3x3
 import numpy as np
 import matplotlib.pyplot as plt
 import DataTypes
@@ -76,7 +77,11 @@ class Torneo:
         print(time.asctime() + " - " +  "Iniciando torneo")
 
         for aprendiz in self.aprendices:
-            aprendiz.jugador = JugadorGrupo3(None,aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
+            if isinstance(aprendiz.red,list):
+                print ("Inicializando jugador multi red")
+                aprendiz.jugador = JugadorGrupo3x3(None, aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
+            else:
+                aprendiz.jugador = JugadorGrupo3(None,aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
 
         for i in range(self.torneos):
             print (time.asctime() + " - " + "Vuelta " + str(i) + " del torneo")

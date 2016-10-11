@@ -10,6 +10,7 @@ from enum import Enum
 import numpy as np
 import pickle
 import os
+import math
 
 class ResultadoJugada():
 
@@ -19,12 +20,12 @@ class ResultadoJugada():
         self.tablero_resultante = tablero_resultante
         self.jugada = jugada
 
-class JugadorGrupo3(Player):
+class JugadorGrupo3x3(Player):
     name = 'JugadorGrupo3'
 
     def __init__(self, color, path = "nn-no-minmax.pkl", red = None, profundidadMinmax = 3):
-        super(JugadorGrupo3, self).__init__(self.name, color=color)
-        self._ann = Ann()
+        super(JugadorGrupo3x3, self).__init__(self.name, color=color)
+        self._ann = [Ann(), Ann(), Ann()]
         self._tableros_resultantes = []
         self.cargar(path,red)
         self.profundidadMinMax = profundidadMinmax
@@ -65,22 +66,37 @@ class JugadorGrupo3(Player):
 
         return mejorResultado
 
+    def cantidadFichas(self):
+        return 4 + len(self._tableros_resultantes) * 2 + (1 if self.color == SquareType.WHITE else 0)
+
+    def obtenerRedObjetivo(self):
+        return int((self.cantidadFichas() - 4) / 3)
+
+    def entrenarRedes(self, resultado):
+
+        for i in xrange(3):
+            cotaInferior = min(i*10,len(self._tableros_resultantes))
+            cotaSuperior = min((i+1) * 10, len(self._tableros_resultantes))
+            conjuntoEntrenamiento = self._tableros_resultantes[cotaInferior:cotaSuperior]
+            if len(conjuntoEntrenamiento) == 0:
+                return
+            self._ann[i].agregar_a_entrenamiento(conjuntoEntrenamiento, resultado)
 
     def on_win(self, board):
         if self.aplicarEntrenamiento:
             resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
-            self._ann.agregar_a_entrenamiento(self._tableros_resultantes, resultado)
+            self.entrenarRedes(resultado)
         self._tableros_resultantes = []
 
     def on_defeat(self, board):
         if self.aplicarEntrenamiento:
             resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
-            self._ann.agregar_a_entrenamiento(self._tableros_resultantes, resultado)
+            self.entrenarRedes(resultado)
         self._tableros_resultantes = []
 
     def on_draw(self, board):
         if self.aplicarEntrenamiento:
-            self._ann.agregar_a_entrenamiento(self._tableros_resultantes, EnumResultado.EMPATE)
+            self.entrenarRedes(EnumResultado.EMPATE)
         self._tableros_resultantes = []
 
     def on_error(self, board):
@@ -94,6 +110,10 @@ class JugadorGrupo3(Player):
 
         return tablero
 
+    def smoothingCoeficient(self,n,u):
+
+        return math.pow(math.e,-math.pow((n-u),2)/float(20**2))
+
     def _evaluar_tablero(self, t, invertir = False):
 
         matriz = t.get_as_matrix()
@@ -103,7 +123,13 @@ class JugadorGrupo3(Player):
         if self._partida_finalizada(t):
             return self._puntaje_final(t), entrada
 
-        return (self._ann.evaluar(np.array(entrada).reshape(1,-1)), entrada)
+        eval = [ann.evaluar(np.array(entrada).reshape(1,-1)) for ann in self._ann]
+        n = self.cantidadFichas()
+        coeficients = [self.smoothingCoeficient(n,4),self.smoothingCoeficient(n,34),self.smoothingCoeficient(n,64)]
+
+        smoothed = sum(x[0]*x[1] for x in zip(eval,coeficients)) / sum(coeficients)
+
+        return smoothed, entrada
 
     def _partida_finalizada(self,tablero):
         return not tablero.get_possible_moves(SquareType.BLACK) and not tablero.get_possible_moves(SquareType.WHITE)
@@ -133,14 +159,19 @@ class JugadorGrupo3(Player):
 
     def almacenar(self):
         if self.aplicarEntrenamiento:
-            self._ann.almacenar()
+            self._ann[0].almacenar()
+            self._ann[1].almacenar()
+            self._ann[2].almacenar()
 
     def cargar(self, path, red):
-        self._ann.cargar(path, red)
+        self._ann[0].cargar("01_" + path, red[0])
+        self._ann[1].cargar("02_" + path, red[1])
+        self._ann[2].cargar("03_" + path, red[2])
 
     def entrenar(self):
         if self.aplicarEntrenamiento:
-            self._ann.entrenar()
+            for ann in self._ann:
+                ann.entrenar()
 
 class AnnBuilder:
 
@@ -149,15 +180,8 @@ class AnnBuilder:
         return MLPRegressor(hidden_layer_sizes=(10,), verbose=False, warm_start=True)
 
     @staticmethod
-    def Red50():
-        return MLPRegressor(hidden_layer_sizes=(50,), verbose=False, warm_start=True)
-
-		
-    @staticmethod
     def Red10_8():
         return MLPRegressor(hidden_layer_sizes=(10,8), verbose=False, warm_start=True)
-
-
 
 class Ann:
 
@@ -177,6 +201,7 @@ class Ann:
         self._salidas_esperadas_entrenamiento.extend([[resultado.value*(0.8**i)] for i in xrange(len(tableros))])
 
     def entrenar(self):
+        print("Entrenando con " + str(len(self._entradas_entrenamiento)) + " ejemplos")
         self._nn.partial_fit(self._entradas_entrenamiento, self._salidas_esperadas_entrenamiento)
         self._entradas_entrenamiento = []
         self._salidas_esperadas_entrenamiento = []

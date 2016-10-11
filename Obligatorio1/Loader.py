@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import DataTypes
 from Torneo import Torneo,AnnBuilder,Aprendiz,Contrincante
-
+'''
 aprendices = []
 #aprendices.append(Aprendiz("nn", AnnBuilder.Red10(), 2))
 #aprendices.append(Aprendiz("nn-no-minmax", AnnBuilder.Red10(), 1))
@@ -18,6 +18,7 @@ contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLA
 
 torneo = Torneo(aprendices, contrincantes, 100, 100)
 torneo.ejecutar()
+'''
 '''
 aprendices = []
 
@@ -30,3 +31,10 @@ torneo = Torneo(aprendices, contrincantes, 10, 10)
 torneo.ejecutar()
 '''
 
+aprendices = []
+aprendices.append(Aprendiz("nn", [AnnBuilder.Red10(),AnnBuilder.Red10(),AnnBuilder.Red10()], 1))
+contrincantes = []
+contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
+
+torneo = Torneo(aprendices, contrincantes, 100, 100)
+torneo.ejecutar()
