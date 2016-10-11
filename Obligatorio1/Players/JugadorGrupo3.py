@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from collections import defaultdict
+
 from sklearn.neural_network import MLPRegressor
 from Player import Player
 import random
@@ -11,61 +13,78 @@ import os
 
 class ResultadoJugada():
 
-    def __init__(self, jugada):
+    def __init__(self, jugada, valor = 0, tablero_resultante = None):
 
-        self.valor = 0
-        self.tablero_resultante = None
+        self.valor = valor
+        self.tablero_resultante = tablero_resultante
         self.jugada = jugada
 
 class JugadorGrupo3(Player):
     name = 'JugadorGrupo3'
 
-    def __init__(self, color, path = "nn.pkl", red = None):
+    def __init__(self, color, path = "nn-no-minmax.pkl", red = None, profundidadMinmax = 3):
         super(JugadorGrupo3, self).__init__(self.name, color=color)
         self._ann = Ann()
         self._tableros_resultantes = []
-
         self.cargar(path,red)
+        self.profundidadMinMax = profundidadMinmax
+        self.aplicarEntrenamiento = red is not None
 
     def move(self, board, opponent_move):
-        jugadas_posibles = board.get_possible_moves(self.color)
-
-        resultados = []
-
-        for j in jugadas_posibles:
-            resultado = ResultadoJugada(j)
-            resultado.valor, resultado.tablero_resultante = self._evaluar_jugada(j, board)
-            resultados.append(resultado)
-
-        mejorResultado = max(resultados, key=lambda r: r.valor)
+        mejorResultado = self.minmax(board, self.profundidadMinMax, True)
 
         self._tableros_resultantes.append(mejorResultado.tablero_resultante)
 
         return mejorResultado.jugada
 
+    def minmax(self, board, profundidad, maximizar):
+
+        if profundidad == 0:
+            valor, tablero = self._evaluar_tablero(board)
+            return ResultadoJugada(None, valor, tablero)
+
+        colorTurno = self.color if maximizar else SquareType((self.color.value + 1) % 2)
+        movimientos_posibles = board.get_possible_moves(colorTurno)
+
+        if len(movimientos_posibles) == 0:
+            valor, tablero = self._evaluar_tablero(board)
+            return ResultadoJugada(None, valor, tablero)
+
+        resultados = []
+
+        for j in movimientos_posibles:
+            nuevoTablero = self._ejecutar_jugada(j, board)
+            resultado = self.minmax(nuevoTablero, profundidad - 1, not maximizar)
+            resultado.jugada = j
+            resultados.append(resultado)
+
+        if maximizar:
+            mejorResultado = max(resultados, key=lambda r: r.valor)
+        else:
+            mejorResultado = min(resultados, key=lambda r: r.valor)
+
+        return mejorResultado
+
+
     def on_win(self, board):
-        #print 'Gané y soy el color:' + self.color.name
-        self._ann.entrenar(self._tableros_resultantes, EnumResultado.VICTORIA)
+        if self.aplicarEntrenamiento:
+            resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
+            self._ann.entrenar(self._tableros_resultantes, resultado)
         self._tableros_resultantes = []
 
     def on_defeat(self, board):
-        #print 'Perdí y soy el color:' + self.color.name
-        self._ann.entrenar(self._tableros_resultantes, EnumResultado.DERROTA)
+        if self.aplicarEntrenamiento:
+            resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
+            self._ann.entrenar(self._tableros_resultantes, resultado)
         self._tableros_resultantes = []
 
     def on_draw(self, board):
-        #print 'Empaté y soy el color:' + self.color.name
-        self._ann.entrenar(self._tableros_resultantes, EnumResultado.EMPATE)
+        if self.aplicarEntrenamiento:
+            self._ann.entrenar(self._tableros_resultantes, EnumResultado.EMPATE)
         self._tableros_resultantes = []
 
     def on_error(self, board):
         raise Exception('Hubo un error.')
-
-    def _evaluar_jugada(self, jugada, t):
-
-        t = self._ejecutar_jugada(jugada,t)
-
-        return self._evaluar_tablero(t)
 
     def _ejecutar_jugada(self,jugada, t):
         tablero = deepcopy(t)
@@ -75,24 +94,46 @@ class JugadorGrupo3(Player):
 
         return tablero
 
-    def _evaluar_tablero(self, t):
+    def _evaluar_tablero(self, t, invertir = False):
 
         matriz = t.get_as_matrix()
 
-        entrada = [self._transormarCasilla(square).value for fila in matriz for square in fila]
+        entrada = [self._transormarCasilla(square, invertir).value for fila in matriz for square in fila]
+
+        if self._partida_finalizada(t):
+            return self._puntaje_final(t), entrada
 
         return (self._ann.evaluar(np.array(entrada).reshape(1,-1)), entrada)
 
-    def _transormarCasilla(self, casilla):
-        if casilla == self.color.value:
-            return EnumCasilla.PROPIA
-        elif casilla == SquareType.EMPTY.value:
+    def _partida_finalizada(self,tablero):
+        return not tablero.get_possible_moves(SquareType.BLACK) and not tablero.get_possible_moves(SquareType.WHITE)
+
+    def _puntaje_final(self, t):
+        results = defaultdict(int)
+        otroColor = SquareType((self.color.value + 1) % 2)
+
+        for i in xrange(8):
+            for j in xrange(8):
+                results[t.get_position(i, j)] += 1
+        if results[self.color] > results[otroColor]:
+            return EnumResultado.VICTORIA.value
+        if results[self.color] < results[otroColor]:
+            return EnumResultado.DERROTA.value
+        else:
+            return EnumResultado.EMPATE.value
+
+
+    def _transormarCasilla(self, casilla, invertir):
+        if casilla == SquareType.EMPTY.value:
             return EnumCasilla.EMPTY
+        elif (not invertir and casilla == self.color.value) or (invertir and casilla != self.color.value):
+            return EnumCasilla.PROPIA
         else:
             return EnumCasilla.RIVAL
 
     def almacenar(self):
-        self._ann.almacenar()
+        if self.aplicarEntrenamiento:
+            self._ann.almacenar()
 
     def cargar(self, path, red):
         self._ann.cargar(path, red)

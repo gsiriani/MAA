@@ -2,10 +2,137 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="13c0562d-9544-47c5-93bc-c97c76196b48" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resultados/nn10-no-minimax vs random.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../.gitattributes" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Torneo.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/nn-no-minmax.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resultados/nn-minmax-3.pkl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resultados/nn-no-minmax.pkl" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_010000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_030000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_044000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_049000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_064000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_067000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_088000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_091000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_106000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_107000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_110000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_111000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_126000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_128000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_132000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_141000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_142000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_149000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_161000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_166000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_190000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_195000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_203000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_206000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_207000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_218000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_221000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_227000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_236000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_252000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_253000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_263000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_265000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_269000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_270000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_277000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_283000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_294000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_302000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_311000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_325000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_326000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_329000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_330000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_337000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_338000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_353000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_354000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_365000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_388000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_391000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_398000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_401000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_402000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_418000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_420000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_428000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_430000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_454000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_456000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_465000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_468000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_469000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_481000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_490000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_491000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_496000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_498000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_508000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_548000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_568000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_576000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_582000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_587000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_591000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_598000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_608000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_632000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_640000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_643000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_646000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_648000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_662000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_684000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_686000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_719000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_721000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_727000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_748000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_759000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_769000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_772000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_773000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_781000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_786000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_799000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_811000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_819000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_826000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_837000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_858000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_867000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_869000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_870000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_883000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_888000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_891000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_898000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_906000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_908000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_913000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_917000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_922000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_931000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_939000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_945000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_955000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_960000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_970000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/log_986000.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/nn.pkl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/nn2.pkl" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loader.py" afterPath="$PROJECT_DIR$/Loader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nn.pkl" afterPath="$PROJECT_DIR$/nn.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nn2.pkl" afterPath="$PROJECT_DIR$/nn2.pkl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Players/JugadorGrupo3.py" afterPath="$PROJECT_DIR$/Players/JugadorGrupo3.py" />
     </list>
     <ignored path="Obligatorio1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -18,9 +145,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Obligatorio1$Loader.coverage" NAME="Loader Coverage Results" MODIFIED="1475890524662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Obligatorio1$Loader.coverage" NAME="Loader Coverage Results" MODIFIED="1476196065874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Obligatorio1$JugadorGrupo3.coverage" NAME="JugadorGrupo3 Coverage Results" MODIFIED="1475796172854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Players" />
-    <SUITE FILE_PATH="coverage/Obligatorio1$InteractiveGame.coverage" NAME="InteractiveGame Coverage Results" MODIFIED="1475799554884" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Obligatorio1$InteractiveGame.coverage" NAME="InteractiveGame Coverage Results" MODIFIED="1476120616410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -34,80 +161,18 @@
       <file leaf-file-name="Loader.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Loader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="124" column="56" selection-start-line="124" selection-start-column="56" selection-end-line="124" selection-end-column="56" />
-              <folding>
-                <element signature="e#25#68#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CustomBatchGame.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CustomBatchGame.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="119">
+              <caret line="14" column="63" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="63" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RandomPlayer.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Players/RandomPlayer.py">
+      <file leaf-file-name="Torneo.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Torneo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-64">
-              <caret line="13" column="11" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GreedyPlayer.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Players/GreedyPlayer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="copy.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/copy.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/enum/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="746" column="0" selection-start-line="746" selection-start-column="0" selection-end-line="746" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="validation.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/sklearn/utils/validation.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="423" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="multilayer_perceptron.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/sklearn/neural_network/multilayer_perceptron.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="642" column="0" selection-start-line="642" selection-start-column="0" selection-end-line="642" selection-end-column="0" />
+            <state relative-caret-position="-40">
+              <caret line="104" column="38" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -116,16 +181,33 @@
       <file leaf-file-name="JugadorGrupo3.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-21">
-              <caret line="27" column="19" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="19" />
+            <state relative-caret-position="96">
+              <caret line="164" column="21" selection-start-line="164" selection-start-column="21" selection-end-line="164" selection-end-column="21" />
               <folding>
-                <element signature="e#24#71#0" expanded="true" />
+                <element signature="e#24#59#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="multilayer_perceptron.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/sklearn/neural_network/multilayer_perceptron.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="174">
+              <caret line="639" column="23" selection-start-line="639" selection-start-column="23" selection-end-line="639" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -139,6 +221,7 @@
         <option value="$PROJECT_DIR$/Players/GreedyPlayer.py" />
         <option value="$PROJECT_DIR$/InteractiveGame.py" />
         <option value="$PROJECT_DIR$/CustomBatchGame.py" />
+        <option value="$PROJECT_DIR$/Torneo.py" />
         <option value="$PROJECT_DIR$/Players/JugadorGrupo3.py" />
         <option value="$PROJECT_DIR$/Loader.py" />
       </list>
@@ -151,10 +234,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="x" value="1" />
+    <option name="y" value="1" />
+    <option name="width" value="1364" />
+    <option name="height" value="726" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -163,7 +246,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
@@ -181,8 +264,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -217,6 +298,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -534,17 +617,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="1" y="1" width="1364" height="726" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26096824" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2714724" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41652614" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -554,6 +636,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -573,21 +656,128 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="22" />
+      <option name="time" value="27" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="np.array(valores).reshape(-1, 1)" language="Python" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2720">
+          <caret line="160" column="51" selection-start-line="160" selection-start-column="51" selection-end-line="160" selection-end-column="51" />
+          <folding>
+            <element signature="e#25#68#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/InteractiveGame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3536">
+          <caret line="208" column="14" selection-start-line="208" selection-start-column="14" selection-end-line="208" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#24#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Board.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1802">
+          <caret line="107" column="18" selection-start-line="107" selection-start-column="18" selection-end-line="107" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#68#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CustomBatchGame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Players/RandomPlayer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="13" column="11" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Players/GreedyPlayer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/copy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3247">
+          <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/enum/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12682">
+          <caret line="746" column="0" selection-start-line="746" selection-start-column="0" selection-end-line="746" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/sklearn/utils/validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7004">
+          <caret line="423" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/sklearn/neural_network/multilayer_perceptron.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10591">
+          <caret line="642" column="0" selection-start-line="642" selection-start-column="0" selection-end-line="642" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="27" column="19" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="19" />
+          <folding>
+            <element signature="e#24#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Loader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1020">
           <caret line="64" column="7" selection-start-line="64" selection-start-column="7" selection-end-line="64" selection-end-column="7" />
           <folding>
-            <element signature="e#25#68#0" expanded="true" />
+            <element signature="e#25#68#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -596,7 +786,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7191">
           <caret line="423" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -621,7 +810,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#24#71#0" expanded="true" />
+            <element signature="e#24#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -631,7 +820,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#25#68#0" expanded="true" />
+            <element signature="e#25#68#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -649,7 +838,7 @@
         <state relative-caret-position="748">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
           <folding>
-            <element signature="e#24#71#0" expanded="true" />
+            <element signature="e#24#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -667,7 +856,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#25#68#0" expanded="true" />
+            <element signature="e#25#68#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -715,13 +904,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/pickle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="885" column="0" selection-start-line="885" selection-start-column="0" selection-end-line="885" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Move.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -733,13 +915,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
           <caret line="1122" column="8" selection-start-line="1122" selection-start-column="8" selection-end-line="1122" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/InteractiveGame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="220" column="29" selection-start-line="220" selection-start-column="17" selection-end-line="220" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -765,27 +940,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Board.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/matplotlib/docstring.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="113">
+          <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="120" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Game.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/matplotlib/pyplot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/sklearn/neural_network/multilayer_perceptron.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="642" column="0" selection-start-line="642" selection-start-column="0" selection-end-line="642" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="96">
+          <caret line="306" column="18" selection-start-line="306" selection-start-column="18" selection-end-line="306" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -793,55 +958,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="113">
           <caret line="423" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="423" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/copy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/enum/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="746" column="0" selection-start-line="746" selection-start-column="0" selection-end-line="746" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CustomBatchGame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Players/GreedyPlayer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
+        <state relative-caret-position="305">
           <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-21">
-          <caret line="27" column="19" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="19" />
-          <folding>
-            <element signature="e#24#71#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Players/RandomPlayer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-64">
+        <state relative-caret-position="17">
           <caret line="13" column="11" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="11" />
           <folding />
         </state>
@@ -855,13 +985,92 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/copy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="228" column="0" selection-start-line="228" selection-start-column="0" selection-end-line="228" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/pickle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="971" column="0" selection-start-line="971" selection-start-column="0" selection-end-line="971" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Board.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="889">
+          <caret line="107" column="18" selection-start-line="107" selection-start-column="18" selection-end-line="107" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/InteractiveGame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="205" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="35" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CustomBatchGame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/enum/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="729" column="0" selection-start-line="729" selection-start-column="0" selection-end-line="729" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Torneo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-40">
+          <caret line="104" column="38" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Continuum/Anaconda2/Lib/site-packages/sklearn/neural_network/multilayer_perceptron.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="639" column="23" selection-start-line="639" selection-start-column="23" selection-end-line="639" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="164" column="21" selection-start-line="164" selection-start-column="21" selection-end-line="164" selection-end-column="21" />
+          <folding>
+            <element signature="e#24#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Loader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="124" column="56" selection-start-line="124" selection-start-column="56" selection-end-line="124" selection-end-column="56" />
-          <folding>
-            <element signature="e#25#68#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="14" column="63" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="63" />
+          <folding />
         </state>
       </provider>
     </entry>
