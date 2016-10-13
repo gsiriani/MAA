@@ -32,9 +32,12 @@ torneo.ejecutar()
 '''
 
 aprendices = []
-aprendices.append(Aprendiz("nn", [AnnBuilder.Red10(),AnnBuilder.Red10(),AnnBuilder.Red10()], 1))
+aprendices.append(Aprendiz("nn-x3", [],3))
+aprendices.append(Aprendiz("nn-x3-no-minmax", [],1))
+aprendices.append(Aprendiz("nn10", None, 1))
+aprendices.append(Aprendiz("nn50", None, 1))
 contrincantes = []
-contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
+#contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
 
-torneo = Torneo(aprendices, contrincantes, 100, 100)
+torneo = Torneo(aprendices, contrincantes, 5, 10)
 torneo.ejecutar()

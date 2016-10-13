@@ -79,6 +79,7 @@ class Torneo:
         for aprendiz in self.aprendices:
             if isinstance(aprendiz.red,list):
                 print ("Inicializando jugador multi red")
+                aprendiz.red = None if len(aprendiz.red) == 0 else aprendiz.red
                 aprendiz.jugador = JugadorGrupo3x3(None, aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
             else:
                 aprendiz.jugador = JugadorGrupo3(None,aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)

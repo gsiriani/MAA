@@ -10,6 +10,7 @@ from enum import Enum
 import numpy as np
 import pickle
 import os
+import sys
 
 class ResultadoJugada():
 
@@ -22,22 +23,39 @@ class ResultadoJugada():
 class JugadorGrupo3(Player):
     name = 'JugadorGrupo3'
 
-    def __init__(self, color, path = "nn-no-minmax.pkl", red = None, profundidadMinmax = 3):
+    def __init__(self, color, path = "nn10.pkl", red = None, profundidadMinmax = 3):
         super(JugadorGrupo3, self).__init__(self.name, color=color)
         self._ann = Ann()
         self._tableros_resultantes = []
         self.cargar(path,red)
         self.profundidadMinMax = profundidadMinmax
         self.aplicarEntrenamiento = red is not None
+        self.epsilonGreedy = 0.1
+        self.epsilonGreedyFactor = 0.999
 
     def move(self, board, opponent_move):
-        mejorResultado = self.minmax(board, self.profundidadMinMax, True)
 
-        self._tableros_resultantes.append(mejorResultado.tablero_resultante)
+        usarExploracion = random.uniform(0,1) <= self.epsilonGreedy
+
+        if not usarExploracion:
+            mejorResultado = self.minmax(board, self.profundidadMinMax, True)
+        else:
+            mejorResultado = self.jugadaRandom(board)
+
+        self._tableros_resultantes.append((mejorResultado.tablero_resultante, mejorResultado.valor))
+        self.epsilonGreedy *= self.epsilonGreedyFactor
 
         return mejorResultado.jugada
 
-    def minmax(self, board, profundidad, maximizar):
+    def jugadaRandom(self, board):
+
+        movimientos_posibles = board.get_possible_moves(self.color)
+        jugada = random.choice(movimientos_posibles)
+        nuevoTablero = self._ejecutar_jugada(jugada, board)
+        valor, tablero = self._evaluar_tablero(nuevoTablero)
+        return ResultadoJugada(jugada, valor, tablero)
+
+    def minmax(self, board, profundidad, maximizar, alpha = - sys.maxint - 1, beta = sys.maxint):
 
         if profundidad == 0:
             valor, tablero = self._evaluar_tablero(board)
@@ -52,16 +70,22 @@ class JugadorGrupo3(Player):
 
         resultados = []
 
+        mejorResultado = None
+
         for j in movimientos_posibles:
             nuevoTablero = self._ejecutar_jugada(j, board)
-            resultado = self.minmax(nuevoTablero, profundidad - 1, not maximizar)
+            resultado = self.minmax(nuevoTablero, profundidad - 1, not maximizar, alpha, beta)
             resultado.jugada = j
-            resultados.append(resultado)
-
-        if maximizar:
-            mejorResultado = max(resultados, key=lambda r: r.valor)
-        else:
-            mejorResultado = min(resultados, key=lambda r: r.valor)
+            if maximizar:
+                mejorResultado = resultado if mejorResultado is None or mejorResultado.valor < resultado.valor else mejorResultado
+                alpha = max(alpha, mejorResultado.valor)
+                if beta <= alpha:
+                    break
+            else:
+                mejorResultado = resultado if mejorResultado is None or mejorResultado.valor > resultado.valor else mejorResultado
+                beta = min(beta, mejorResultado.valor)
+                if beta <= alpha:
+                    break
 
         return mejorResultado
 
@@ -74,7 +98,7 @@ class JugadorGrupo3(Player):
 
     def on_defeat(self, board):
         if self.aplicarEntrenamiento:
-            resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
+            resultado = EnumResultado.DERROTA if self.profundidadMinMax % 2 == 1 else EnumResultado.VICTORIA
             self._ann.agregar_a_entrenamiento(self._tableros_resultantes, resultado)
         self._tableros_resultantes = []
 
@@ -166,6 +190,7 @@ class Ann:
         self._nn = MLPRegressor(hidden_layer_sizes=(10,), verbose=False, warm_start=True)
         self._entradas_entrenamiento = []
         self._salidas_esperadas_entrenamiento = []
+        self.lambdaCoefficient = 0.9
 
     def evaluar(self, entrada):
         return self._nn.predict(entrada)
@@ -173,8 +198,15 @@ class Ann:
     def agregar_a_entrenamiento(self, tableros, resultado):
 
         tableros.reverse()
-        self._entradas_entrenamiento.extend(tableros)
-        self._salidas_esperadas_entrenamiento.extend([[resultado.value*(0.8**i)] for i in xrange(len(tableros))])
+        for i in xrange(len(tableros)):
+            tablero, valorEstimado = tableros[i][0], tableros[i][1]
+            self._entradas_entrenamiento.append(tablero)
+            if i == 0 or True:
+                self._salidas_esperadas_entrenamiento.append(resultado.value)
+            else:
+                valorAAprender = valorEstimado + self.lambdaCoefficient * (self._salidas_esperadas_entrenamiento[i-1] -
+                    valorEstimado)
+                self._salidas_esperadas_entrenamiento.append(valorAAprender)
 
     def entrenar(self):
         self._nn.partial_fit(self._entradas_entrenamiento, self._salidas_esperadas_entrenamiento)
@@ -190,7 +222,7 @@ class Ann:
             self._nn = pickle.load(open(path, 'rb'))
         else:
             self._nn = red
-            tableroVacio = [EnumCasilla.EMPTY.value for _ in xrange(64)]
+            tableroVacio = ([EnumCasilla.EMPTY.value for _ in xrange(64)],0)
             self.agregar_a_entrenamiento([tableroVacio], EnumResultado.EMPATE)
             self.entrenar()
 

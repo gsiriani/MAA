@@ -9,6 +9,7 @@ from DataTypes import SquareType
 from enum import Enum
 import numpy as np
 import pickle
+from JugadorGrupo3 import Ann,EnumCasilla,EnumResultado
 import os
 import math
 
@@ -34,7 +35,7 @@ class JugadorGrupo3x3(Player):
     def move(self, board, opponent_move):
         mejorResultado = self.minmax(board, self.profundidadMinMax, True)
 
-        self._tableros_resultantes.append(mejorResultado.tablero_resultante)
+        self._tableros_resultantes.append((mejorResultado.tablero_resultante,mejorResultado.valor))
 
         return mejorResultado.jugada
 
@@ -70,7 +71,7 @@ class JugadorGrupo3x3(Player):
         return 4 + len(self._tableros_resultantes) * 2 + (1 if self.color == SquareType.WHITE else 0)
 
     def obtenerRedObjetivo(self):
-        return int((self.cantidadFichas() - 4) / 3)
+        return min(int((self.cantidadFichas() - 4) / 20),2)
 
     def entrenarRedes(self, resultado):
 
@@ -90,7 +91,7 @@ class JugadorGrupo3x3(Player):
 
     def on_defeat(self, board):
         if self.aplicarEntrenamiento:
-            resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
+            resultado = EnumResultado.DERROTA if self.profundidadMinMax % 2 == 1 else EnumResultado.VICTORIA
             self.entrenarRedes(resultado)
         self._tableros_resultantes = []
 
@@ -123,13 +124,13 @@ class JugadorGrupo3x3(Player):
         if self._partida_finalizada(t):
             return self._puntaje_final(t), entrada
 
-        eval = [ann.evaluar(np.array(entrada).reshape(1,-1)) for ann in self._ann]
+        #eval = [ann.evaluar(np.array(entrada).reshape(1,-1)) for ann in self._ann]
         n = self.cantidadFichas()
-        coeficients = [self.smoothingCoeficient(n,4),self.smoothingCoeficient(n,34),self.smoothingCoeficient(n,64)]
+        #coeficients = [self.smoothingCoeficient(n,4),self.smoothingCoeficient(n,34),self.smoothingCoeficient(n,64)]
 
-        smoothed = sum(x[0]*x[1] for x in zip(eval,coeficients)) / sum(coeficients)
+        #smoothed = sum(x[0]*x[1] for x in zip(eval,coeficients)) / sum(coeficients)
 
-        return smoothed, entrada
+        return self._ann[self.obtenerRedObjetivo()].evaluar(np.array(entrada).reshape(1,-1)), entrada #smoothed, entrada
 
     def _partida_finalizada(self,tablero):
         return not tablero.get_possible_moves(SquareType.BLACK) and not tablero.get_possible_moves(SquareType.WHITE)
@@ -164,71 +165,11 @@ class JugadorGrupo3x3(Player):
             self._ann[2].almacenar()
 
     def cargar(self, path, red):
-        self._ann[0].cargar("01_" + path, red[0])
-        self._ann[1].cargar("02_" + path, red[1])
-        self._ann[2].cargar("03_" + path, red[2])
+        self._ann[0].cargar("01_" + path, red[0] if red is not None else None)
+        self._ann[1].cargar("02_" + path, red[1] if red is not None else None)
+        self._ann[2].cargar("03_" + path, red[2] if red is not None else None)
 
     def entrenar(self):
         if self.aplicarEntrenamiento:
             for ann in self._ann:
                 ann.entrenar()
-
-class AnnBuilder:
-
-    @staticmethod
-    def Red10():
-        return MLPRegressor(hidden_layer_sizes=(10,), verbose=False, warm_start=True)
-
-    @staticmethod
-    def Red10_8():
-        return MLPRegressor(hidden_layer_sizes=(10,8), verbose=False, warm_start=True)
-
-class Ann:
-
-    def __init__(self):
-
-        self._nn = MLPRegressor(hidden_layer_sizes=(10,), verbose=False, warm_start=True)
-        self._entradas_entrenamiento = []
-        self._salidas_esperadas_entrenamiento = []
-
-    def evaluar(self, entrada):
-        return self._nn.predict(entrada)
-
-    def agregar_a_entrenamiento(self, tableros, resultado):
-
-        tableros.reverse()
-        self._entradas_entrenamiento.extend(tableros)
-        self._salidas_esperadas_entrenamiento.extend([[resultado.value*(0.8**i)] for i in xrange(len(tableros))])
-
-    def entrenar(self):
-        print("Entrenando con " + str(len(self._entradas_entrenamiento)) + " ejemplos")
-        self._nn.partial_fit(self._entradas_entrenamiento, self._salidas_esperadas_entrenamiento)
-        self._entradas_entrenamiento = []
-        self._salidas_esperadas_entrenamiento = []
-
-    def almacenar(self):
-        pickle.dump(self._nn, open(self.path,'wb'))
-
-    def cargar(self, path, red):
-        self.path = path
-        if os.path.isfile(path):
-            self._nn = pickle.load(open(path, 'rb'))
-        else:
-            self._nn = red
-            tableroVacio = [EnumCasilla.EMPTY.value for _ in xrange(64)]
-            self.agregar_a_entrenamiento([tableroVacio], EnumResultado.EMPATE)
-            self.entrenar()
-
-
-class EnumCasilla(Enum):
-    RIVAL = -1
-    PROPIA = 1
-    EMPTY = 0
-
-class EnumResultado(Enum):
-    VICTORIA = 1
-    EMPATE = 0
-    DERROTA = -1
-
-
-
