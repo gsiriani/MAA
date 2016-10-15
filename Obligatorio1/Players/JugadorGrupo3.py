@@ -23,7 +23,7 @@ class ResultadoJugada():
 class JugadorGrupo3(Player):
     name = 'JugadorGrupo3'
 
-    def __init__(self, color, path = "nn10.pkl", red = None, profundidadMinmax = 3):
+    def __init__(self, color, path = "nn-x3.pkl", red = None, profundidadMinmax = 3):
         super(JugadorGrupo3, self).__init__(self.name, color=color)
         self._ann = Ann()
         self._tableros_resultantes = []

@@ -18,8 +18,10 @@ class Estadisticas:
         self.Negros = (0,0,0)
         self.HistoriaBlancos = []
         self.HistoriaNegros = []
+        self.HistoriaNegrosVs = {}
+        self.HistoriaBlancosVs = {}
 
-    def Cargar(self, blancos, negros, esPrimerJugador, vuelta):
+    def Cargar(self, blancos, negros, esPrimerJugador, contrincante,vuelta):
 
         if not esPrimerJugador:
             blancos = tuple(reversed(blancos))
@@ -34,6 +36,13 @@ class Estadisticas:
         else:
             self.HistoriaBlancos.append(blancos)
             self.HistoriaNegros.append(negros)
+
+        if not self.HistoriaNegrosVs.has_key(contrincante):
+            self.HistoriaNegrosVs[contrincante] = (0, 0, 0)
+            self.HistoriaBlancosVs[contrincante] = (0, 0, 0)
+
+        self.HistoriaNegrosVs[contrincante] = tuple([sum(x) for x in zip(self.HistoriaNegrosVs[contrincante], negros)])
+        self.HistoriaBlancosVs[contrincante] = tuple([sum(x) for x in zip(self.HistoriaBlancosVs[contrincante], blancos)])
 
     def ObtenerVictorias(self):
         return [sum(x) for x in zip([y[0] for y in self.HistoriaBlancos], [y[0] for y in self.HistoriaNegros])]
@@ -85,7 +94,7 @@ class Torneo:
                 aprendiz.jugador = JugadorGrupo3(None,aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
 
         for i in range(self.torneos):
-            print (time.asctime() + " - " + "Vuelta " + str(i) + " del torneo")
+            print (time.asctime() + " - " + "*** Vuelta " + str(i) + " del torneo ***")
             self.ejecutarVuelta(i)
 
         for aprendiz in self.aprendices:
@@ -146,11 +155,11 @@ class Torneo:
         estatidicasB = self.obtenerSuma(BvsW, DataTypes.GameStatus.BLACK_WINS)
         estatidicasW = self.obtenerSuma(WvsB,DataTypes.GameStatus.WHITE_WINS)
 
-        jugadorA.estadisticas.Cargar(estatidicasW,estatidicasB, True, vuelta)
-        jugadorB.estadisticas.Cargar(estatidicasW, estatidicasB, False, vuelta)
+        jugadorA.estadisticas.Cargar(estatidicasW, estatidicasB, True, vuelta, jugadorB.nombre)
+        jugadorB.estadisticas.Cargar(estatidicasW, estatidicasB, False, vuelta, jugadorA.nombre)
 
-        print(time.asctime() + " - " + str(estatidicasW))
-        print(time.asctime() + " - " + str(estatidicasB))
+        print(time.asctime() + " - Jugando como Blancas - " + str(estatidicasW))
+        print(time.asctime() + " - Jugando como Negras - " + str(estatidicasB))
 
         return (estatidicasW, estatidicasB)
 
@@ -161,6 +170,29 @@ class Torneo:
 
         for contrincante in self.contricantes:
             plt.plot(contrincante.estadisticas.ObtenerVictorias(),label=contrincante.nombre)
+
+        plt.legend()
+        plt.show()
+
+        plt.clf()
+
+        jugadores = []
+
+        for aprendiz in self.aprendices:
+            jugadores.append((aprendiz.nombre, aprendiz.estadisticas.Negros[0], aprendiz.estadisticas.Blancos[0]))
+
+        for contrincante in self.contricantes:
+            jugadores.append((contrincante.nombre, contrincante.estadisticas.Negros[0], contrincante.estadisticas.Blancos[0]))
+
+        bar_width = 0.75
+        pos = [i + 1 for i in range(len(jugadores))]
+        tick_pos = [i + (bar_width / 2) for i in pos]
+
+        plt.bar(pos, [j[1] for j in jugadores], label='Juega con negras',color='#F4561D', alpha=0.5)
+        plt.bar(pos, [j[1] + j[2] for j in jugadores], label='Juega con blancas',color='#F1911E', alpha=0.5)
+
+        plt.xticks(tick_pos ,[j[0] for j in jugadores])
+        plt.xlim([min(tick_pos) - bar_width, max(tick_pos) + bar_width])
 
         plt.legend()
         plt.show()

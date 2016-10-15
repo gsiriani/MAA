@@ -19,7 +19,8 @@ class Game(object):
 
     def _log_to_file(self):
         pass
-        '''with open('./logs/log_' + datetime.datetime.now().strftime('%f') + '.csv', 'w') as f:
+        '''
+            with open('./logs/log_' + datetime.datetime.now().strftime('%f') + '.csv', 'w') as f:
             w = csv.writer(f)
             for move, color in self._move_list:
                 if move:

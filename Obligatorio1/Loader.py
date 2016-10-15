@@ -32,12 +32,12 @@ torneo.ejecutar()
 '''
 
 aprendices = []
-aprendices.append(Aprendiz("nn-x3", [],3))
-aprendices.append(Aprendiz("nn-x3-no-minmax", [],1))
-aprendices.append(Aprendiz("nn10", None, 1))
-aprendices.append(Aprendiz("nn50", None, 1))
+aprendices.append(Aprendiz("nn-50-x3", [],1))
+#aprendices.append(Aprendiz("nn-x3-no-minmax", [],1))
+#aprendices.append(Aprendiz("nn10", None, 1))
+#aprendices.append(Aprendiz("nn50", None, 1))
 contrincantes = []
-#contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
+contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
 
-torneo = Torneo(aprendices, contrincantes, 5, 10)
+torneo = Torneo(aprendices, contrincantes, 15, 1)
 torneo.ejecutar()

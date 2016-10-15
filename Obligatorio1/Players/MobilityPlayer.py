@@ -3,23 +3,16 @@ from collections import defaultdict
 from copy import deepcopy
 from DataTypes import SquareType
 from Player import Player
-from Players.JugadorGrupo3 import EnumResultado
+from Players import PositionalPlayer
 
 
-class PositionalPlayer(Player):
+class MobilityPlayer(Player):
     """Jugador que siempre elige la jugada que más fichas come."""
 
-    name = 'PositionalPlayer'
-
-    BOARD_VALUES = [
-        [100, -20, 10, 5],
-        [-20, -50, -2, -2],
-        [10, -2, -1, -1],
-        [5, -2, -1, -1]
-    ]
+    name = 'MobilityPlayer'
 
     def __init__(self, color):
-        super(PositionalPlayer, self).__init__(self.name, color)
+        super(MobilityPlayer, self).__init__(self.name, color)
 
     def move(self, board, opponent_move):
         """
@@ -45,14 +38,13 @@ class PositionalPlayer(Player):
 
         tablero = t.get_as_matrix()
 
-        valorInicio = 0
-        valorFin = 0
+        diferenciaFichas = 0
         tableroOcupado = 0
 
+        esquinas = 0
+
         for x in xrange(8):
-            x = 3.5 - abs(3.5 - x)
             for y in xrange(8):
-                y = 3.5 - abs(3.5 - y)
 
                 ficha = tablero[x][y]
                 if ficha == SquareType.EMPTY:
@@ -60,12 +52,23 @@ class PositionalPlayer(Player):
 
                 multiplicador = 1 if ficha == self.color else -1
 
-                valorInicio += PositionalPlayer.BOARD_VALUES[x][y] * multiplicador
-                valorFin += multiplicador
+                if (x == 0 or x == 7) and (y == 0 or y == 7):
+                    esquinas += multiplicador
+
+                diferenciaFichas += multiplicador
                 tableroOcupado += 1
 
-        return valorInicio if float(tableroOcupado) / 64 <= 0.8 else valorFin
+        otroColor = SquareType((self.color.value + 1) % 2)
 
+        if float(tableroOcupado) / 64 <= 0.8:
+            mobilidadColor = len(tablero.get_possible_moves(self.color))
+            mobilidadOtroColor = len(tablero.get_possible_moves(otroColor))
+
+            mobilidad = (mobilidadColor - mobilidadOtroColor) / float(mobilidadColor + mobilidadOtroColor)
+
+            return esquinas * 10 + mobilidad
+        else:
+            return diferenciaFichas
 
     def _partida_finalizada(self, tablero):
         return not tablero.get_possible_moves(SquareType.BLACK) and not tablero.get_possible_moves(SquareType.WHITE)
