@@ -25,7 +25,8 @@ class JugadorGrupo3(Player):
 
     def __init__(self, color, path = "nn-x3.pkl", red = None, profundidadMinmax = 3):
         super(JugadorGrupo3, self).__init__(self.name, color=color)
-        self._ann = Ann()
+        self._ann_Early = Ann()
+        self._ann_Late = Ann()
         self._tableros_resultantes = []
         self.cargar(path,red)
         self.profundidadMinMax = profundidadMinmax
@@ -91,6 +92,18 @@ class JugadorGrupo3(Player):
 
 
     def on_win(self, board):
+<<<<<<< HEAD
+        #print 'Gané y soy el color:' + self.color.name
+        self.entrenar(EnumResultado.VICTORIA)
+
+    def on_defeat(self, board):
+        #print 'Perdí y soy el color:' + self.color.name
+        self.entrenar(EnumResultado.DERROTA)
+
+    def on_draw(self, board):
+        #print 'Empaté y soy el color:' + self.color.name
+        self.entrenar(EnumResultado.EMPATE)
+=======
         if self.aplicarEntrenamiento:
             resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
             self._ann.agregar_a_entrenamiento(self._tableros_resultantes, resultado)
@@ -106,10 +119,23 @@ class JugadorGrupo3(Player):
         if self.aplicarEntrenamiento:
             self._ann.agregar_a_entrenamiento(self._tableros_resultantes, EnumResultado.EMPATE)
         self._tableros_resultantes = []
+>>>>>>> ANN
 
     def on_error(self, board):
         raise Exception('Hubo un error.')
 
+<<<<<<< HEAD
+    def _evaluar_jugada(self, jugada, t):
+
+        t = self._ejecutar_jugada(jugada,t)
+
+        if len(self._tableros_resultantes) < 30:
+            return self._evaluar_tablero(t, self._ann_Early)
+        else:
+            return self._evaluar_tablero(t, self._ann_Late)
+
+=======
+>>>>>>> ANN
     def _ejecutar_jugada(self,jugada, t):
         tablero = deepcopy(t)
 
@@ -118,7 +144,11 @@ class JugadorGrupo3(Player):
 
         return tablero
 
+<<<<<<< HEAD
+    def _evaluar_tablero(self, t, ann):
+=======
     def _evaluar_tablero(self, t, invertir = False):
+>>>>>>> ANN
 
         matriz = t.get_as_matrix()
 
@@ -127,7 +157,7 @@ class JugadorGrupo3(Player):
         if self._partida_finalizada(t):
             return self._puntaje_final(t), entrada
 
-        return (self._ann.evaluar(np.array(entrada).reshape(1,-1)), entrada)
+        return (ann.evaluar(np.array(entrada).reshape(1,-1)), entrada)
 
     def _partida_finalizada(self,tablero):
         return not tablero.get_possible_moves(SquareType.BLACK) and not tablero.get_possible_moves(SquareType.WHITE)
@@ -162,10 +192,21 @@ class JugadorGrupo3(Player):
     def cargar(self, path, red):
         self._ann.cargar(path, red)
 
+<<<<<<< HEAD
+    def entrenar(self, resultado):
+        if len(self._tableros_resultantes) > 30:
+            self._ann_Early.entrenar(self._tableros_resultantes[:31], resultado)
+            self._ann_Late.entrenar(self._tableros_resultantes[31:], resultado)
+        else:
+            self._ann_Early.entrenar(self._tableros_resultantes, resultado)
+        self._tableros_resultantes = []
+        
+=======
     def entrenar(self):
         if self.aplicarEntrenamiento:
             self._ann.entrenar()
 
+>>>>>>> ANN
 class AnnBuilder:
 
     @staticmethod
