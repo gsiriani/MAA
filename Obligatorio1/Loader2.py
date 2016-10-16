@@ -10,7 +10,7 @@ import DataTypes
 from Torneo import Torneo,AnnBuilder,Aprendiz,Contrincante
 
 aprendices = []
-aprendices.append(Aprendiz("nn-50-x3", [AnnBuilder.Red50(),AnnBuilder.Red50(),AnnBuilder.Red50()],1))
+aprendices.append(Aprendiz("nn-50-50-x3", [AnnBuilder.Red50_50(),AnnBuilder.Red50_50(),AnnBuilder.Red50_50()],1))
 contrincantes = []
 contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
 

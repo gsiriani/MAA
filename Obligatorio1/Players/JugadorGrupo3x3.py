@@ -124,13 +124,13 @@ class JugadorGrupo3x3(Player):
         if self._partida_finalizada(t):
             return self._puntaje_final(t), entrada
 
-        #eval = [ann.evaluar(np.array(entrada).reshape(1,-1)) for ann in self._ann]
+        eval = [ann.evaluar(np.array(entrada).reshape(1,-1)) for ann in self._ann]
         n = self.cantidadFichas()
-        #coeficients = [self.smoothingCoeficient(n,4),self.smoothingCoeficient(n,34),self.smoothingCoeficient(n,64)]
+        coeficients = [self.smoothingCoeficient(n,4),self.smoothingCoeficient(n,34),self.smoothingCoeficient(n,64)]
 
-        #smoothed = sum(x[0]*x[1] for x in zip(eval,coeficients)) / sum(coeficients)
+        smoothed = sum(x[0]*x[1] for x in zip(eval,coeficients)) / sum(coeficients)
 
-        return self._ann[self.obtenerRedObjetivo()].evaluar(np.array(entrada).reshape(1,-1)), entrada #smoothed, entrada
+        return smoothed, entrada #self._ann[self.obtenerRedObjetivo()].evaluar(np.array(entrada).reshape(1,-1)), entrada #smoothed, entrada
 
     def _partida_finalizada(self,tablero):
         return not tablero.get_possible_moves(SquareType.BLACK) and not tablero.get_possible_moves(SquareType.WHITE)

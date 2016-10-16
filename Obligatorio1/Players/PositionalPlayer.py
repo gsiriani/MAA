@@ -27,7 +27,7 @@ class PositionalPlayer(Player):
         :param opponent_move: Move
         :return: Move
         """
-        max_value = 0
+        max_value = -99999
         chosen_move = None
         for move in board.get_possible_moves(self.color):
             nuevoTablero = self._ejecutar_jugada(move, board)
@@ -50,15 +50,15 @@ class PositionalPlayer(Player):
         tableroOcupado = 0
 
         for x in xrange(8):
-            x = 3.5 - abs(3.5 - x)
+            x = int(3.5 - abs(3.5 - x))
             for y in xrange(8):
-                y = 3.5 - abs(3.5 - y)
+                y = int(3.5 - abs(3.5 - y))
 
                 ficha = tablero[x][y]
-                if ficha == SquareType.EMPTY:
-                    break
+                if ficha == SquareType.EMPTY.value:
+                    continue
 
-                multiplicador = 1 if ficha == self.color else -1
+                multiplicador = 1 if ficha == self.color.value else -1
 
                 valorInicio += PositionalPlayer.BOARD_VALUES[x][y] * multiplicador
                 valorFin += multiplicador

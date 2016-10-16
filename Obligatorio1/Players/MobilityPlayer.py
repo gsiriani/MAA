@@ -47,10 +47,10 @@ class MobilityPlayer(Player):
             for y in xrange(8):
 
                 ficha = tablero[x][y]
-                if ficha == SquareType.EMPTY:
-                    break
+                if ficha == SquareType.EMPTY.value:
+                    continue
 
-                multiplicador = 1 if ficha == self.color else -1
+                multiplicador = 1 if ficha == self.color.value else -1
 
                 if (x == 0 or x == 7) and (y == 0 or y == 7):
                     esquinas += multiplicador
@@ -61,8 +61,8 @@ class MobilityPlayer(Player):
         otroColor = SquareType((self.color.value + 1) % 2)
 
         if float(tableroOcupado) / 64 <= 0.8:
-            mobilidadColor = len(tablero.get_possible_moves(self.color))
-            mobilidadOtroColor = len(tablero.get_possible_moves(otroColor))
+            mobilidadColor = len(t.get_possible_moves(self.color))
+            mobilidadOtroColor = len(t.get_possible_moves(otroColor))
 
             mobilidad = (mobilidadColor - mobilidadOtroColor) / float(mobilidadColor + mobilidadOtroColor)
 

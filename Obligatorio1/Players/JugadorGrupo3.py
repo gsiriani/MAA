@@ -30,7 +30,7 @@ class JugadorGrupo3(Player):
         self.cargar(path,red)
         self.profundidadMinMax = profundidadMinmax
         self.aplicarEntrenamiento = red is not None
-        self.epsilonGreedy = 0.1
+        self.epsilonGreedy = 0
         self.epsilonGreedyFactor = 0.999
 
     def move(self, board, opponent_move):
@@ -180,6 +180,10 @@ class AnnBuilder:
     @staticmethod
     def Red10_8():
         return MLPRegressor(hidden_layer_sizes=(10,8), verbose=False, warm_start=True)
+
+    @staticmethod
+    def Red50_50():
+        return MLPRegressor(hidden_layer_sizes=(50,50), verbose=False, warm_start=True)
 
 
 

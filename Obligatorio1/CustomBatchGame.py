@@ -4,25 +4,34 @@ from Game import Game
 from DataTypes import SquareType, GameStatus
 from copy import deepcopy
 from Players.RandomPlayer import RandomPlayer
-
+import random
 
 class CustomBatchGame(Game):
     DIRS = 8
 
-    def __init__(self, black_player, white_player):
+    def __init__(self, black_player, white_player, firstRandomMoves = False):
         self.players = {SquareType.BLACK: black_player,
                         SquareType.WHITE: white_player}
+        self.firstRandomMoves = firstRandomMoves
         super(CustomBatchGame, self).__init__()
 
     def play(self):
         self._last_move = None
+        remainingRandomMoves = random.randint(0,30) if self.firstRandomMoves else 0
+
         while self._game_status == GameStatus.PLAYING:
-            if self._state.get_possible_moves(self._turn):
-                self._last_move = self.players[self._turn].move(deepcopy(self._state), self._last_move)
+            posibleMoves = self._state.get_possible_moves(self._turn)
+            if posibleMoves:
+                if remainingRandomMoves > 0:
+                    self._last_move = random.choice(posibleMoves)
+                else:
+                    self._last_move = self.players[self._turn].move(deepcopy(self._state), self._last_move)
                 self._do_move(self._last_move, self._turn)
             else:
                 self._last_move = None
             self._pass_turn()
+            remainingRandomMoves -= 1
+
         self._log_to_file()
         if self._game_status == GameStatus.BLACK_WINS:
             self.players[SquareType.WHITE].on_defeat(deepcopy(self._state))

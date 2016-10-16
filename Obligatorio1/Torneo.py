@@ -20,6 +20,7 @@ class Estadisticas:
         self.HistoriaNegros = []
         self.HistoriaNegrosVs = {}
         self.HistoriaBlancosVs = {}
+        self.PartidasJugadas = 0
 
     def Cargar(self, blancos, negros, esPrimerJugador, contrincante,vuelta):
 
@@ -40,6 +41,8 @@ class Estadisticas:
         if not self.HistoriaNegrosVs.has_key(contrincante):
             self.HistoriaNegrosVs[contrincante] = (0, 0, 0)
             self.HistoriaBlancosVs[contrincante] = (0, 0, 0)
+
+        self.PartidasJugadas += sum(blancos) + sum(negros)
 
         self.HistoriaNegrosVs[contrincante] = tuple([sum(x) for x in zip(self.HistoriaNegrosVs[contrincante], negros)])
         self.HistoriaBlancosVs[contrincante] = tuple([sum(x) for x in zip(self.HistoriaBlancosVs[contrincante], blancos)])
@@ -80,6 +83,7 @@ class Torneo:
         self.contricantes = contrincantes
         self.partidas = partidas
         self.torneos = torneos
+        self.comienzoAleatorio = False
 
     def ejecutar(self):
 
@@ -143,13 +147,13 @@ class Torneo:
         jugadorA.jugador.color = DataTypes.SquareType.BLACK
         jugadorB.jugador.color = DataTypes.SquareType.WHITE
 
-        BvsW = [CustomBatchGame(black_player=jugadorA.jugador, white_player=jugadorB.jugador).play() for _ in
+        BvsW = [CustomBatchGame(black_player=jugadorA.jugador, white_player=jugadorB.jugador, firstRandomMoves=self.comienzoAleatorio).play() for _ in
                 xrange(self.partidas)]
 
         jugadorA.jugador.color = DataTypes.SquareType.WHITE
         jugadorB.jugador.color = DataTypes.SquareType.BLACK
 
-        WvsB = [CustomBatchGame(black_player=jugadorB.jugador, white_player=jugadorA.jugador).play() for _ in
+        WvsB = [CustomBatchGame(black_player=jugadorB.jugador, white_player=jugadorA.jugador, firstRandomMoves=self.comienzoAleatorio).play() for _ in
                 xrange(self.partidas)]
 
         estatidicasB = self.obtenerSuma(BvsW, DataTypes.GameStatus.BLACK_WINS)
@@ -179,17 +183,19 @@ class Torneo:
         jugadores = []
 
         for aprendiz in self.aprendices:
-            jugadores.append((aprendiz.nombre, aprendiz.estadisticas.Negros[0], aprendiz.estadisticas.Blancos[0]))
+            jugadores.append((aprendiz.nombre, aprendiz.estadisticas.Negros[0], aprendiz.estadisticas.Blancos[0],
+                             float(aprendiz.estadisticas.PartidasJugadas)))
 
         for contrincante in self.contricantes:
-            jugadores.append((contrincante.nombre, contrincante.estadisticas.Negros[0], contrincante.estadisticas.Blancos[0]))
+            jugadores.append((contrincante.nombre, contrincante.estadisticas.Negros[0], contrincante.estadisticas.Blancos[0],
+                             float(contrincante.estadisticas.PartidasJugadas)))
 
         bar_width = 0.75
         pos = [i + 1 for i in range(len(jugadores))]
         tick_pos = [i + (bar_width / 2) for i in pos]
 
-        plt.bar(pos, [j[1] for j in jugadores], label='Juega con negras',color='#F4561D', alpha=0.5)
-        plt.bar(pos, [j[1] + j[2] for j in jugadores], label='Juega con blancas',color='#F1911E', alpha=0.5)
+        plt.bar(pos, [j[1]/j[3] for j in jugadores], label='Juega con negras',color='#F4561D', alpha=0.5)
+        plt.bar(pos, [(j[1] + j[2])/j[3] for j in jugadores], label='Juega con blancas',color='#F1911E', alpha=0.5)
 
         plt.xticks(tick_pos ,[j[0] for j in jugadores])
         plt.xlim([min(tick_pos) - bar_width, max(tick_pos) + bar_width])

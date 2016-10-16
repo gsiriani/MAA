@@ -7,6 +7,10 @@ from Players.JugadorGrupo3 import JugadorGrupo3,AnnBuilder
 import numpy as np
 import matplotlib.pyplot as plt
 import DataTypes
+from Players.PositionalPlayer import PositionalPlayer
+from Players.MobilityPlayer import MobilityPlayer
+from Players.GreedyPlayer import GreedyPlayer
+
 from Torneo import Torneo,AnnBuilder,Aprendiz,Contrincante
 '''
 aprendices = []
@@ -33,11 +37,15 @@ torneo.ejecutar()
 
 aprendices = []
 aprendices.append(Aprendiz("nn-50-x3", [],1))
-#aprendices.append(Aprendiz("nn-x3-no-minmax", [],1))
-#aprendices.append(Aprendiz("nn10", None, 1))
-#aprendices.append(Aprendiz("nn50", None, 1))
+aprendices.append(Aprendiz("nn-x3-no-minmax", [],1))
+aprendices.append(Aprendiz("nn10", None, 1))
+aprendices.append(Aprendiz("nn50", None, 1))
 contrincantes = []
-contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
+#contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
+#contrincantes.append(Contrincante("Positional",PositionalPlayer(DataTypes.SquareType.BLACK)))
+#contrincantes.append(Contrincante("Greedy",GreedyPlayer(DataTypes.SquareType.BLACK)))
+#contrincantes.append(Contrincante("Mobility",MobilityPlayer(DataTypes.SquareType.BLACK)))
 
-torneo = Torneo(aprendices, contrincantes, 15, 1)
+torneo = Torneo(aprendices, contrincantes, 100, 1)
+torneo.comienzoAleatorio = True
 torneo.ejecutar()
