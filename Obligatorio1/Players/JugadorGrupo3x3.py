@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
-
+import collections
 from sklearn.neural_network import MLPRegressor
 from Player import Player
 import random
@@ -12,6 +12,7 @@ import pickle
 from JugadorGrupo3 import Ann,EnumCasilla,EnumResultado
 import os
 import math
+import sys
 
 class ResultadoJugada():
 
@@ -21,25 +22,71 @@ class ResultadoJugada():
         self.tablero_resultante = tablero_resultante
         self.jugada = jugada
 
-class JugadorGrupo3x3(Player):
-    name = 'JugadorGrupo3'
+class TranspositionTableItem():
 
-    def __init__(self, color, path = "nn-no-minmax.pkl", red = None, profundidadMinmax = 3):
+    def __init__(self, resultado, profundidad):
+        self.resultado = resultado
+        self.profundidad = profundidad
+
+class TramspositionTable():
+
+    def __init__(self, tamanoMaximo = 100000):
+        self.tamanoMaximo = tamanoMaximo
+        self.tabla = collections.OrderedDict()
+        self.valores = []
+
+    def agregar(self, t, resultado, profundidad):
+        if self.tabla.has_key(t):
+            elemento = self.tabla[t]
+            if elemento.profundidad <= profundidad:
+                self.tabla.pop(t)
+                elemento.resultado = resultado
+                elemento.profundidad = profundidad
+                self.tabla[t] = elemento
+        else:
+
+            if len(self.tabla) >= self.tamanoMaximo - 1:
+                self.tabla.popitem(last=False)
+
+            elemento = TranspositionTableItem(resultado, profundidad)
+            self.tabla[t] = elemento
+
+    def obtener(self, t, profundidad):
+
+        if self.tabla.has_key(t):
+            elemento = self.tabla[t]
+
+            return elemento if elemento.profundidad >= profundidad else None
+
+        return None
+
+    def limpiar(self):
+
+        self.tabla.clear()
+
+class JugadorGrupo3x3(Player):
+    name = 'JugadorGrupo3x3'
+
+    def __init__(self, color, path = "nn-50-50-x3.pkl", red = None, profundidadMinmax = 3):
         super(JugadorGrupo3x3, self).__init__(self.name, color=color)
         self._ann = [Ann(), Ann(), Ann()]
         self._tableros_resultantes = []
         self.cargar(path,red)
         self.profundidadMinMax = profundidadMinmax
         self.aplicarEntrenamiento = red is not None
+        self.tablaTransposicion = TramspositionTable()
 
     def move(self, board, opponent_move):
         mejorResultado = self.minmax(board, self.profundidadMinMax, True)
 
         self._tableros_resultantes.append((mejorResultado.tablero_resultante,mejorResultado.valor))
 
+        if self.aplicarEntrenamiento:
+            self.tablaTransposicion.limpiar()
+
         return mejorResultado.jugada
 
-    def minmax(self, board, profundidad, maximizar):
+    def minmax(self, board, profundidad, maximizar, alpha = - sys.maxint - 1, beta = sys.maxint):
 
         if profundidad == 0:
             valor, tablero = self._evaluar_tablero(board)
@@ -52,18 +99,33 @@ class JugadorGrupo3x3(Player):
             valor, tablero = self._evaluar_tablero(board)
             return ResultadoJugada(None, valor, tablero)
 
-        resultados = []
+        tableroInicial = self._transformar_tablero(board)
+        resultadoAlmacenado = self.tablaTransposicion.obtener(tableroInicial, profundidad)
+
+        if resultadoAlmacenado is not None:
+            return resultadoAlmacenado.resultado
+
+        movimientos_posibles.sort(key=lambda x: self._evaluar_tablero(self._ejecutar_jugada(x, board))[0])
+        movimientos_posibles.reverse()
+
+        mejorResultado = None
 
         for j in movimientos_posibles:
             nuevoTablero = self._ejecutar_jugada(j, board)
-            resultado = self.minmax(nuevoTablero, profundidad - 1, not maximizar)
+            resultado = self.minmax(nuevoTablero, profundidad - 1, not maximizar, alpha, beta)
             resultado.jugada = j
-            resultados.append(resultado)
+            if maximizar:
+                mejorResultado = resultado if mejorResultado is None or mejorResultado.valor < resultado.valor else mejorResultado
+                alpha = max(alpha, mejorResultado.valor)
+                if beta <= alpha:
+                    break
+            else:
+                mejorResultado = resultado if mejorResultado is None or mejorResultado.valor > resultado.valor else mejorResultado
+                beta = min(beta, mejorResultado.valor)
+                if beta <= alpha:
+                    break
 
-        if maximizar:
-            mejorResultado = max(resultados, key=lambda r: r.valor)
-        else:
-            mejorResultado = min(resultados, key=lambda r: r.valor)
+        self.tablaTransposicion.agregar(tableroInicial, mejorResultado, profundidad)
 
         return mejorResultado
 
@@ -115,11 +177,13 @@ class JugadorGrupo3x3(Player):
 
         return math.pow(math.e,-math.pow((n-u),2)/float(20**2))
 
-    def _evaluar_tablero(self, t, invertir = False):
-
+    def _transformar_tablero(self, t):
         matriz = t.get_as_matrix()
+        return tuple([self._transormarCasilla(square).value for fila in matriz for square in fila])
 
-        entrada = [self._transormarCasilla(square, invertir).value for fila in matriz for square in fila]
+    def _evaluar_tablero(self, t):
+
+        entrada = self._transformar_tablero(t)
 
         if self._partida_finalizada(t):
             return self._puntaje_final(t), entrada
@@ -150,10 +214,10 @@ class JugadorGrupo3x3(Player):
             return EnumResultado.EMPATE.value
 
 
-    def _transormarCasilla(self, casilla, invertir):
+    def _transormarCasilla(self, casilla):
         if casilla == SquareType.EMPTY.value:
             return EnumCasilla.EMPTY
-        elif (not invertir and casilla == self.color.value) or (invertir and casilla != self.color.value):
+        elif casilla == self.color.value:
             return EnumCasilla.PROPIA
         else:
             return EnumCasilla.RIVAL

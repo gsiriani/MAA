@@ -37,6 +37,7 @@ torneo.ejecutar()
 
 aprendices = []
 aprendices.append(Aprendiz("nn-50-x3", [],1))
+aprendices.append(Aprendiz("nn-50-50-x3", [],1))
 aprendices.append(Aprendiz("nn-x3-no-minmax", [],1))
 aprendices.append(Aprendiz("nn10", None, 1))
 aprendices.append(Aprendiz("nn50", None, 1))
@@ -46,6 +47,6 @@ contrincantes = []
 #contrincantes.append(Contrincante("Greedy",GreedyPlayer(DataTypes.SquareType.BLACK)))
 #contrincantes.append(Contrincante("Mobility",MobilityPlayer(DataTypes.SquareType.BLACK)))
 
-torneo = Torneo(aprendices, contrincantes, 100, 1)
-torneo.comienzoAleatorio = True
+torneo = Torneo(aprendices, contrincantes, 1, 10)
+torneo.comienzoAleatorio = False
 torneo.ejecutar()

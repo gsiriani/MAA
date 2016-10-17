@@ -221,5 +221,6 @@ if __name__ == '__main__':
     from Players.RandomPlayer import RandomPlayer
     from Players.GreedyPlayer import GreedyPlayer
     from Players.JugadorGrupo3 import JugadorGrupo3
-    t = InteractiveGame([RandomPlayer, GreedyPlayer, JugadorGrupo3])
+    from Players.JugadorGrupo3x3 import JugadorGrupo3x3
+    t = InteractiveGame([RandomPlayer, GreedyPlayer, JugadorGrupo3, JugadorGrupo3x3])
     t.play()
