@@ -2,6 +2,8 @@
 from collections import defaultdict
 import collections
 from sklearn.neural_network import MLPRegressor
+
+from Move import Move
 from Player import Player
 import random
 from copy import deepcopy
@@ -29,10 +31,11 @@ class TranspositionTableItem():
 
 class TramspositionTable():
 
-    def __init__(self, tamanoMaximo = 100000):
+    def __init__(self, tamanoMaximo = 10000):
         self.tamanoMaximo = tamanoMaximo
         self.tabla = collections.OrderedDict()
-        self.valores = []
+        self.consultas = 0
+        self.consultasExitosas = 0
 
     def agregar(self, t, resultado, profundidad):
         if self.tabla.has_key(t):
@@ -52,7 +55,10 @@ class TramspositionTable():
 
     def obtener(self, t, profundidad):
 
+        self.consultas += 1
+
         if self.tabla.has_key(t):
+            self.consultasExitosas += 1
             elemento = self.tabla[t]
 
             return elemento if elemento.profundidad >= profundidad else None
@@ -66,7 +72,7 @@ class TramspositionTable():
 class JugadorGrupo3(Player):
     name = 'JugadorGrupo3'
 
-    def __init__(self, color, path = "nn-50-50-x3.pkl", red = None, profundidadMinmax = 3):
+    def __init__(self, color, path = None, red = None, profundidadMinmax = 3):
         super(JugadorGrupo3, self).__init__(self.name, color=color)
         self._ann = [Ann(), Ann(), Ann()]
         self._tableros_resultantes = []
@@ -76,8 +82,27 @@ class JugadorGrupo3(Player):
         self.tablaTransposicion = TramspositionTable()
         self.epsilonGreedy = 0
         self.epsilonGreedyFactor = 0.999
+        self.jugadasPosibles = None
+        self.usoCache = []
+
+        if path is None:
+            self.path = os.path.join("redes","nn-50-50-x3")
+
+    def encontrarJugadasPosibles(self, board):
+        self.jugadasPosibles = []
+
+        for x in xrange(8):
+            for y in xrange(8):
+                if board.get_position(x, y) == SquareType.EMPTY:
+                    self.jugadasPosibles.append((x,y))
+
 
     def move(self, board, opponent_move):
+
+        if self.jugadasPosibles is None:
+            self.encontrarJugadasPosibles(board)
+        elif opponent_move is not None:
+            self.jugadasPosibles.remove((opponent_move.get_row(), opponent_move.get_col()))
 
         usarExploracion = random.uniform(0, 1) <= self.epsilonGreedy
         if not usarExploracion:
@@ -91,11 +116,14 @@ class JugadorGrupo3(Player):
         if self.aplicarEntrenamiento:
             self.tablaTransposicion.limpiar()
 
+        jugada = mejorResultado.jugada
+        self.jugadasPosibles.remove((jugada.get_row(),jugada.get_col()))
+
         return mejorResultado.jugada
 
     def jugadaRandom(self, board):
 
-        movimientos_posibles = board.get_possible_moves(self.color)
+        movimientos_posibles = self.get_possible_moves(board, self.color)
         jugada = random.choice(movimientos_posibles)
         nuevoTablero = self._ejecutar_jugada(jugada, board)
         valor, tablero = self._evaluar_tablero(nuevoTablero)
@@ -108,7 +136,7 @@ class JugadorGrupo3(Player):
             return ResultadoJugada(None, valor, tablero)
 
         colorTurno = self.color if maximizar else SquareType((self.color.value + 1) % 2)
-        movimientos_posibles = board.get_possible_moves(colorTurno)
+        movimientos_posibles = self.get_possible_moves(board, colorTurno)
 
         if len(movimientos_posibles) == 0:
             valor, tablero = self._evaluar_tablero(board)
@@ -144,6 +172,15 @@ class JugadorGrupo3(Player):
 
         return mejorResultado
 
+    def get_possible_moves(self, board, color):
+        moves = []
+        for x, y in self.jugadasPosibles:
+            move = Move(x, y)
+            if board.is_valid_move(move, color):
+                moves.append(move)
+        return moves
+
+
     def cantidadFichas(self):
         return 4 + len(self._tableros_resultantes) * 2 + (1 if self.color == SquareType.WHITE else 0)
 
@@ -165,17 +202,29 @@ class JugadorGrupo3(Player):
             resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
             self.entrenarRedes(resultado)
         self._tableros_resultantes = []
+        self.jugadasPosibles = None
+        self.usoCache.append(float(self.tablaTransposicion.consultasExitosas)/self.tablaTransposicion.consultas)
+        self.tablaTransposicion.consultas = 0
+        self.tablaTransposicion.consultasExitosas = 0
 
     def on_defeat(self, board):
         if self.aplicarEntrenamiento:
             resultado = EnumResultado.DERROTA if self.profundidadMinMax % 2 == 1 else EnumResultado.VICTORIA
             self.entrenarRedes(resultado)
         self._tableros_resultantes = []
+        self.jugadasPosibles = None
+        self.usoCache.append(float(self.tablaTransposicion.consultasExitosas) / self.tablaTransposicion.consultas)
+        self.tablaTransposicion.consultas = 0
+        self.tablaTransposicion.consultasExitosas = 0
 
     def on_draw(self, board):
         if self.aplicarEntrenamiento:
             self.entrenarRedes(EnumResultado.EMPATE)
         self._tableros_resultantes = []
+        self.jugadasPosibles = None
+        self.usoCache.append(float(self.tablaTransposicion.consultasExitosas) / self.tablaTransposicion.consultas)
+        self.tablaTransposicion.consultas = 0
+        self.tablaTransposicion.consultasExitosas = 0
 
     def on_error(self, board):
         raise Exception('Hubo un error.')
@@ -212,7 +261,7 @@ class JugadorGrupo3(Player):
         return smoothed, entrada #self._ann[self.obtenerRedObjetivo()].evaluar(np.array(entrada).reshape(1,-1)), entrada #smoothed, entrada
 
     def _partida_finalizada(self,tablero):
-        return not tablero.get_possible_moves(SquareType.BLACK) and not tablero.get_possible_moves(SquareType.WHITE)
+        return not self.get_possible_moves(tablero, SquareType.BLACK) and not self.get_possible_moves(tablero, SquareType.WHITE)
 
     def _puntaje_final(self, t):
         results = defaultdict(int)
