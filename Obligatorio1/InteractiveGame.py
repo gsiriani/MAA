@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 
 from Tkinter import *
-from Board import Board
-from DataTypes import SquareType, GameStatus
-from Move import Move
-from Game import Game
 from copy import deepcopy
 
+from Board import Board
+from DataTypes import SquareType, GameStatus
+from Game import Game
+from Move import Move
 
 DEFAULT_FONT = ('Helvetica', 13)
 GridSize = 60  # size in pixels of each square on playing board
@@ -220,7 +220,7 @@ class InteractiveGame(Game):
 if __name__ == '__main__':
     from Players.RandomPlayer import RandomPlayer
     from Players.GreedyPlayer import GreedyPlayer
+    from extras.JugadorGrupoSimple import JugadorGrupoSimple
     from Players.JugadorGrupo3 import JugadorGrupo3
-    from Players.JugadorGrupo3x3 import JugadorGrupo3x3
-    t = InteractiveGame([RandomPlayer, GreedyPlayer, JugadorGrupo3, JugadorGrupo3x3])
+    t = InteractiveGame([RandomPlayer, GreedyPlayer, JugadorGrupoSimple, JugadorGrupo3])
     t.play()

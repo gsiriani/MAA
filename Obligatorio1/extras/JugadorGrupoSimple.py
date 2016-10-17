@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
-import collections
+
 from sklearn.neural_network import MLPRegressor
-from Player import Player
+from Players.Player import Player
 import random
 from copy import deepcopy
 from DataTypes import SquareType
@@ -10,7 +10,6 @@ from enum import Enum
 import numpy as np
 import pickle
 import os
-import math
 import sys
 
 class ResultadoJugada():
@@ -21,75 +20,30 @@ class ResultadoJugada():
         self.tablero_resultante = tablero_resultante
         self.jugada = jugada
 
-class TranspositionTableItem():
-
-    def __init__(self, resultado, profundidad):
-        self.resultado = resultado
-        self.profundidad = profundidad
-
-class TramspositionTable():
-
-    def __init__(self, tamanoMaximo = 100000):
-        self.tamanoMaximo = tamanoMaximo
-        self.tabla = collections.OrderedDict()
-        self.valores = []
-
-    def agregar(self, t, resultado, profundidad):
-        if self.tabla.has_key(t):
-            elemento = self.tabla[t]
-            if elemento.profundidad <= profundidad:
-                self.tabla.pop(t)
-                elemento.resultado = resultado
-                elemento.profundidad = profundidad
-                self.tabla[t] = elemento
-        else:
-
-            if len(self.tabla) >= self.tamanoMaximo - 1:
-                self.tabla.popitem(last=False)
-
-            elemento = TranspositionTableItem(resultado, profundidad)
-            self.tabla[t] = elemento
-
-    def obtener(self, t, profundidad):
-
-        if self.tabla.has_key(t):
-            elemento = self.tabla[t]
-
-            return elemento if elemento.profundidad >= profundidad else None
-
-        return None
-
-    def limpiar(self):
-
-        self.tabla.clear()
-
-class JugadorGrupo3(Player):
-    name = 'JugadorGrupo3'
+class JugadorGrupoSimple(Player):
+    name = 'JugadorGrupoSimple'
 
     def __init__(self, color, path = "nn-50-50-x3.pkl", red = None, profundidadMinmax = 3):
-        super(JugadorGrupo3, self).__init__(self.name, color=color)
-        self._ann = [Ann(), Ann(), Ann()]
+        super(JugadorGrupoSimple, self).__init__(self.name, color=color)
+        self._ann = Ann()
         self._tableros_resultantes = []
         self.cargar(path,red)
         self.profundidadMinMax = profundidadMinmax
         self.aplicarEntrenamiento = red is not None
-        self.tablaTransposicion = TramspositionTable()
         self.epsilonGreedy = 0
         self.epsilonGreedyFactor = 0.999
 
     def move(self, board, opponent_move):
 
-        usarExploracion = random.uniform(0, 1) <= self.epsilonGreedy
+        usarExploracion = random.uniform(0,1) <= self.epsilonGreedy
+
         if not usarExploracion:
             mejorResultado = self.minmax(board, self.profundidadMinMax, True)
         else:
             mejorResultado = self.jugadaRandom(board)
 
-        self._tableros_resultantes.append((mejorResultado.tablero_resultante,mejorResultado.valor))
+        self._tableros_resultantes.append((mejorResultado.tablero_resultante, mejorResultado.valor))
         self.epsilonGreedy *= self.epsilonGreedyFactor
-
-        if self.aplicarEntrenamiento:
-            self.tablaTransposicion.limpiar()
 
         return mejorResultado.jugada
 
@@ -114,14 +68,7 @@ class JugadorGrupo3(Player):
             valor, tablero = self._evaluar_tablero(board)
             return ResultadoJugada(None, valor, tablero)
 
-        tableroInicial = self._transformar_tablero(board)
-        resultadoAlmacenado = self.tablaTransposicion.obtener(tableroInicial, profundidad)
-
-        if resultadoAlmacenado is not None:
-            return resultadoAlmacenado.resultado
-
-        movimientos_posibles.sort(key=lambda x: self._evaluar_tablero(self._ejecutar_jugada(x, board))[0])
-        movimientos_posibles.reverse()
+        resultados = []
 
         mejorResultado = None
 
@@ -140,41 +87,24 @@ class JugadorGrupo3(Player):
                 if beta <= alpha:
                     break
 
-        self.tablaTransposicion.agregar(tableroInicial, mejorResultado, profundidad)
-
         return mejorResultado
 
-    def cantidadFichas(self):
-        return 4 + len(self._tableros_resultantes) * 2 + (1 if self.color == SquareType.WHITE else 0)
-
-    def obtenerRedObjetivo(self):
-        return min(int((self.cantidadFichas() - 4) / 20),2)
-
-    def entrenarRedes(self, resultado):
-
-        for i in xrange(3):
-            cotaInferior = min(i*10,len(self._tableros_resultantes))
-            cotaSuperior = min((i+1) * 10, len(self._tableros_resultantes))
-            conjuntoEntrenamiento = self._tableros_resultantes[cotaInferior:cotaSuperior]
-            if len(conjuntoEntrenamiento) == 0:
-                return
-            self._ann[i].agregar_a_entrenamiento(conjuntoEntrenamiento, resultado)
 
     def on_win(self, board):
         if self.aplicarEntrenamiento:
             resultado = EnumResultado.VICTORIA if self.profundidadMinMax % 2 == 1 else EnumResultado.DERROTA
-            self.entrenarRedes(resultado)
+            self._ann.agregar_a_entrenamiento(self._tableros_resultantes, resultado)
         self._tableros_resultantes = []
 
     def on_defeat(self, board):
         if self.aplicarEntrenamiento:
             resultado = EnumResultado.DERROTA if self.profundidadMinMax % 2 == 1 else EnumResultado.VICTORIA
-            self.entrenarRedes(resultado)
+            self._ann.agregar_a_entrenamiento(self._tableros_resultantes, resultado)
         self._tableros_resultantes = []
 
     def on_draw(self, board):
         if self.aplicarEntrenamiento:
-            self.entrenarRedes(EnumResultado.EMPATE)
+            self._ann.agregar_a_entrenamiento(self._tableros_resultantes, EnumResultado.EMPATE)
         self._tableros_resultantes = []
 
     def on_error(self, board):
@@ -188,28 +118,16 @@ class JugadorGrupo3(Player):
 
         return tablero
 
-    def smoothingCoeficient(self,n,u):
+    def _evaluar_tablero(self, t, invertir = False):
 
-        return math.pow(math.e,-math.pow((n-u),2)/float(20**2))
-
-    def _transformar_tablero(self, t):
         matriz = t.get_as_matrix()
-        return tuple([self._transormarCasilla(square).value for fila in matriz for square in fila])
 
-    def _evaluar_tablero(self, t):
-
-        entrada = self._transformar_tablero(t)
+        entrada = [self._transormarCasilla(square, invertir).value for fila in matriz for square in fila]
 
         if self._partida_finalizada(t):
             return self._puntaje_final(t), entrada
 
-        eval = [ann.evaluar(np.array(entrada).reshape(1,-1)) for ann in self._ann]
-        n = self.cantidadFichas()
-        coeficients = [self.smoothingCoeficient(n,4),self.smoothingCoeficient(n,34),self.smoothingCoeficient(n,64)]
-
-        smoothed = sum(x[0]*x[1] for x in zip(eval,coeficients)) / sum(coeficients)
-
-        return smoothed, entrada #self._ann[self.obtenerRedObjetivo()].evaluar(np.array(entrada).reshape(1,-1)), entrada #smoothed, entrada
+        return (self._ann.evaluar(np.array(entrada).reshape(1,-1)), entrada)
 
     def _partida_finalizada(self,tablero):
         return not tablero.get_possible_moves(SquareType.BLACK) and not tablero.get_possible_moves(SquareType.WHITE)
@@ -229,34 +147,27 @@ class JugadorGrupo3(Player):
             return EnumResultado.EMPATE.value
 
 
-    def _transormarCasilla(self, casilla):
+    def _transormarCasilla(self, casilla, invertir):
         if casilla == SquareType.EMPTY.value:
             return EnumCasilla.EMPTY
-        elif casilla == self.color.value:
+        elif (not invertir and casilla == self.color.value) or (invertir and casilla != self.color.value):
             return EnumCasilla.PROPIA
         else:
             return EnumCasilla.RIVAL
 
     def almacenar(self):
         if self.aplicarEntrenamiento:
-            self._ann[0].almacenar()
-            self._ann[1].almacenar()
-            self._ann[2].almacenar()
+            self._ann.almacenar()
 
     def cargar(self, path, red):
-        self._ann[0].cargar(os.path.join(os.path.dirname(path),"01_" + os.path.basename(path)),
-                            red[0] if red is not None else None)
-        self._ann[1].cargar(os.path.join(os.path.dirname(path),"02_" + os.path.basename(path)),
-                            red[1] if red is not None else None)
-        self._ann[2].cargar(os.path.join(os.path.dirname(path),"03_" + os.path.basename(path)),
-                            red[2] if red is not None else None)
+        self._ann.cargar(path, red)
 
     def entrenar(self):
         if self.aplicarEntrenamiento:
-            for ann in self._ann:
-                ann.entrenar()
+            self._ann.entrenar()
 
 class Ann:
+
     def __init__(self):
 
         self._nn = MLPRegressor(hidden_layer_sizes=(10,), verbose=False, warm_start=True)
@@ -276,9 +187,8 @@ class Ann:
             if i == 0 or True:
                 self._salidas_esperadas_entrenamiento.append(resultado.value)
             else:
-                valorAAprender = valorEstimado + self.lambdaCoefficient * (
-                self._salidas_esperadas_entrenamiento[i - 1] -
-                valorEstimado)
+                valorAAprender = valorEstimado + self.lambdaCoefficient * (self._salidas_esperadas_entrenamiento[i-1] -
+                    valorEstimado)
                 self._salidas_esperadas_entrenamiento.append(valorAAprender)
 
     def entrenar(self):
@@ -287,7 +197,7 @@ class Ann:
         self._salidas_esperadas_entrenamiento = []
 
     def almacenar(self):
-        pickle.dump(self._nn, open(self.path, 'wb'))
+        pickle.dump(self._nn, open(self.path,'wb'))
 
     def cargar(self, path, red):
         self.path = path
@@ -295,7 +205,7 @@ class Ann:
             self._nn = pickle.load(open(path, 'rb'))
         else:
             self._nn = red
-            tableroVacio = ([EnumCasilla.EMPTY.value for _ in xrange(64)], 0)
+            tableroVacio = ([EnumCasilla.EMPTY.value for _ in xrange(64)],0)
             self.agregar_a_entrenamiento([tableroVacio], EnumResultado.EMPATE)
             self.entrenar()
 
@@ -305,8 +215,10 @@ class EnumCasilla(Enum):
     PROPIA = 1
     EMPTY = 0
 
-
 class EnumResultado(Enum):
     VICTORIA = 1
     EMPATE = 0
     DERROTA = -1
+
+
+

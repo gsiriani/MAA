@@ -1,17 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from CustomBatchGame import CustomBatchGame
-from Players.RandomPlayer import RandomPlayer
-from Players.GreedyPlayer import GreedyPlayer
-from Players.JugadorGrupo3 import JugadorGrupo3,AnnBuilder
-import numpy as np
-import matplotlib.pyplot as plt
-import DataTypes
-from Players.PositionalPlayer import PositionalPlayer
-from Players.MobilityPlayer import MobilityPlayer
-from Players.GreedyPlayer import GreedyPlayer
-
-from Torneo import Torneo,AnnBuilder,Aprendiz,Contrincante
+from Torneo import Torneo, Aprendiz
+import os
 '''
 aprendices = []
 #aprendices.append(Aprendiz("nn", AnnBuilder.Red10(), 2))
@@ -36,11 +26,11 @@ torneo.ejecutar()
 '''
 
 aprendices = []
-aprendices.append(Aprendiz("nn-50-x3", [],1))
-aprendices.append(Aprendiz("nn-50-50-x3", [],1))
-aprendices.append(Aprendiz("nn-x3-no-minmax", [],1))
-aprendices.append(Aprendiz("nn10", None, 1))
-aprendices.append(Aprendiz("nn50", None, 1))
+aprendices.append(Aprendiz(os.path.join("redes","otras","nn-50-x3"), [],1))
+aprendices.append(Aprendiz(os.path.join("redes","nn-50-50-x3"), [],1))
+aprendices.append(Aprendiz(os.path.join("redes","otras","nn-x3-no-minmax"), [],1))
+aprendices.append(Aprendiz(os.path.join("redes","otras","nn10"), None, 1))
+aprendices.append(Aprendiz(os.path.join("redes","otras","nn50"), None, 1))
 contrincantes = []
 #contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
 #contrincantes.append(Contrincante("Positional",PositionalPlayer(DataTypes.SquareType.BLACK)))

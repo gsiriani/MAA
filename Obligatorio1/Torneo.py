@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from CustomBatchGame import CustomBatchGame
-from Players.RandomPlayer import RandomPlayer
-from Players.GreedyPlayer import GreedyPlayer
-from Players.JugadorGrupo3 import JugadorGrupo3,AnnBuilder
-from Players.JugadorGrupo3x3 import JugadorGrupo3x3
-import numpy as np
-import matplotlib.pyplot as plt
-import DataTypes
 import time
+
+import matplotlib.pyplot as plt
+from sklearn.neural_network import MLPRegressor
+
+import DataTypes
+from CustomBatchGame import CustomBatchGame
+from Players.JugadorGrupo3 import JugadorGrupo3
+from extras.JugadorGrupoSimple import JugadorGrupoSimple
+
 
 class Estadisticas:
 
@@ -75,6 +76,24 @@ class Aprendiz:
         self.minmax = minmax
         self.estadisticas = Estadisticas()
 
+class AnnBuilder:
+    @staticmethod
+    def Red10():
+        return MLPRegressor(hidden_layer_sizes=(10,), verbose=False, warm_start=True)
+
+    @staticmethod
+    def Red50():
+        return MLPRegressor(hidden_layer_sizes=(50,), verbose=False, warm_start=True)
+
+    @staticmethod
+    def Red10_8():
+        return MLPRegressor(hidden_layer_sizes=(10, 8), verbose=False, warm_start=True)
+
+    @staticmethod
+    def Red50_50():
+        return MLPRegressor(hidden_layer_sizes=(50, 50), verbose=False, warm_start=True)
+
+
 
 class Torneo:
 
@@ -93,9 +112,9 @@ class Torneo:
             if isinstance(aprendiz.red,list):
                 print ("Inicializando jugador multi red")
                 aprendiz.red = None if len(aprendiz.red) == 0 else aprendiz.red
-                aprendiz.jugador = JugadorGrupo3x3(None, aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
+                aprendiz.jugador = JugadorGrupo3(None, aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
             else:
-                aprendiz.jugador = JugadorGrupo3(None,aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
+                aprendiz.jugador = JugadorGrupoSimple(None, aprendiz.nombre + '.pkl', aprendiz.red, aprendiz.minmax)
 
         for i in range(self.torneos):
             print (time.asctime() + " - " + "*** Vuelta " + str(i) + " del torneo ***")

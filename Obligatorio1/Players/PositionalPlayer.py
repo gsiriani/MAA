@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 from collections import defaultdict
 from copy import deepcopy
+
 from DataTypes import SquareType
 from Player import Player
-from Players.JugadorGrupo3 import EnumResultado
 
 
 class PositionalPlayer(Player):
