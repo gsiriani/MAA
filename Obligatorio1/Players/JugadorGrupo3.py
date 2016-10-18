@@ -274,7 +274,9 @@ class JugadorGrupo3(Player):
         self.jugadasPosibles = None
 
         # Se acutaliza la historia del hit ratio de la tabla de transposición
-        self.usoCache.append(float(self.tablaTransposicion.consultasExitosas) / self.tablaTransposicion.consultas)
+        if self.tablaTransposicion.consultas > 0:
+            self.usoCache.append(float(self.tablaTransposicion.consultasExitosas) / self.tablaTransposicion.consultas)
+
         self.tablaTransposicion.consultas = 0
         self.tablaTransposicion.consultasExitosas = 0
 
