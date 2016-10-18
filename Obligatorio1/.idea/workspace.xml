@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="13c0562d-9544-47c5-93bc-c97c76196b48" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loader.py" afterPath="$PROJECT_DIR$/Loader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Loader2.py" afterPath="$PROJECT_DIR$/Loader2.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Players/JugadorGrupo3.py" afterPath="$PROJECT_DIR$/Players/JugadorGrupo3.py" />
     </list>
     <ignored path="Obligatorio1.iws" />
@@ -17,10 +17,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Obligatorio1$Loader.coverage" NAME="Loader Coverage Results" MODIFIED="1476750490679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Obligatorio1$Loader.coverage" NAME="Loader Coverage Results" MODIFIED="1476754274797" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Obligatorio1$JugadorGrupo3.coverage" NAME="JugadorGrupo3 Coverage Results" MODIFIED="1476392781894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Players" />
     <SUITE FILE_PATH="coverage/Obligatorio1$JugadorGrupo3x3.coverage" NAME="JugadorGrupo3x3 Coverage Results" MODIFIED="1476737418238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Players" />
-    <SUITE FILE_PATH="coverage/Obligatorio1$InteractiveGame.coverage" NAME="InteractiveGame Coverage Results" MODIFIED="1476750877104" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Obligatorio1$InteractiveGame.coverage" NAME="InteractiveGame Coverage Results" MODIFIED="1476751372765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Obligatorio1$Loader2.coverage" NAME="Loader2 Coverage Results" MODIFIED="1476748799790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Obligatorio1$JugadorGrupo3__1_.coverage" NAME="JugadorGrupo3 (1) Coverage Results" MODIFIED="1476750803822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Players" />
   </component>
@@ -53,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Loader.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Loader.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Loader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8">
-              <caret line="32" column="76" selection-start-line="32" selection-start-column="76" selection-end-line="32" selection-end-column="76" />
+            <state relative-caret-position="178">
+              <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
               <folding>
                 <element signature="e#24#40#0" expanded="true" />
               </folding>
@@ -77,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JugadorGrupo3.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="JugadorGrupo3.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="86" column="20" selection-start-line="86" selection-start-column="20" selection-end-line="86" selection-end-column="20" />
+            <state relative-caret-position="-4611">
+              <caret line="116" column="12" selection-start-line="116" selection-start-column="12" selection-end-line="116" selection-end-column="12" />
               <folding>
                 <element signature="e#24#59#0" expanded="true" />
               </folding>
@@ -116,8 +116,8 @@
         <option value="$PROJECT_DIR$/extras/JugadorGrupoSimple.py" />
         <option value="$PROJECT_DIR$/Torneo.py" />
         <option value="$PROJECT_DIR$/Loader2.py" />
-        <option value="$PROJECT_DIR$/Loader.py" />
         <option value="$PROJECT_DIR$/Players/JugadorGrupo3.py" />
+        <option value="$PROJECT_DIR$/Loader.py" />
       </list>
     </option>
   </component>
@@ -240,7 +240,7 @@
       <recent name="C:\Source\MAA\Obligatorio1" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.InteractiveGame">
+  <component name="RunManager" selected="Python.Loader">
     <configuration default="false" name="Loader" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -548,9 +548,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.InteractiveGame" />
-        <item index="1" class="java.lang.String" itemvalue="Python.JugadorGrupo3 (1)" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Loader" />
+        <item index="0" class="java.lang.String" itemvalue="Python.Loader" />
+        <item index="1" class="java.lang.String" itemvalue="Python.InteractiveGame" />
+        <item index="2" class="java.lang.String" itemvalue="Python.JugadorGrupo3 (1)" />
         <item index="3" class="java.lang.String" itemvalue="Python.Loader2" />
         <item index="4" class="java.lang.String" itemvalue="Python.JugadorGrupo3x3" />
       </list>
@@ -592,7 +592,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43862522" sideWeight="0.4969743" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3289689" sideWeight="0.4969743" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27769348" sideWeight="0.51111114" order="0" side_tool="true" content_ui="tabs" />
@@ -628,11 +628,6 @@
           <url>file://$PROJECT_DIR$/extras/JugadorGrupoSimple.py</url>
           <line>135</line>
           <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/Players/JugadorGrupo3.py</url>
-          <line>296</line>
-          <option name="timeStamp" value="86" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -980,16 +975,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8">
-          <caret line="32" column="76" selection-start-line="32" selection-start-column="76" selection-end-line="32" selection-end-column="76" />
-          <folding>
-            <element signature="e#24#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CustomBatchGame.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -1032,6 +1017,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4611">
+          <caret line="116" column="12" selection-start-line="116" selection-start-column="12" selection-end-line="116" selection-end-column="12" />
+          <folding>
+            <element signature="e#24#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Loader2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1042,12 +1037,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Players/JugadorGrupo3.py">
+    <entry file="file://$PROJECT_DIR$/Loader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="86" column="20" selection-start-line="86" selection-start-column="20" selection-end-line="86" selection-end-column="20" />
+        <state relative-caret-position="178">
+          <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
           <folding>
-            <element signature="e#24#59#0" expanded="true" />
+            <element signature="e#24#40#0" expanded="true" />
           </folding>
         </state>
       </provider>

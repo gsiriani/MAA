@@ -36,9 +36,9 @@ aprendices.append(Aprendiz(os.path.join("redes","nn-50-50-x3"), [],3))
 #aprendices.append(Aprendiz(os.path.join("redes","otras","nn10"), None, 1))
 #aprendices.append(Aprendiz(os.path.join("redes","otras","nn50"), None, 1))
 contrincantes = []
-contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
-contrincantes.append(Contrincante("Positional",PositionalPlayer(DataTypes.SquareType.BLACK)))
-contrincantes.append(Contrincante("Greedy",GreedyPlayer(DataTypes.SquareType.BLACK)))
+#contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
+#contrincantes.append(Contrincante("Positional",PositionalPlayer(DataTypes.SquareType.BLACK)))
+#contrincantes.append(Contrincante("Greedy",GreedyPlayer(DataTypes.SquareType.BLACK)))
 contrincantes.append(Contrincante("Mobility",MobilityPlayer(DataTypes.SquareType.BLACK)))
 
 torneo = Torneo(aprendices, contrincantes, 10, 1)
