@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from Torneo import Torneo, Aprendiz
+from Players.GreedyPlayer import GreedyPlayer
+from Players.JugadorGrupo3 import JugadorGrupo3
+from Players.MobilityPlayer import MobilityPlayer
+from Players.PositionalPlayer import PositionalPlayer
+from Players.RandomPlayer import RandomPlayer
+from BatchGame import BatchGame
 import os
 '''
 aprendices = []
@@ -9,34 +15,28 @@ aprendices = []
 aprendices.append(Aprendiz("nn-2-layer", AnnBuilder.Red10_8(),1))
 contrincantes = []
 contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
-
-torneo = Torneo(aprendices, contrincantes, 100, 100)
-torneo.ejecutar()
-'''
-'''
-aprendices = []
-
-aprendices.append(Aprendiz("nn-no-minmax", None, 1))
-aprendices.append(Aprendiz("nn-minmax-3", None, 3))
-contrincantes = []
-contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
-
-torneo = Torneo(aprendices, contrincantes, 10, 10)
-torneo.ejecutar()
 '''
 
-aprendices = []
-aprendices.append(Aprendiz(os.path.join("redes","otras","nn-50-x3"), [],1))
-aprendices.append(Aprendiz(os.path.join("redes","nn-50-50-x3"), [],1))
-aprendices.append(Aprendiz(os.path.join("redes","otras","nn-x3-no-minmax"), [],1))
-aprendices.append(Aprendiz(os.path.join("redes","otras","nn10"), None, 1))
-aprendices.append(Aprendiz(os.path.join("redes","otras","nn50"), None, 1))
-contrincantes = []
-#contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
-#contrincantes.append(Contrincante("Positional",PositionalPlayer(DataTypes.SquareType.BLACK)))
-#contrincantes.append(Contrincante("Greedy",GreedyPlayer(DataTypes.SquareType.BLACK)))
-#contrincantes.append(Contrincante("Mobility",MobilityPlayer(DataTypes.SquareType.BLACK)))
+RandomNegro = [BatchGame(black_player=RandomPlayer, white_player=JugadorGrupo3).play() for _ in xrange(2)]
+RandomBlanco = [BatchGame(black_player=JugadorGrupo3, white_player=RandomPlayer).play() for _ in xrange(2)]
+print 'Random'
+print 'Blanco: ' + str(len([x for x in RandomNegro if x == 0]))
+print 'Negro: ' + str(len([x for x in RandomBlanco if x == 1]))
 
-torneo = Torneo(aprendices, contrincantes, 1, 10)
-torneo.comienzoAleatorio = False
-torneo.ejecutar()
+GreedNegro = [BatchGame(black_player=GreedyPlayer, white_player=JugadorGrupo3).play() for _ in xrange(2)]
+GreedBlanco = [BatchGame(black_player=JugadorGrupo3, white_player=GreedyPlayer).play() for _ in xrange(2)]
+print '\nGreedy'
+print 'Blanco: ' + str(len([x for x in GreedNegro if x == 0]))
+print 'Negro: ' + str(len([x for x in GreedBlanco if x == 1]))
+
+MobilityNegro = [BatchGame(black_player=MobilityPlayer, white_player=JugadorGrupo3).play() for _ in xrange(2)]
+MobilityBlanco = [BatchGame(black_player=JugadorGrupo3, white_player=MobilityPlayer).play() for _ in xrange(2)]
+print '\nMobility'
+print 'Blanco: ' + str(len([x for x in MobilityNegro if x == 0]))
+print 'Negro: ' + str(len([x for x in MobilityBlanco if x == 1]))
+
+PositionalNegro = [BatchGame(black_player=PositionalPlayer, white_player=JugadorGrupo3).play() for _ in xrange(2)]
+PositionalBlanco = [BatchGame(black_player=JugadorGrupo3, white_player=PositionalPlayer).play() for _ in xrange(2)]
+print '\nPositional'
+print 'Blanco: ' + str(len([x for x in PositionalNegro if x == 0]))
+print 'Negro: ' + str(len([x for x in PositionalBlanco if x == 1]))
