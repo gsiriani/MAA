@@ -76,7 +76,6 @@ class JugadorGrupo3(Player):
         super(JugadorGrupo3, self).__init__(self.name, color=color)
         self._ann = [Ann(), Ann(), Ann()]
         self._tableros_resultantes = []
-        self.cargar(path,red)
         self.profundidadMinMax = profundidadMinmax
         self.aplicarEntrenamiento = red is not None
         self.tablaTransposicion = TramspositionTable()
@@ -86,7 +85,9 @@ class JugadorGrupo3(Player):
         self.usoCache = []
 
         if path is None:
-            self.path = os.path.join("redes","nn-50-50-x3")
+            self.path = os.path.join("redes","nn-50-50-x3.pkl")
+
+        self.cargar(self.path,red)
 
     def encontrarJugadasPosibles(self, board):
         self.jugadasPosibles = []

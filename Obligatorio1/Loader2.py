@@ -6,11 +6,11 @@ from Torneo import Torneo,Aprendiz,Contrincante, AnnBuilder
 import matplotlib.pyplot as plt
 
 aprendices = []
-aprendices.append(Aprendiz(os.path.join("redes","otras","nn-50-x3"), [],1))
+aprendices.append(Aprendiz(os.path.join("redes","otras","nn-50-x3"), [],3))
 contrincantes = []
 contrincantes.append(Contrincante("Random",RandomPlayer(DataTypes.SquareType.BLACK)))
 
-torneo = Torneo(aprendices, contrincantes, 100, 1)
+torneo = Torneo(aprendices, contrincantes, 20, 1)
 torneo.ejecutar()
 
 plt.clf()
