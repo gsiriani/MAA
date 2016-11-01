@@ -20,7 +20,7 @@ class MobilityPlayer(Player):
         :param opponent_move: Move
         :return: Move
         """
-        max_value = 0
+        max_value = -9999
         chosen_move = None
         for move in board.get_possible_moves(self.color):
             nuevoTablero = self._ejecutar_jugada(move, board)
